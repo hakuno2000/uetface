@@ -3,7 +3,8 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  form(method="post" action="")
+  | #{Log_rp}
+  form(method="post", action="", name="login_form")
       table
           tr
             td
@@ -16,4 +17,26 @@ block content
             td
                 input#password(name="password" type="password")
             td
-                input#login(name="login" type="submit")
+                input#login(name="login" type="submit" value="Đăng nhập")
+  h1 Đăng Ký
+  form(method="post", action"/", name="reg_form")
+      table
+          tr
+            td
+                input(name="reg_user" type="text" placeholder="Tài khoản mới")
+          tr
+            td
+                input(name="reg_email" type="email" placeholder="Email")
+          tr
+            td
+                input(name="reg_pass" type="password" placeholder="Mật khẩu")
+          tr
+            td
+                |Nam
+                input#Male(name="sex", type="radio", value="M",checked)
+                |Nữ
+                input#FeMale(name="sex", type="radio",value="F")
+          tr
+            td
+                input(name="register", type="submit", value="Đăng ký")
+          | #{Reg_rp}
