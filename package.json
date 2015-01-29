@@ -1,0 +1,35 @@
+{
+  "name": "UETFace",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.10.2",
+    "cookie-parser": "~1.3.3",
+    "debug": "~2.1.1",
+    "express": "~4.11.1",
+    "jade": "~1.9.1",
+    "less-middleware": "1.0.x",
+    "morgan": "~1.5.1",
+    "serve-favicon": "~2.2.0"
+  },
+  "description": "uetface project. he thong danh gia mon hoc cua truong dai hoc cong nghe",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "http://bitbucket.org/phiph_57/uetface.git"
+  },
+  "keywords": [
+    "uet",
+    "nodejs",
+    "danh",
+    "gia",
+    "mon",
+    "hoc"
+  ],
+  "author": "phipham",
+  "license": "ISC"
+}

@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  form(method="post" action="")
+      table
+          tr
+            td
+              span Tài khoản
+            td
+              span Mật khẩu
+          tr
+            td
+                input#username(name="username" type="text")
+            td
+                input#password(name="password" type="password")
+            td
+                input#login(name="login" type="submit")
