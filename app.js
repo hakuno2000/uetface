@@ -9,6 +9,7 @@ var mysql=require('mysql');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var logout=require('./routes/logout');
+var evaluation=require('./routes/evaluation');
 var app = express();
 
 // view engine setup
@@ -27,6 +28,7 @@ app.use(session({secret:'deo ai biet dau',resave:false, saveUninitialized: true}
 app.use('/', routes);
 app.use('/users', users);
 app.use('/logout',logout);
+app.use('/evaluation',evaluation);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
