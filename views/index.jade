@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  | #{Log_rp}
+  h2(style="color:red") #{Log_rp}
   form(method="post", action="", name="login_form")
       table
           tr
@@ -23,13 +23,25 @@ block content
       table
           tr
             td
-                input(name="reg_user" type="text" placeholder="Tài khoản mới")
+                input(name="std_name",type="text", placeholder="Họ tên")
           tr
             td
-                input(name="reg_email" type="email" placeholder="Email")
+                |K
+                input(name="std_grade", type="text", placeholder="Khóa")
+                |-
+                input(name="std_class", type="text", placeholder="Lớp")
           tr
             td
-                input(name="reg_pass" type="password" placeholder="Mật khẩu")
+                input(name="std_id", type="text", placeholder="Mã sinh viên")
+          tr
+            td
+                input(name="reg_user", type="text", placeholder="Tài khoản mới")
+          tr
+            td
+                input(name="reg_email", type="email", placeholder="Email")
+          tr
+            td
+                input(name="reg_pass", type="password", placeholder="Mật khẩu")
           tr
             td
                 |Nam
@@ -39,4 +51,4 @@ block content
           tr
             td
                 input(name="register", type="submit", value="Đăng ký")
-          | #{Reg_rp}
+          h1(style="color:red;") #{Reg_rp}
