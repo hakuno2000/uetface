@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3fded2d3-7433-425a-a475-19937f02c171" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/nav.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/evaluation.jade" afterPath="$PROJECT_DIR$/views/evaluation.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/evaluation.js" afterPath="$PROJECT_DIR$/routes/evaluation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/layout.jade" afterPath="$PROJECT_DIR$/views/layout.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/users.jade" afterPath="$PROJECT_DIR$/views/users.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="3fded2d3-7433-425a-a475-19937f02c171" name="Default" comment="" />
     <ignored path="UETFace.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
