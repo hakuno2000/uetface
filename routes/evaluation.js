@@ -6,7 +6,7 @@ var router=express.Router();
 var mysql=require('mysql');
 router.get('/',function(req,res,next){
     if(req.session.username){
-        res.render('evaluation');
+        res.render('evaluation',{user:req.session.username});
     }
     else{
         res.redirect('/');
@@ -63,7 +63,7 @@ router.post('/',function(req,res,next){
             connection.query('INSERT INTO ketquadanhgia SET ?',form,function(err,results){
                 if(err) throw err;
                 else{
-                    res.render('evaluation',{Rp_Form:'Đánh giá thành công.'})
+                    res.render('evaluation',{Rp_Form:'Đánh giá thành công.',user:req.session.username})
                 }
             });
         }
