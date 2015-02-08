@@ -3,10 +3,10 @@
  */
 
 var config = {
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'uetface'
+    host: 'sql3.freesqldatabase.com',
+    user: 'sql366657',
+    password: 'rW7*fC9*',
+    database: 'sql366657'
 };
 var connect=function(mysql){
     return mysql.createConnection(config);

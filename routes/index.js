@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql=require('mysql');
+var connector=require('./connectDB');
 /* GET home page. */
 router.get('/', function(req, res, next) {
     if(req.session.username){
@@ -11,13 +12,7 @@ router.get('/', function(req, res, next) {
 });
 router.post('/',function(req,res,next){
     if(req.body.username!=''&&req.body.password&&req.body.login!='') {
-        var connectionConfig = {
-            host: 'localhost',
-            user: 'root',
-            password: 'root',
-            database: 'uetface'
-        };
-        var connection = mysql.createConnection(connectionConfig);
+        var connection = connector(mysql);
         connection.query("select * from sinhvien where tai_khoan='"+req.body.username+"'",
             function (err, rows, fields) {
                 if (err) throw err;
@@ -42,15 +37,7 @@ router.post('/',function(req,res,next){
         res.render('index',{title:'UETFace',Log_rp:'Chưa nhập tài khoản hoặc mật khẩu!'});
     }else if(req.body.reg_user!=''&&req.body.reg_email!=''&&req.body.reg_pass!=''&&req.body.std_name!=''
             &&req.body.std_grade!=''&&req.body.std_class!=''&&req.body.std_id!=''){
-
-        var connectionConfig = {
-            host: 'localhost',
-            user: 'root',
-            password: 'root',
-            database: 'uetface'
-        };
-
-        var connection = mysql.createConnection(connectionConfig);
+        var connection = connector(mysql);
         connection.query('select * from sinhvien where tai_khoan=\"'+req.body.reg_user+'\"',
             function(err,rows,fields){
                 if(err) throw err;
