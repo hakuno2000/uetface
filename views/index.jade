@@ -1,54 +1,63 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  h2(style="color:red") #{Log_rp}
-  form(method="post", action="", name="login_form")
-      table
-          tr
-            td
-              span Tài khoản
-            td
-              span Mật khẩu
-          tr
-            td
-                input#username(name="username" type="text")
-            td
-                input#password(name="password" type="password")
-            td
-                input#login(name="login" type="submit" value="Đăng nhập")
-  h1 Đăng Ký
-  form(method="post", action"/", name="reg_form")
-      table
-          tr
-            td
-                input(name="std_name",type="text", placeholder="Họ tên")
-          tr
-            td
-                |K
-                input(name="std_grade", type="text", placeholder="Khóa")
-                |-
-                input(name="std_class", type="text", placeholder="Lớp")
-          tr
-            td
-                input(name="std_id", type="text", placeholder="Mã sinh viên")
-          tr
-            td
-                input(name="reg_user", type="text", placeholder="Tài khoản mới")
-          tr
-            td
-                input(name="reg_email", type="email", placeholder="Email")
-          tr
-            td
-                input(name="reg_pass", type="password", placeholder="Mật khẩu")
-          tr
-            td
-                |Nam
-                input#Male(name="sex", type="radio", value="M",checked)
-                |Nữ
-                input#FeMale(name="sex", type="radio",value="F")
-          tr
-            td
-                input(name="register", type="submit", value="Đăng ký")
-          h1(style="color:red;") #{Reg_rp}
+  nav(class="navbar navbar-default navbar-fixed-top")
+    div.container
+      ul(class="nav navbar-nav")
+          li(class="active")
+            h1.navbar-header #{title}
+
+      form.navbar-form.navbar-right.form-inline(method="post", action="", name="login_form")
+          div.input-group.form-group
+              span.input-group-addon
+                  span.glyphicon.glyphicon-user
+              input#username.form-control(placeholder="Tài khoản",name="username", type="text")
+          div.input-group.form-group
+              span.input-group-addon
+                  span.glyphicon.glyphicon-lock
+              input#password.form-control(placeholder="Mật khẩu",name="password", type="password")
+          input#login.btn.btn-default(name="login", type="submit", value="Đăng nhập")
+
+  div.container
+      div.col-sm-6.col-md-6
+          p Welcome to #{title}
+      div.col-sm-6.col-md-6
+          div.form-group
+              h1 Đăng Ký
+          form(method="post", action"/", name="reg_form")
+              div.input-group.form-group
+                  span.input-group-addon
+                      span.glyphicon.glyphicon-education
+                  input.form-control(name="std_name",type="text", placeholder="Họ tên")
+              div.input-group.form-group
+                  span.input-group-addon
+                      span.glyphicon K
+                  input.form-control(name="std_grade", type="text", placeholder="Khóa")
+                  span.input-group-addon -
+                  input.form-control(name="std_class", type="text", placeholder="Lớp")
+              div.input-group.form-group
+                  span.input-group-addon
+                      span.glyphicon.glyphicon-barcode
+                  input.form-control(name="std_id", type="text", placeholder="Mã sinh viên")
+              div.input-group.form-group
+                  span.input-group-addon
+                      span.glyphicon.glyphicon-user
+                  input.form-control(name="reg_user", type="text", placeholder="Tài khoản mới")
+              div.input-group.form-group
+                  span.input-group-addon
+                      span.glyphicon.glyphicon-envelope
+                  input.form-control(name="reg_email", type="email", placeholder="Email")
+              div.input-group.form-group
+                  span.input-group-addon
+                      span.glyphicon.glyphicon-lock
+                  input.form-control(name="reg_pass", type="password", placeholder="Mật khẩu")
+              div.input-group.form-group
+                  label.radio-inline
+                        input#Male(name="sex", type="radio", value="M",checked)
+                        |Nam
+                  label.radio-inline
+                        input#FeMale(name="sex", type="radio",value="F")
+                        |Nữ
+              div.input-group.form-group
+                input.btn.btn-default(name="register", type="submit", value="Đăng ký")
+      h1(style="color:red;") #{Reg_rp}

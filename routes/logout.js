@@ -5,7 +5,7 @@ var express=require('express');
 var router=express.Router();
 
 router.get('/',function(req,res){
-    if(req.session.username){
+    if(req.session){
         req.session.destroy(function(err){
             if(err) {
                 throw err;
@@ -13,7 +13,8 @@ router.get('/',function(req,res){
                 res.redirect('/');
             }
         })
-    }else{
+    }
+    else{
         res.redirect('/');
     }
 });

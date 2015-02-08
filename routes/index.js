@@ -10,7 +10,6 @@ router.get('/', function(req, res, next) {
     }
 });
 router.post('/',function(req,res,next){
-    console.log(req.body);
     if(req.body.username!=''&&req.body.password&&req.body.login!='') {
         var connectionConfig = {
             host: 'localhost',
@@ -22,7 +21,7 @@ router.post('/',function(req,res,next){
         connection.query("select * from sinhvien where tai_khoan='"+req.body.username+"'",
             function (err, rows, fields) {
                 if (err) throw err;
-                if(rows.length==0) res.render('index',{title:'UETFace',Log_rp:'Tài khoản hoặc mật khẩu không đúng!'});
+                if(rows.length==0||rows.length>1) res.render('index',{title:'UETFace',Log_rp:'Tài khoản hoặc mật khẩu không đúng!'});
                 rows.forEach(function (row) {
                     console.log(row);
                     if (req.body.password == row.mat_khau) {
@@ -30,6 +29,8 @@ router.post('/',function(req,res,next){
                         req.session.password = req.body.password;
                         req.session.user_id =row.ma_sinh_vien;
                         res.redirect('/users');
+                    }else{
+                        res.redirect('/');
                     }
                 });
             }

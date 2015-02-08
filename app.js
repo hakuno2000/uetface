@@ -10,7 +10,13 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var logout=require('./routes/logout');
 var evaluation=require('./routes/evaluation');
+var admin=require('./routes/admin/admin');
+var ad_dashboard=require('./routes/admin/ad_dashboard');
 var app = express();
+var add_subject=require('./routes/admin/add_subject');
+var add_class=require('./routes/admin/add_class');
+var add_teacher=require('./routes/admin/add_teacher');
+var add_student=require('./routes/admin/add_student');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,6 +35,12 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/logout',logout);
 app.use('/evaluation',evaluation);
+app.use('/admin',admin);
+app.use('/admin/dashboard',ad_dashboard);
+app.use('/admin/add/subject',add_subject);
+app.use('/admin/add/class',add_class);
+app.use('/admin/add/teacher',add_teacher);
+app.use('/admin/add/student',add_student);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

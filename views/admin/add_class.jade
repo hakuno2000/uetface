@@ -1,0 +1,52 @@
+//
+   Created by Phi on 2/8/2015.
+extends ../layout
+block content
+    nav(class="navbar navbar-default navbar-fixed-top")
+        div(class="container")
+            ul(class="nav navbar-nav")
+                li()
+                    a(href='/admin') Trang chủ
+                li()
+                    a(href='/admin/add/subject') Chỉnh sửa môn học
+                li()
+                    a(href='/admin/add/teacher') Thông tin giảng viên
+                li(class="active")
+                    a(href='/admin/add/class') Chỉnh sửa lớp học
+                li()
+                    a(href='/admin/add/student') Thông tin sinh viên
+            ul.nav.navbar-nav.navbar-right
+                li
+                    a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{ad}!
+                        span(class="caret")
+                    ul(class="dropdown-menu" role="menu")
+                        li
+                            a(href='/logout') Thoát ra
+    br
+    h1 Thêm lớp
+    div.containter
+        div.col-sm-6.col-md-6
+            form(method="post",action="",name="add_class")
+                div.form-group
+                    label
+                        |Mã lớp
+                    input.form-control(name="ma_lop",type="text", placeholder="1", min="1")
+                div.form-group
+                    label
+                        |Mã môn
+                    input.form-control(name="ma_mon",type="text", placeholder="INT...")
+                div.input-group.form-group
+                    span.input-group-addon Từ Tiết
+                    input.form-control(name="tiet_bat_dau", type="number", value="1", min="1",max="9")
+                    span.input-group-addon Đến Tiết
+                    input.form-control(name="tiet_ket_thuc", type="number", value="3",min="2", max="10")
+                div.form-group
+                    label
+                        |Thứ
+                    input.form-control(name="ngay_hoc", type="number", placeholder="7", min="2", max="7")
+                div.form-group
+                    label
+                        |Giảng đường
+                    input.form-control(name="giang_duong", type="text", placeholder="303-GĐ2")
+                div.form-group
+                    input.btn.btn-default(name="add_submit", type="submit", value="Tạo lớp")

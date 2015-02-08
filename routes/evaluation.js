@@ -3,7 +3,7 @@
  */
 var express=require('express');
 var router=express.Router();
-var mysql=require('mysql');
+var connector=require('./connectDB');
 router.get('/',function(req,res,next){
     if(req.session.username){
         res.render('evaluation',{user:req.session.username});
@@ -22,13 +22,6 @@ router.post('/',function(req,res,next){
             &&req.body.q13!=''&&req.body.q14!=''&&req.body.q15!=''&&req.body.q16!=''&&req.body.q17!=''
             &&req.body.q18!=''&&req.body.q19!=''&&req.body.q20!=''&&req.body.q21!=''&&req.body.q22!=''&&req.body.q23!=''
         ){
-            var connectConfig={
-                host:'localhost',
-                user:'root',
-                password:'root',
-                database:'uetface'
-            };
-            var connection=mysql.createConnection(connectConfig);
             var form={
                 ma_mon:req.body.sub_id,
                 ma_giang_vien:req.body.tea_id,
@@ -60,10 +53,15 @@ router.post('/',function(req,res,next){
                 date:req.body.date
             };
             console.log(form);
-            connection.query('INSERT INTO ketquadanhgia SET ?',form,function(err,results){
+            connector.query('INSERT INTO ketquadanhgia SET ?',form,function(err,results){
                 if(err) throw err;
                 else{
                     res.render('evaluation',{Rp_Form:'Đánh giá thành công.',user:req.session.username})
+                }
+            });
+            connector.end(function(err){
+                if(err){
+                    throw err;
                 }
             });
         }
