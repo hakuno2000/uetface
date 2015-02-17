@@ -3,6 +3,7 @@
  */
 var express=require('express');
 var router=express.Router();
+var mysql=require('mysql');
 var connector=require('./connectDB');
 router.get('/',function(req,res,next){
     if(req.session.username){
@@ -53,13 +54,14 @@ router.post('/',function(req,res,next){
                 date:req.body.date
             };
             console.log(form);
-            connector.query('INSERT INTO ketquadanhgia SET ?',form,function(err,results){
+            var connection=connector(mysql);
+            connection.query('INSERT INTO ketquadanhgia SET ?',form,function(err,results){
                 if(err) throw err;
                 else{
                     res.render('evaluation',{Rp_Form:'Đánh giá thành công.',user:req.session.username})
                 }
             });
-            connector.end(function(err){
+            connection.end(function(err){
                 if(err){
                     throw err;
                 }
