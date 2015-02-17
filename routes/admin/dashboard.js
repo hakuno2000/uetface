@@ -5,7 +5,7 @@ var express=require('express');
 var router=express.Router();
 router.get('/',function(req,res,next){
     if(req.session.level){
-        res.render('admin/ad_dashboard',{ad:req.session.user_ad});
+        res.render('admin/dashboard',{ad:req.session.user_ad});
     }
     else{
         res.render('admin/admin')

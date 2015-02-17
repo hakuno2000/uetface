@@ -27,6 +27,10 @@ block content
           form(method="post", action"/", name="reg_form")
               div.input-group.form-group
                   span.input-group-addon
+                      span.glyphicon.glyphicon-barcode
+                  input.form-control(name="std_id", type="text", placeholder="Mã sinh viên")
+              div.input-group.form-group
+                  span.input-group-addon
                       span.glyphicon.glyphicon-education
                   input.form-control(name="std_name",type="text", placeholder="Họ tên")
               div.input-group.form-group
@@ -35,10 +39,6 @@ block content
                   input.form-control(name="std_grade", type="text", placeholder="Khóa")
                   span.input-group-addon -
                   input.form-control(name="std_class", type="text", placeholder="Lớp")
-              div.input-group.form-group
-                  span.input-group-addon
-                      span.glyphicon.glyphicon-barcode
-                  input.form-control(name="std_id", type="text", placeholder="Mã sinh viên")
               div.input-group.form-group
                   span.input-group-addon
                       span.glyphicon.glyphicon-user

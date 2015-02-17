@@ -8,13 +8,13 @@ block content
                 li()
                     a(href='/admin') Trang chủ
                 li()
-                    a(href='/admin/add/subject') Chỉnh sửa môn học
+                    a(href='/admin/subject') Môn học
                 li()
-                    a(href='/admin/add/teacher') Thông tin giảng viên
+                    a(href='/admin/teacher') Giảng viên
                 li(class="active")
-                    a(href='/admin/add/class') Chỉnh sửa lớp học
+                    a(href='/admin/class') Lớp học
                 li()
-                    a(href='/admin/add/student') Thông tin sinh viên
+                    a(href='/admin/student') Sinh viên
             ul.nav.navbar-nav.navbar-right
                 li
                     a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{ad}!
@@ -22,7 +22,6 @@ block content
                     ul(class="dropdown-menu" role="menu")
                         li
                             a(href='/logout') Thoát ra
-    br
     h1 Thêm lớp
     div.containter
         div.col-sm-6.col-md-6

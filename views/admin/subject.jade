@@ -8,13 +8,13 @@ block content
                 li()
                     a(href='/admin') Trang chủ
                 li(class="active")
-                    a(href='/admin/add/subject') Chỉnh sửa môn học
+                    a(href='/admin/subject') Môn học
                 li()
-                    a(href='/admin/add/teacher') Thông tin giảng viên
+                    a(href='/admin/teacher') Giảng viên
                 li()
-                    a(href='/admin/add/class') Chỉnh sửa lớp học
+                    a(href='/admin/class') Lớp học
                 li()
-                    a(href='/admin/add/student') Thông tin sinh viên
+                    a(href='/admin/student') Sinh viên
             ul.nav.navbar-nav.navbar-right
                 li
                     a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{ad}!
@@ -22,6 +22,27 @@ block content
                     ul(class="dropdown-menu" role="menu")
                         li
                             a(href='/logout') Thoát ra
+    br
+    h1 Danh sách môn
+    div.container
+        table.table.table-responsive.table-striped.table-hover(ng-app="listclass", ng-controller="classController")
+            tr
+                th
+                    a(href="",ng-click="reverse=!reverse;order('ma_mon', reverse)") Mã môn
+                th
+                    a(href="",ng-click="reverse=!reverse;order('ten_mon', reverse)") Tên môn
+                th
+                    a(href="",ng-click="reverse=!reverse;order('khoa', reverse)") Khoa
+                th
+                    a(href="",ng-click="reverse=!reverse;order('tin_chi', reverse)") Tín chỉ
+                th
+                    a(href="",ng-click="reverse=!reverse;order('', reverse)") Mô tả
+            tr(ng-repeat="class in classes")
+                td(ng-bind="class.ma_mon")
+                td(ng-bind="class.ten_mon")
+                td(ng-bind="class.khoa")
+                td(ng-bind="class.tin_chi")
+                td(ng-bind="class.mo_ta")
     br
     h1 Thêm môn học
     h2 #{rp}
@@ -49,3 +70,4 @@ block content
                     textarea.form-control(name="mo_ta",placeholder="...",rows="3")
                 div.form-group
                     input.btn.btn-default(name="add_submit", type="submit", value="Tạo môn")
+    script(type="text/javascript" src='/javascript/subject.js').
