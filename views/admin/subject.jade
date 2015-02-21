@@ -2,72 +2,103 @@
    Created by Phi on 2/8/2015.
 extends ../layout
 block content
-    nav(class="navbar navbar-default navbar-fixed-top")
-        div(class="container")
-            ul(class="nav navbar-nav")
+    div(ng-app="Subject",ng-controller="SubjectController")
+        nav.navbar.navbar-default.navbar-fixed-top
+            div.container
+                ul.nav.navbar-nav
+                    li()
+                        a(href='/admin') Trang chủ
+                    li(class="active")
+                        a(href='/admin/subject') Môn học
+                    li()
+                        a(href='/admin/teacher') Giảng viên
+                    li()
+                        a(href='/admin/class') Lớp học
+                    li()
+                        a(href='/admin/student') Sinh viên
+                ul.nav.navbar-nav.navbar-right
+                    li
+                        a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{ad}!
+                            span(class="caret")
+                        ul.dropdown-menu(role="menu")
+                            li
+                                a(href='/logout') Thoát ra
+        br
+        h1 Danh sách môn
+        div.container
+            select(ng-model="page_length", ng-click="setPage(page_num)", ng-init='page_length=10')
+                option(value='5') 5
+                option(value='10') 10
+                option(value='20') 20
+                option(value='40') 40
+                option(value='60') 60
+                option(value='100') 100
+            table.table.table-responsive.table-striped.table-hover
+                tr
+                    th
+                        a(href="",ng-click="reverse=!reverse;order('ma_mon', reverse)") Mã môn
+                    th
+                        a(href="",ng-click="reverse=!reverse;order('ten_mon', reverse)") Tên môn
+                    th
+                        a(href="",ng-click="reverse=!reverse;order('khoa', reverse)") Khoa
+                    th
+                        center
+                            a(href="",ng-click="reverse=!reverse;order('tin_chi', reverse)") Tín chỉ
+                    th
+                        a(href="",ng-click="reverse=!reverse;order('', reverse)") Mô tả
+                    th
+                        center
+                            a() Chỉnh sửa
+                tr(ng-repeat="class in classes")
+                    td(ng-bind="class.ma_mon")
+                    td(ng-bind="class.ten_mon")
+                    td(ng-bind="class.khoa")
+                    td.text-center(ng-bind="class.tin_chi")
+                    td(ng-bind="class.mo_ta")
+                    td
+                        center
+                            a.glyphicon.glyphicon-pencil(href="#Add_Subject", ng-click="edit(class)")
+            ul.pagination(ng-app='pagination')
+                li(ng-click='Prev()')
+                    a(href='') «
                 li()
-                    a(href='/admin') Trang chủ
-                li(class="active")
-                    a(href='/admin/subject') Môn học
+                    a(href='',ng-click='setPage(page_show);', ng-bind='page_show',ng-init='page_num=1;page_show=1', ng-model='page_num')
                 li()
-                    a(href='/admin/teacher') Giảng viên
-                li()
-                    a(href='/admin/class') Lớp học
-                li()
-                    a(href='/admin/student') Sinh viên
-            ul.nav.navbar-nav.navbar-right
-                li
-                    a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{ad}!
-                        span(class="caret")
-                    ul(class="dropdown-menu" role="menu")
-                        li
-                            a(href='/logout') Thoát ra
-    br
-    h1 Danh sách môn
-    div.container
-        table.table.table-responsive.table-striped.table-hover(ng-app="listclass", ng-controller="classController")
-            tr
-                th
-                    a(href="",ng-click="reverse=!reverse;order('ma_mon', reverse)") Mã môn
-                th
-                    a(href="",ng-click="reverse=!reverse;order('ten_mon', reverse)") Tên môn
-                th
-                    a(href="",ng-click="reverse=!reverse;order('khoa', reverse)") Khoa
-                th
-                    a(href="",ng-click="reverse=!reverse;order('tin_chi', reverse)") Tín chỉ
-                th
-                    a(href="",ng-click="reverse=!reverse;order('', reverse)") Mô tả
-            tr(ng-repeat="class in classes")
-                td(ng-bind="class.ma_mon")
-                td(ng-bind="class.ten_mon")
-                td(ng-bind="class.khoa")
-                td(ng-bind="class.tin_chi")
-                td(ng-bind="class.mo_ta")
-    br
-    h1 Thêm môn học
-    h2 #{rp}
-    div.containter
-        div.col-sm-6.col-md-6
-            form(method="post",action="",name="add_class")
-                div.form-group
-                    label
-                        |Mã môn
-                    input.form-control(name="ma_mon",type="text", placeholder="INT...")
-                div.form-group
-                    label
-                        |Tên môn
-                    input.form-control(name="ten_mon", type="text", placeholder="Lập trình nâng cao")
-                div.form-group
-                    label
-                        |Khoa
-                    input.form-control(name="khoa", type="text", placeholder="Công nghệ thônng tin")
-                div.form-group
-                    label
-                        |Tín chỉ
-                    input.form-control(name="tin_chi", type="number", placeholder="2")
-                div.form-group
-                    label Mô tả
-                    textarea.form-control(name="mo_ta",placeholder="...",rows="3")
-                div.form-group
-                    input.btn.btn-default(name="add_submit", type="submit", value="Tạo môn")
-    script(type="text/javascript" src='/javascript/subject.js').
+                    a(href='',ng-click='setPage(page_show+1);', ng-bind='page_show+1')
+                li(ng-click='setPage(page_show+2)')
+                    a(href='', ng-bind='page_show+2')
+                li(ng-click='setPage(page_show+3)')
+                    a(href='', ng-bind='page_show+3')
+                li(ng-click='setPage(page_show+4)')
+                    a(href='', ng-bind='page_show+4')
+                li(ng-click='Next()')
+                    a(href='') »
+        br
+        h1(ng-bind='purpose')
+        h2 #{rp}
+        a(name="Add_Subject")
+        div.containter
+            div.col-sm-6.col-md-6
+                form(method="post",dothat='{{action}}',name="add_class")
+                    div.form-group
+                        label
+                            |Mã môn
+                        input.form-control(name="ma_mon",type="text",ng-model='subject.ma_mon', placeholder="INT...")
+                    div.form-group
+                        label
+                            |Tên môn
+                        input.form-control(name="ten_mon", type="text",ng-model='subject.ten_mon', placeholder="Lập trình nâng cao")
+                    div.form-group
+                        label
+                            |Khoa
+                        input.form-control(name="khoa", type="text",ng-model='subject.khoa', placeholder="Công nghệ thônng tin")
+                    div.form-group
+                        label
+                            |Tín chỉ
+                        input.form-control(name="tin_chi", type="number",ng-model='subject.tin_chi', placeholder="2")
+                    div.form-group
+                        label Mô tả
+                        textarea.form-control(name="mo_ta",ng-model='subject.mo_ta',placeholder="...",rows="3")
+                    div.form-group
+                        input.btn.btn-default(name="add_submit", type="submit", ng-click='doAction()', value="{{submit}}")
+        script(type="text/javascript", src='/javascript/subject.js').
