@@ -17,7 +17,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
             $scope.classes=data.rows;
             $scope.number_page=data.number_page;
         }).error(function(data){
-            console.log(err);
+            console.log(data);
         });
     $scope.setPage=function(n){
         if(n<=3){
@@ -43,7 +43,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
                     $scope.page_show=$scope.number_page-4;
                 }
             }).error(function(data){
-                console.log(err);
+                console.log(data);
             });
     }
     $scope.Prev=function(){
@@ -62,7 +62,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
                 $scope.classes=data.rows;
                 $scope.number_page=data.number_page;
             }).error(function(data){
-                console.log(err);
+                console.log(data);
             });
     }
     $scope.Next=function(){
@@ -82,22 +82,49 @@ process.controller('SubjectController',function($scope,$filter,$http){
                 $scope.classes=data.rows;
                 $scope.number_page=data.number_page;
             }).error(function(data){
-                console.log(err);
+                console.log(data);
             });
     }
     $scope.edit=function(data){
         $scope.purpose='Chỉnh sửa môn học';
         $scope.action='edit';
+        $scope.enable=true;
+        $scope.submit='Xác nhận chỉnh sửa.';
         $scope.subject=data;
     }
     $scope.doAction=function(){
         if($scope.subject){
-            $http.post('/admin/subject/api',{action:$scope.action,subject:$scope.subject})
-                .success(function(data){
-                    console.log(data);
-                }).error(function(data){
-                    console.log(err);
-                });
+            if($scope.action=='add'){
+                $http.post('/admin/subject/api',{action:$scope.action,subject:$scope.subject})
+                    .success(function(data){
+                        $scope.rp=data.rp;
+                        if(data.type=='error'){
+                            $scope.type_rp='color:red';
+                        }else{
+                            $scope.type_rp='color:green';
+                        }
+                    }).error(function(data){
+                        console.log(data);
+                    });
+            }else if($scope.action=='edit'){
+                console.log($scope.subject);
+                $http.put('/admin/subject/api',{action:$scope.action,subject:$scope.subject})
+                    .success(function(data){
+                        $scope.rp=data.rp;
+                        if(data.type=='error'){
+                            $scope.type_rp='color:red';
+                        }else{
+                            $scope.subject=angular.copy({});
+                            $scope.type_rp='color:green';
+                            $scope.enable=false;
+                            $scope.action='add';
+                            $scope.purpose='Thêm môn học';
+                            $scope.submit='Thêm môn';
+                        }
+                    }).error(function(data){
+                        console.log(data);
+                    });
+            }
         }
     }
 });

@@ -4,7 +4,7 @@ extends ../layout
 block content
     div(ng-app="Subject",ng-controller="SubjectController")
         nav.navbar.navbar-default.navbar-fixed-top
-            div.container
+            div.container-fluid
                 ul.nav.navbar-nav
                     li()
                         a(href='/admin') Trang chủ
@@ -25,57 +25,64 @@ block content
                                 a(href='/logout') Thoát ra
         br
         h2 Danh sách môn
-        div.container
-            select(ng-model="page_length", ng-click="setPage(page_num)", ng-init='page_length=10')
-                option(value='5') 5
-                option(value='10') 10
-                option(value='20') 20
-                option(value='40') 40
-                option(value='60') 60
-                option(value='100') 100
-            table.table.table-responsive.table-striped.table-hover
-                tr
-                    th
-                        a(href="",ng-click="reverse=!reverse;order('ma_mon', reverse)") Mã môn
-                    th
-                        a(href="",ng-click="reverse=!reverse;order('ten_mon', reverse)") Tên môn
-                    th
-                        a(href="",ng-click="reverse=!reverse;order('khoa', reverse)") Khoa
-                    th
-                        center
-                            a(href="",ng-click="reverse=!reverse;order('tin_chi', reverse)") Tín chỉ
-                    th
-                        a(href="",ng-click="reverse=!reverse;order('', reverse)") Mô tả
-                    th
-                        center
-                            a() Chỉnh sửa
-                tr(ng-repeat="class in classes")
-                    td(ng-bind="class.ma_mon")
-                    td(ng-bind="class.ten_mon")
-                    td(ng-bind="class.khoa")
-                    td.text-center(ng-bind="class.tin_chi")
-                    td(ng-bind="class.mo_ta")
-                    td
-                        center
-                            a.glyphicon.glyphicon-pencil(href="#Add_Subject", ng-click="edit(class)")
-            ul.pagination(ng-app='pagination')
-                li(ng-click='Prev()')
-                    a(href='') «
-                li()
-                    a(href='',ng-click='setPage(page_show);', ng-bind='page_show',ng-init='page_num=1;page_show=1', ng-model='page_num')
-                li()
-                    a(href='',ng-click='setPage(page_show+1);', ng-bind='page_show+1')
-                li(ng-click='setPage(page_show+2)')
-                    a(href='', ng-bind='page_show+2')
-                li(ng-click='setPage(page_show+3)')
-                    a(href='', ng-bind='page_show+3')
-                li(ng-click='setPage(page_show+4)')
-                    a(href='', ng-bind='page_show+4')
-                li(ng-click='Next()')
-                    a(href='') »
+        div.container-fluid
+            div.col-sm-12.col-md-12
+                select(ng-model="page_length", ng-click="setPage(page_num)", ng-init='page_length=10')
+                    option(value='5') 5
+                    option(value='10') 10
+                    option(value='20') 20
+                    option(value='40') 40
+                    option(value='60') 60
+                    option(value='100') 100
+                table.table.table-responsive.table-striped.table-hover
+                    tr
+                        th
+                            a(href="",ng-click="reverse=!reverse;order('ma_mon', reverse)") Mã môn
+                        th
+                            a(href="",ng-click="reverse=!reverse;order('ten_mon', reverse)") Tên môn
+                        th
+                            a(href="",ng-click="reverse=!reverse;order('khoa', reverse)") Khoa
+                        th
+                            center
+                                a(href="",ng-click="reverse=!reverse;order('tin_chi', reverse)") Tín chỉ
+                        th
+                            a(href="",ng-click="reverse=!reverse;order('', reverse)") Mô tả
+                        th
+                            center
+                                a() Chỉnh sửa
+                        th
+                            center
+                                a() Xóa
+                    tr(ng-repeat="class in classes")
+                        td(ng-bind="class.ma_mon")
+                        td(ng-bind="class.ten_mon")
+                        td(ng-bind="class.khoa")
+                        td.text-center(ng-bind="class.tin_chi")
+                        td(ng-bind="class.mo_ta")
+                        td
+                            center
+                                a.glyphicon.glyphicon-pencil(href="#Add_Subject", ng-click="edit(class)")
+                        td
+                            center
+                                a.glyphicon.glyphicon-remove(ng-click='remove(class)')
+                ul.pagination(ng-app='pagination')
+                    li(ng-click='Prev()')
+                        a(href='') «
+                    li()
+                        a(href='',ng-click='setPage(page_show);', ng-bind='page_show',ng-init='page_num=1;page_show=1', ng-model='page_num')
+                    li()
+                        a(href='',ng-click='setPage(page_show+1);', ng-bind='page_show+1')
+                    li(ng-click='setPage(page_show+2)')
+                        a(href='', ng-bind='page_show+2')
+                    li(ng-click='setPage(page_show+3)')
+                        a(href='', ng-bind='page_show+3')
+                    li(ng-click='setPage(page_show+4)')
+                        a(href='', ng-bind='page_show+4')
+                    li(ng-click='Next()')
+                        a(href='') »
         br
         h2(ng-bind='purpose')
-        h3 #{rp}
+        h3(style='{{type_rp}}') {{rp}}
         a(name="Add_Subject")
         div.containter
             div.col-sm-6.col-md-6
@@ -83,7 +90,7 @@ block content
                     div.form-group
                         label
                             |Mã môn
-                        input.form-control(name="ma_mon",type="text",ng-model='subject.ma_mon', placeholder="INT...")
+                        input.form-control(name="ma_mon",type="text",ng-model='subject.ma_mon', placeholder="INT...",ng-init='enable=false',ng-disabled='enable')
                     div.form-group
                         label
                             |Tên môn
