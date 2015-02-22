@@ -45,11 +45,43 @@ router.get('/api',function(req,res,next){
 });
 router.post('/api',function(req,res,next){
     console.log(req.body);
-    res.json('completed');
-    if(req.body.subject){
-       if(req.body.action=='add'){
-           //doing in that
-       }
+    if(req.session.level){
+        if(req.body.subject){
+            if(req.body.action=='add'){
+                if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.khoa&&req.body.subject.tin_chi){
+                    var check_subject=connect(mysql);
+                    check_subject.query('select * from monhoc where ma_mon="'+req.body.subject.ma_mon+'"',function(err,rows,fields){
+                        if(err) res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad,rp:'Lỗi truy vấn.'});
+                        if(rows.length>0){
+                            res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad,rp:'Mã môn đã tồn tại.'});
+                        }
+                        if(rows.length==0) {
+                            var create_subject = connect(mysql);
+                            var subject = {
+                                ma_mon: req.body.subject.ma_mon,
+                                ten_mon: req.body.subject.ten_mon,
+                                khoa: req.body.subject.khoa,
+                                tin_chi: req.body.subject.tin_chi,
+                                mo_ta: req.body.subject.mo_ta
+                            };
+                            create_subject.query('INSERT INTO monhoc SET ?',subject,function(err,result){
+                                if(err) res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad,rp:'Đã xảy ra lỗi.'});
+                                else{
+                                    res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad,rp:'Môn học thêm thành công.'});
+                                }
+                            });
+                        }
+                    });
+                }else{
+                    res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad,rp:'Bạn đã nhập thiếu thông tin.'})
+                }
+            }else if(req.body.action=='edit'){
+
+            }
+        }
+    }
+    else{
+        res.redirect('/admin');
     }
 });
 router.post('/',function(req,res,next){
