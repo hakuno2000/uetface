@@ -4,13 +4,13 @@
 var express=require('express');
 var router=express.Router();
 var mysql=require('mysql');
-var connect=require('./../connectDB')
+var connect=require('./../connectDB');
 router.get('/', function (req,res,next) {
-    //if(req.session.level){
+    if(req.session.level){
         res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad});
-    //}else{
-    //    res.redirect('/admin');
-    //}
+    }else{
+        res.redirect('/admin');
+    }
 });
 
 router.get('/api',function(req,res,next){
@@ -36,20 +36,18 @@ router.get('/api',function(req,res,next){
             res.json(data);
         });
         list2.end(function(err){
-            if(err) ;
+            if(err) console.log(err);
         });
     });
     list.end(function(err){
-        if(err) ;
+        if(err) console.log(err);
     });
 });
 router.post('/api',function(req,res,next){
-    console.log(req.body);
     if(req.session.level){
-        console.log(req.body);
         if(req.body.subject){
             if(req.body.action=='add'){
-                if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.khoa&&req.body.subject.tin_chi){
+                if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.khoa!=''&&req.body.subject.tin_chi!=''){
                     var check_subject=connect(mysql);
                     check_subject.query('select * from monhoc where ma_mon="'+req.body.subject.ma_mon+'"',function(err,rows,fields){
                         if(err) res.json({type:'error',rp:'Lỗi truy vấn.'});
@@ -71,7 +69,13 @@ router.post('/api',function(req,res,next){
                                     res.json({type:'success',rp:'Môn học thêm thành công.'});
                                 }
                             });
+                            create_subject.end(function(err){
+                                if(err) console.log(err);
+                            });
                         }
+                    });
+                    check_subject.end(function(err){
+                        if(err) console.log(err);
                     });
                 }else{
                     res.json({type:'error',rp:'Bạn đã nhập thiếu thông tin.'})
@@ -86,12 +90,11 @@ router.post('/api',function(req,res,next){
     }
 });
 router.put('/api',function(req,res,next){
-    console.log(req.body);
-    if(true){
+    if(req.session.level){
         if(req.body.action=='edit'){
-            if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.khoa&&req.body.subject.tin_chi){
+            if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.khoa!=''&&req.body.subject.tin_chi!=''){
                 var check_subject=connect(mysql);
-                check_subject.query('select * from monhoc where ma_mon="'+req.body.subject.ma_mon+'"',function(err,rows,fields){
+                check_subject.query('select * from monhoc where ma_mon="'+req.body.subject.change+'"',function(err,rows,fields){
                     if(err) res.json({type:'error',rp:'Lỗi truy vấn.'});
                     if(rows.length!=1){
                         res.json({type:'error',rp:'Môn học không tồn tại.'});
@@ -99,21 +102,28 @@ router.put('/api',function(req,res,next){
                     if(rows.length==1) {
                         var update_subject = connect(mysql);
                         var subject = {
+                            ma_mon_thay_doi: req.body.subject.change,
                             ma_mon: req.body.subject.ma_mon,
                             ten_mon: req.body.subject.ten_mon,
                             khoa: req.body.subject.khoa,
                             tin_chi: req.body.subject.tin_chi,
                             mo_ta: req.body.subject.mo_ta
                         };
-                        var query='UPDATE monhoc SET ten_mon="'+subject.ten_mon+'",khoa="'+subject.khoa+'",tin_chi="'+subject.tin_chi+'",mo_ta="'+subject.mo_ta+'" where ma_mon="'+subject.ma_mon+'"';
-                        console.log(query);
+                        var query='UPDATE monhoc SET ma_mon="'+subject.ma_mon+'",ten_mon="'+subject.ten_mon+'",khoa="'+subject.khoa+'",tin_chi="'+subject.tin_chi+'",mo_ta="'+subject.mo_ta+'" where ma_mon="'+subject.ma_mon_thay_doi+'"';
+                        console.log(query)
                         update_subject.query(query,function(err,result){
                             if(err) res.json({type:'error',rp:'Đã xảy ra lỗi.'});
                             else{
                                 res.json({type:'success',rp:'Chỉnh sửa môn học thành công.'});
                             }
                         });
+                        update_subject.end(function(err){
+                            if(err) console.log(err);
+                        });
                     }
+                });
+                check_subject.end(function(err){
+                    if(err) console.log(err);
                 });
             }else{
                 res.json({type:'error',rp:'Bạn đã nhập thiếu thông tin.'})
@@ -121,41 +131,39 @@ router.put('/api',function(req,res,next){
         }else{
             res.json({type:'error',rp:'Đã có lỗi xảy ra! Sai phương thức!'})
         }
-    }
-});
-/*
-router.post('/',function(req,res,next){
-    if(req.session.level){
-        if(req.body.ma_mon!=''&&req.body.ten_mon!=''&&req.body.khoa&&req.body.tin_chi){
-            var check_subject=connect(mysql);
-            check_subject.query('select * from monhoc where ma_mon="'+req.body.ma_mon+'"',function(err,rows,fields){
-                if(err) res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad,rp:'Lỗi truy vấn.'});
-                if(rows.length>0){
-                    res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad,rp:'Mã môn đã tồn tại.'});
-                }
-                if(rows.length==0) {
-                    var create_subject = connect(mysql);
-                    var subject = {
-                        ma_mon: req.body.ma_mon,
-                        ten_mon: req.body.ten_mon,
-                        khoa: req.body.khoa,
-                        tin_chi: req.body.tin_chi,
-                        mo_ta: req.body.mo_ta
-                    };
-                    create_subject.query('INSERT INTO monhoc SET ?',subject,function(err,result){
-                       if(err) res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad,rp:'Đã xảy ra lỗi.'});
-                       else{
-                           res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad,rp:'Môn học thêm thành công.'});
-                       }
-                    });
-                }
-            });
-        }else{
-            res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad,rp:'Bạn đã nhập thiếu thông tin.'})
-        }
     }else{
         res.redirect('/admin');
     }
 });
-*/
+router.delete('/api',function(req,res){
+    if(req.session.level){
+        console.log(req.query.ma_mon);
+        var ma_mon=req.query.ma_mon;
+        var check_subject=connect(mysql);
+        check_subject.query('select * from monhoc where ma_mon="'+ma_mon+'"',function(err,rows,fields){
+            if(err) res.json({type:'error',rp:'Lỗi truy vấn.'});
+            if(rows.length!=1){
+                res.json({type:'error',rp:'Môn học không tồn tại.'});
+            }
+            if(rows.length==1) {
+                var delete_subject = connect(mysql);
+                var query='DELETE FROM monhoc where ma_mon="'+ma_mon+'"';
+                delete_subject.query(query,function(err,result){
+                    if(err) res.json({type:'error',rp:'Đã xảy ra lỗi.'});
+                    else{
+                        res.json({type:'success',rp:'Xóa môn học thành công.'});
+                    }
+                });
+                delete_subject.end(function(err){
+                    if(err) console.log(err);
+                });
+            }
+        });
+        check_subject.end(function(err){
+            if(err) console.log(err);
+        });
+    }else{
+        res.json({type:'error',rp:'Có lỗi xảy ra.'})
+    }
+});
 module.exports=router;

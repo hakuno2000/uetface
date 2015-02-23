@@ -87,10 +87,15 @@ block content
         div.containter
             div.col-sm-6.col-md-6
                 form(method="post",dothat='{{action}}',name="add_class")
+                    div.form-group(ng-init='enable=false',ng-hide="!enable")
+                        label
+                            |Mã môn cần thay đổi
+                        input.form-control(name='mm_thaydoi',type='text',ng-model='subject.change',value='',ng-disabled='enable')
+                        h3 Thay đổi thông tin
                     div.form-group
                         label
                             |Mã môn
-                        input.form-control(name="ma_mon",type="text",ng-model='subject.ma_mon', placeholder="INT...",ng-init='enable=false',ng-disabled='enable')
+                        input.form-control(name="ma_mon",type="text",ng-model='subject.ma_mon', placeholder="INT...")
                     div.form-group
                         label
                             |Tên môn
@@ -108,4 +113,5 @@ block content
                         textarea.form-control(name="mo_ta",ng-model='subject.mo_ta',placeholder="...",rows="3")
                     div.form-group
                         input.btn.btn-default(name="add_submit", type="submit", ng-click='doAction()', value="{{submit}}")
+                        input.btn.btn-default(name='reset',type='submit',ng-click='reset()', value='Hủy', ng-hide='!enable')
         script(type="text/javascript", src='/javascript/subject.js').

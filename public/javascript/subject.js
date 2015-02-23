@@ -91,6 +91,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
         $scope.enable=true;
         $scope.submit='Xác nhận chỉnh sửa.';
         $scope.subject=data;
+        $scope.subject.change=data.ma_mon;
     }
     $scope.doAction=function(){
         if($scope.subject){
@@ -101,6 +102,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
                         if(data.type=='error'){
                             $scope.type_rp='color:red';
                         }else{
+                            $scope.subject=angular.copy({});
                             $scope.type_rp='color:green';
                         }
                     }).error(function(data){
@@ -127,4 +129,30 @@ process.controller('SubjectController',function($scope,$filter,$http){
             }
         }
     }
+    $scope.reset=function(){
+        $scope.subject=angular.copy({});
+        $scope.type_rp='color:green';
+        $scope.enable=false;
+        $scope.action='add';
+        $scope.purpose='Thêm môn học';
+        $scope.submit='Thêm môn';
+    };
+    $scope.remove=function(data){
+        if(window.confirm('Bạn có chắc chắn không?')){
+            console.log("it's ok");
+            $http.delete('/admin/subject/api?ma_mon='+data.ma_mon,{})
+                .success(function(data){
+                    console.log(data);
+                    $http.get('/admin/subject/api')
+                        .success(function(data){
+                            $scope.classes=data.rows;
+                            $scope.number_page=data.number_page;
+                        }).error(function(data){
+                            console.log(data);
+                        });
+                }).error(function(data){
+                    console.log(data);
+                });
+        }
+    };
 });
