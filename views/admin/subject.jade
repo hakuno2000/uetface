@@ -2,6 +2,40 @@
    Created by Phi on 2/8/2015.
 extends ../layout
 block content
+    script(type="text/javascript").
+        $(document).ready(function () {
+            var showChar = 100;
+            var ellipsestext = "...";
+            var moretext = "more";
+            var lesstext = "less";
+            console.log('dumangoai')
+            var data=angular.element('.more');
+            console.log(data);
+            for(var i=0;i<data.length;i++){
+
+                var content = data[i].innerHTML;
+                console.log(content);
+                if (content.length > showChar) {
+                    var c = content.substr(0, showChar);
+                    var h = content.substr(showChar - 1, content.length - showChar);
+                    var html = c + '<span class="moreelipses">' + ellipsestext + '</span>&nbsp;<span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+                    data[0].innerHTML+=html;
+                }
+            }
+            $(".morelink").click(function () {
+                console.log('duma2');
+                if ($(this).hasClass("less")) {
+                    $(this).removeClass("less");
+                    $(this).html(moretext);
+                } else {
+                    $(this).addClass("less");
+                    $(this).html(lesstext);
+                }
+                $(this).parent().prev().toggle();
+                $(this).prev().toggle();
+                return false;
+            });
+        });
     div(ng-app="Subject",ng-controller="SubjectController")
         nav.navbar.navbar-default.navbar-fixed-top
             div.container-fluid
@@ -27,7 +61,7 @@ block content
         h2 Danh sách môn
         div.container-fluid
             div.col-sm-12.col-md-12
-                select(ng-model="page_length", ng-click="setPage(page_num)", ng-init='page_length=10')
+                select(ng-model="page_length", ng-click="setPage(page_num)", ng-init="page_length=10")
                     option(value='5') 5
                     option(value='10') 10
                     option(value='20') 20
@@ -36,21 +70,21 @@ block content
                     option(value='100') 100
                 table.table.table-responsive.table-striped.table-hover
                     tr
-                        th
+                        th.col-sm-1
                             a(href="",ng-click="reverse=!reverse;order('ma_mon', reverse)") Mã môn
-                        th
+                        th.col-sm-2
                             a(href="",ng-click="reverse=!reverse;order('ten_mon', reverse)") Tên môn
-                        th
+                        th.col-sm-2
                             a(href="",ng-click="reverse=!reverse;order('khoa', reverse)") Khoa
-                        th
+                        th.col-sm-2
                             center
                                 a(href="",ng-click="reverse=!reverse;order('tin_chi', reverse)") Tín chỉ
-                        th
+                        th.col-sm-3
                             a(href="",ng-click="reverse=!reverse;order('', reverse)") Mô tả
-                        th
+                        th.col-sm-1
                             center
                                 a() Chỉnh sửa
-                        th
+                        th.col-sm-1
                             center
                                 a() Xóa
                     tr(ng-repeat="class in classes")
@@ -58,7 +92,14 @@ block content
                         td(ng-bind="class.ten_mon")
                         td(ng-bind="class.khoa")
                         td.text-center(ng-bind="class.tin_chi")
-                        td(ng-bind="class.mo_ta")
+                        td
+                            span(ng-show="class.less")
+                                div(ng-bind="class.mo_ta.showless")
+                                a(ng-click="more(class)") more
+                            span(ng-show="class.more")
+                                div(ng-bind="class.mo_ta.showmore")
+                                span(ng-show='class.special')
+                                    a(ng-click="more(class)") less
                         td
                             center
                                 a.glyphicon.glyphicon-pencil(href="#Add_Subject", ng-click="edit(class)")
@@ -68,15 +109,15 @@ block content
                 ul.pagination(ng-app='pagination')
                     li(ng-click='Prev()')
                         a(href='') «
-                    li()
-                        a(href='',ng-click='setPage(page_show);', ng-bind='page_show',ng-init='page_num=1;page_show=1', ng-model='page_num')
-                    li()
+                    li(ng-init='page_num=1;page_show=1',class='{{active1}}')
+                        a(href='',ng-click='setPage(page_show);', ng-bind='page_show', ng-model='page_num')
+                    li(ng-click='page_active(page_show+1)',class='{{active2}}')
                         a(href='',ng-click='setPage(page_show+1);', ng-bind='page_show+1')
-                    li(ng-click='setPage(page_show+2)')
+                    li(ng-click='setPage(page_show+2)',class='{{active3}}')
                         a(href='', ng-bind='page_show+2')
-                    li(ng-click='setPage(page_show+3)')
+                    li(ng-click='setPage(page_show+3)',class='{{active4}}')
                         a(href='', ng-bind='page_show+3')
-                    li(ng-click='setPage(page_show+4)')
+                    li(ng-click='setPage(page_show+4)',class='{{active5}}')
                         a(href='', ng-bind='page_show+4')
                     li(ng-click='Next()')
                         a(href='') »
@@ -110,8 +151,8 @@ block content
                         input.form-control(name="tin_chi", type="number",ng-model='subject.tin_chi', placeholder="2")
                     div.form-group
                         label Mô tả
-                        textarea.form-control(name="mo_ta",ng-model='subject.mo_ta',placeholder="...",rows="3")
+                        textarea.form-control(name="mo_ta",ng-model='subject.mo_ta.showmore',placeholder="...",rows="3")
                     div.form-group
                         input.btn.btn-default(name="add_submit", type="submit", ng-click='doAction()', value="{{submit}}")
                         input.btn.btn-default(name='reset',type='submit',ng-click='reset()', value='Hủy', ng-hide='!enable')
-        script(type="text/javascript", src='/javascript/subject.js').
+        script(type="text/javascript", src='/javascripts/subject.js').

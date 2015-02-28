@@ -14,11 +14,45 @@ process.controller('SubjectController',function($scope,$filter,$http){
     $scope.order('-ma_mon',false);
     $http.get('/admin/subject/api')
         .success(function(data){
-            $scope.classes=data.rows;
+
             $scope.number_page=data.number_page;
+            var showChar = 100;
+            var temp=[];
+            temp=data.rows;
+
+            for(var i=0;i<temp.length;i++){
+                if(temp[i].mota!=''&&temp[i].mota!=undefined)
+                {
+                    var content = temp[i].mo_ta;
+                    temp[i].mo_ta={};
+                    if (content.length > showChar) {
+                        var c = content.substr(0, showChar);
+                        temp[i].mo_ta.showless=c+' ...';
+                        temp[i].mo_ta.showmore=content;
+                        temp[i].more=false;
+                        temp[i].less=true;
+                        console.log(temp[i].mo_ta.showless);
+                    }else{
+                        temp[i].mo_ta.showmore=content;
+                        temp[i].more=true;
+                        temp[i].special=false;
+                    }
+                }
+                else{
+                    temp[i].mo_ta={};
+                    temp[i].mo_ta.showmore='';
+                }
+            }
+            console.log(temp);
+            $scope.classes=temp;
         }).error(function(data){
             console.log(data);
         });
+    $scope.more=function(data){
+        data.less=!data.less;
+        data.more=!data.more;
+        data.special=!data.special;
+    }
     $scope.setPage=function(n){
         if(n<=3){
             $scope.page_num=n;
@@ -42,6 +76,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
                 if($scope.page_show+4>$scope.number_page){
                     $scope.page_show=$scope.number_page-4;
                 }
+                $scope.check();
             }).error(function(data){
                 console.log(data);
             });
@@ -59,6 +94,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
         }
         $http.get('/admin/subject/api?page_num='+$scope.page_num+'&page_length='+$scope.page_length)
             .success(function(data){
+                $scope.check();
                 $scope.classes=data.rows;
                 $scope.number_page=data.number_page;
             }).error(function(data){
@@ -72,7 +108,6 @@ process.controller('SubjectController',function($scope,$filter,$http){
             $scope.page_num=$scope.page_num+1;
             if($scope.page_num>=2&&$scope.page_num<=$scope.number_page-4){
                 $scope.page_show=$scope.page_show+1;
-
             }else if($scope.page_num-$scope.page_show>4){
                 $scope.page_show=$scope.page_num-4;
             }
@@ -81,6 +116,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
             .success(function(data){
                 $scope.classes=data.rows;
                 $scope.number_page=data.number_page;
+                $scope.check();
             }).error(function(data){
                 console.log(data);
             });
@@ -93,6 +129,25 @@ process.controller('SubjectController',function($scope,$filter,$http){
         $scope.subject=data;
         $scope.subject.change=data.ma_mon;
     }
+    $scope.check=function(){
+        if($scope.page_show==$scope.page_num){
+            $scope.active1='active';
+            $scope.active2=$scope.active3=$scope.active4=$scope.active5='';
+        }else if($scope.page_num-$scope.page_show==1){
+            $scope.active2='active';
+            $scope.active1=$scope.active3=$scope.active4=$scope.active5='';
+        }else if($scope.page_num-$scope.page_show==2){
+            $scope.active3='active';
+            $scope.active1=$scope.active2=$scope.active4=$scope.active5='';
+        }else if($scope.page_num-$scope.page_show==3){
+            $scope.active4='active';
+            $scope.active1=$scope.active3=$scope.active2=$scope.active5='';
+        }else if($scope.page_num-$scope.page_show==4){
+            $scope.active5='active';
+            $scope.active1=$scope.active3=$scope.active4=$scope.active2='';
+        }
+    }
+    $scope.check();
     $scope.doAction=function(){
         if($scope.subject){
             if($scope.action=='add'){
@@ -155,4 +210,6 @@ process.controller('SubjectController',function($scope,$filter,$http){
                 });
         }
     };
+
+    //$scope.load();
 });

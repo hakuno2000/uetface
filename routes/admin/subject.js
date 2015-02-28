@@ -12,7 +12,6 @@ router.get('/', function (req,res,next) {
         res.redirect('/admin');
     }
 });
-
 router.get('/api',function(req,res,next){
     var data={number_page:1};
     if(req.query.page_num){
@@ -61,7 +60,7 @@ router.post('/api',function(req,res,next){
                                 ten_mon: req.body.subject.ten_mon,
                                 khoa: req.body.subject.khoa,
                                 tin_chi: req.body.subject.tin_chi,
-                                mo_ta: req.body.subject.mo_ta
+                                mo_ta: req.body.subject.mo_ta.showmore
                             };
                             create_subject.query('INSERT INTO monhoc SET ?',subject,function(err,result){
                                 if(err) res.json({type:'error',rp:'Đã xảy ra lỗi.'});
@@ -107,7 +106,7 @@ router.put('/api',function(req,res,next){
                             ten_mon: req.body.subject.ten_mon,
                             khoa: req.body.subject.khoa,
                             tin_chi: req.body.subject.tin_chi,
-                            mo_ta: req.body.subject.mo_ta
+                            mo_ta: req.body.subject.mo_ta.showmore
                         };
                         var query='UPDATE monhoc SET ma_mon="'+subject.ma_mon+'",ten_mon="'+subject.ten_mon+'",khoa="'+subject.khoa+'",tin_chi="'+subject.tin_chi+'",mo_ta="'+subject.mo_ta+'" where ma_mon="'+subject.ma_mon_thay_doi+'"';
                         console.log(query)
