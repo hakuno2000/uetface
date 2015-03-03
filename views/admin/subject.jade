@@ -2,61 +2,26 @@
    Created by Phi on 2/8/2015.
 extends ../layout
 block content
-    script(type="text/javascript").
-        $(document).ready(function () {
-            var showChar = 100;
-            var ellipsestext = "...";
-            var moretext = "more";
-            var lesstext = "less";
-            console.log('dumangoai')
-            var data=angular.element('.more');
-            console.log(data);
-            for(var i=0;i<data.length;i++){
-
-                var content = data[i].innerHTML;
-                console.log(content);
-                if (content.length > showChar) {
-                    var c = content.substr(0, showChar);
-                    var h = content.substr(showChar - 1, content.length - showChar);
-                    var html = c + '<span class="moreelipses">' + ellipsestext + '</span>&nbsp;<span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
-                    data[0].innerHTML+=html;
-                }
-            }
-            $(".morelink").click(function () {
-                console.log('duma2');
-                if ($(this).hasClass("less")) {
-                    $(this).removeClass("less");
-                    $(this).html(moretext);
-                } else {
-                    $(this).addClass("less");
-                    $(this).html(lesstext);
-                }
-                $(this).parent().prev().toggle();
-                $(this).prev().toggle();
-                return false;
-            });
-        });
-    div(ng-app="Subject",ng-controller="SubjectController")
+    div.container-fluid(ng-app="Subject",ng-controller="SubjectController")
         nav.navbar.navbar-default.navbar-fixed-top
-            div.container-fluid
-                ul.nav.navbar-nav
-                    li()
-                        a(href='/admin') Trang chủ
-                    li(class="active")
-                        a(href='/admin/subject') Môn học
-                    li()
-                        a(href='/admin/teacher') Giảng viên
-                    li()
-                        a(href='/admin/class') Lớp học
-                    li()
-                        a(href='/admin/student') Sinh viên
-                ul.nav.navbar-nav.navbar-right
-                    li
-                        a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{ad}!
-                            span(class="caret")
-                        ul.dropdown-menu(role="menu")
-                            li
-                                a(href='/logout') Thoát ra
+            ul.nav.navbar-nav
+                li()
+                    a(href='/admin') Trang chủ
+                li(class="active")
+                    a(href='/admin/subject') Môn học
+                li()
+                    a(href='/admin/teacher') Giảng viên
+                li()
+                    a(href='/admin/class') Lớp học
+                li()
+                    a(href='/admin/student') Sinh viên
+            ul.nav.navbar-nav.navbar-right
+                li
+                    a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{ad}!
+                        span(class="caret")
+                    ul.dropdown-menu(role="menu")
+                        li
+                            a(href='/logout') Thoát ra
         br
         h2 Danh sách môn
         div.container-fluid
@@ -87,25 +52,25 @@ block content
                         th.col-sm-1
                             center
                                 a() Xóa
-                    tr(ng-repeat="class in classes")
-                        td(ng-bind="class.ma_mon")
-                        td(ng-bind="class.ten_mon")
-                        td(ng-bind="class.khoa")
-                        td.text-center(ng-bind="class.tin_chi")
+                    tr(ng-repeat="subject in subjects")
+                        td(ng-bind="subject.ma_mon")
+                        td(ng-bind="subject.ten_mon")
+                        td(ng-bind="subject.khoa")
+                        td.text-center(ng-bind="subject.tin_chi")
                         td
-                            span(ng-show="class.less")
-                                div(ng-bind="class.mo_ta.showless")
+                            span(ng-show="subject.less")
+                                div(ng-bind="subject.mo_ta.showless")
                                 a(ng-click="more(class)") more
-                            span(ng-show="class.more")
-                                div(ng-bind="class.mo_ta.showmore")
-                                span(ng-show='class.special')
-                                    a(ng-click="more(class)") less
+                            span(ng-show="subject.more")
+                                div(ng-bind="subject.mo_ta.showmore")
+                                span(ng-show='subject.special')
+                                    a(ng-click="more(subject)") less
                         td
                             center
-                                a.glyphicon.glyphicon-pencil(href="#Add_Subject", ng-click="edit(class)")
+                                a.glyphicon.glyphicon-pencil(href="#Add_Subject", ng-click="edit(subject)")
                         td
                             center
-                                a.glyphicon.glyphicon-remove(ng-click='remove(class)')
+                                a.glyphicon.glyphicon-remove(ng-click='remove(subject)')
                 ul.pagination(ng-app='pagination')
                     li(ng-click='Prev()')
                         a(href='') «

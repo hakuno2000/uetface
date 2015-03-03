@@ -7,9 +7,9 @@ process.controller('SubjectController',function($scope,$filter,$http){
     $scope.action="add";
     $scope.submit='Thêm môn học';
     $scope.purpose='Thêm môn học';
-    number_page='1';
+    $scope.number_page='1';
     $scope.order = function(predicate, reverse) {
-        $scope.classes = orderBy($scope.classes, predicate, reverse);
+        $scope.subjects = orderBy($scope.subjects, predicate, reverse);
     };
     $scope.order('-ma_mon',false);
     $http.get('/admin/subject/api')
@@ -31,7 +31,6 @@ process.controller('SubjectController',function($scope,$filter,$http){
                         temp[i].mo_ta.showmore=content;
                         temp[i].more=false;
                         temp[i].less=true;
-                        console.log(temp[i].mo_ta.showless);
                     }else{
                         temp[i].mo_ta.showmore=content;
                         temp[i].more=true;
@@ -43,8 +42,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
                     temp[i].mo_ta.showmore='';
                 }
             }
-            console.log(temp);
-            $scope.classes=temp;
+            $scope.subjects=temp;
         }).error(function(data){
             console.log(data);
         });
@@ -67,7 +65,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
         }
         $http.get('/admin/subject/api?page_num='+$scope.page_num+'&page_length='+$scope.page_length)
             .success(function(data){
-                $scope.classes=data.rows;
+                $scope.subjects=data.rows;
                 $scope.number_page=data.number_page;
                 if($scope.page_num>$scope.number_page){
                     $scope.page_num=$scope.number_page;
@@ -95,7 +93,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
         $http.get('/admin/subject/api?page_num='+$scope.page_num+'&page_length='+$scope.page_length)
             .success(function(data){
                 $scope.check();
-                $scope.classes=data.rows;
+                $scope.subjects=data.rows;
                 $scope.number_page=data.number_page;
             }).error(function(data){
                 console.log(data);
@@ -114,7 +112,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
         }
         $http.get('/admin/subject/api?page_num='+$scope.page_num+'&page_length='+$scope.page_length)
             .success(function(data){
-                $scope.classes=data.rows;
+                $scope.subjects=data.rows;
                 $scope.number_page=data.number_page;
                 $scope.check();
             }).error(function(data){
@@ -200,7 +198,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
                     console.log(data);
                     $http.get('/admin/subject/api')
                         .success(function(data){
-                            $scope.classes=data.rows;
+                            $scope.subjects=data.rows;
                             $scope.number_page=data.number_page;
                         }).error(function(data){
                             console.log(data);
