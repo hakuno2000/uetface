@@ -6,11 +6,12 @@ var router=express.Router();
 
 router.get('/', function (req,res,next) {
     if(req.session.level){
-        res.render('admin/add_class',{ad:req.session.user_ad});
+        res.render('admin/class',{title:"Quản lí lớp học",ad:req.session.user_ad});
     }else{
         res.redirect('/admin');
     }
 });
+
 router.post('/',function(req,res,next){
 
 });
