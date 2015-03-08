@@ -3,7 +3,7 @@
 extends layout
 block content
     nav(class="navbar navbar-default navbar-fixed-top")
-        div.container-fluid
+        div.container
             ul(class="nav navbar-nav")
                 li()
                     a(href='/users') Trang chủ
@@ -19,7 +19,7 @@ block content
     br
     div.container
         #{Rp_Form}
-        form(method="post" name="danhgia")
+        form(method="post", name="danhgia")
             table#info
                 tr
                     td(colspan='2')

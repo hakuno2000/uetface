@@ -4,7 +4,7 @@
 var express=require('express');
 var router=express.Router();
 var mysql=require('mysql');
-var connect=require('./../connectDB');
+var connect=require('./../mysql/connectDB');
 router.get('/', function (req,res,next) {
     if(req.session.level){
         res.render('admin/class',{title:"Quản lí lớp học",ad:req.session.user_ad});

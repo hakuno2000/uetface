@@ -4,7 +4,7 @@
 var express=require('express');
 var router=express.Router();
 var mysql=require('mysql');
-var connect=require('./../../connectDB');
+var connect=require('./../../mysql/connectDB');
 router.get('/',function(req,res,next){
     var listclass=connect(mysql);
     listclass.query('select * from monhoc',function(err,rows,fields){

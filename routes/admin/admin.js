@@ -3,7 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
-var connection=require('./../connectDB');
+var connection=require('./../mysql/connectDB');
 var mysql=require('mysql');
 router.get('/',function(req,res,next){
     if(req.session.level) {

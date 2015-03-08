@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql=require('mysql');
-var connector=require('./connectDB');
+var connector=require('./mysql/connectDB');
 /* GET home page. */
 router.get('/', function(req, res, next) {
     if(req.session.username){

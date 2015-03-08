@@ -3,7 +3,7 @@
 extends ../layout
 block content
     script(type='text/javascript' src='/javascripts/class.js')
-    div.container-fluid(ng-app='class' ng-controller='classController')
+    div.container(ng-app='class' ng-controller='classController')
         nav(class="navbar navbar-default navbar-fixed-top")
             ul(class="nav navbar-nav")
                 li()
@@ -75,7 +75,7 @@ block content
             li(ng-click='Next()')
                 a(href='') »
         h1 Thêm lớp
-        div.containter-fluid
+        div.containter
             div.col-sm-6.col-md-6
                 form(method="post",action="",name="add_class")
                     div.form-group

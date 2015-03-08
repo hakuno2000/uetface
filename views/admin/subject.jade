@@ -2,7 +2,7 @@
    Created by Phi on 2/8/2015.
 extends ../layout
 block content
-    div.container-fluid(ng-app="Subject",ng-controller="SubjectController")
+    div.container(ng-app="Subject",ng-controller="SubjectController")
         nav.navbar.navbar-default.navbar-fixed-top
             ul.nav.navbar-nav
                 li()
@@ -24,7 +24,7 @@ block content
                             a(href='/logout') Thoát ra
         br
         h2 Danh sách môn
-        div.container-fluid
+        div.container
             div.col-sm-12.col-md-12
                 select(ng-model="page_length", ng-click="setPage(page_num)", ng-init="page_length=10")
                     option(value='5') 5
