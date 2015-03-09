@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mysql=require('mysql');
 var connector=require('./connectDB');
+var dbURL = 'mongodb://localhost/uetface';
+var db = require('mongoose').connect(dbURL);
 /* GET home page. */
 router.get('/', function(req, res, next) {
     if(req.session.username){
