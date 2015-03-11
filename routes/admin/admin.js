@@ -3,8 +3,8 @@
  */
 var express = require('express');
 var router = express.Router();
-var connection=require('./../mysql/connectDB');
-var mysql=require('mysql');
+var mongoose=require('mongoose');
+var dbURL=require('./../data/dbURL');
 router.get('/',function(req,res,next){
     if(req.session.level) {
         res.render('admin/dashboard',{title:'Quản trị viên',ad:req.session.user_ad});
@@ -14,6 +14,7 @@ router.get('/',function(req,res,next){
 });
 router.post('/',function(req,res,next){
     var admin=require('./../data/models/admin');
+    if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
     if(req.body.user!=''&&req.body.pass!=''){
         admin.findOne({'username':req.body.user},function(err,result){
             if(err) res.render('admin/admin',{title:"Quản trị viên",log_rp:'Lỗi đăng nhập.'});
@@ -24,6 +25,7 @@ router.post('/',function(req,res,next){
             }else{
                 res.redirect('/admin');
             }
+            if(mongoose.connection.readyState==1) mongoose.disconnect();
         });
     }
     else{

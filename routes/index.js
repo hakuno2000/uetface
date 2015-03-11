@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var mongoose=require('mongoose');
+var dbURL=require('./data/dbURL');
 /* GET home page. */
 router.get('/', function(req, res, next) {
     if(req.session.username){
@@ -11,20 +13,21 @@ router.get('/', function(req, res, next) {
 router.post('/',function(req,res,next){
     if(req.body.username!=''&&req.body.password&&req.body.login!='') {
         var user_login=require('./data/models/user_login');
+        if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
         user_login.findOne({'tai_khoan':req.body.username},function(err,result){
-            if (err) res.render('index');
+            if (err) console.log(err);
             var isNull=require('./isNull');
             if(!isNull(result)){
                 if (req.body.password == result.mat_khau) {
                     req.session.username = req.body.username;
                     req.session.password = req.body.password;
                     //req.session.user_id =row.ma_sinh_vien;
-
                     res.redirect('/users');
                 }
             }else{
                 res.redirect('/');
             }
+            if(mongoose.connection.readyState==1) mongoose.disconnect();
         });
     }else if(req.body.login){
         res.render('index',{title:'UETFace',Log_rp:'Chưa nhập tài khoản hoặc mật khẩu!'});
