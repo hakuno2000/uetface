@@ -1,14 +1,9 @@
 var express = require('express');
 var router = express.Router();
-
+var userNotLoggedIn=require('./user_not_logged_in')
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-    if(req.session.username){
+router.get('/',userNotLoggedIn, function(req, res, next) {
         res.render('users',{user:req.session.username});
-    }
-    else{
-        res.redirect('/');
-    }
 });
 
 module.exports = router;

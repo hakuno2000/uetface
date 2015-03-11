@@ -1,23 +1,14 @@
 /**
- * Created by Phi on 2/16/2015.
+ * Created by PHI on 3/1/2015.
  */
-var process=angular.module('Subject',[]);
-process.controller('SubjectController',function($scope,$filter,$http){
-    var orderBy = $filter('orderBy');
-    $scope.action="add";
-    $scope.submit='Thêm môn học';
-    $scope.purpose='Thêm môn học';
-    number_page='1';
-    $scope.order = function(predicate, reverse) {
-        $scope.classes = orderBy($scope.classes, predicate, reverse);
-    };
-    $scope.order('-ma_mon',false);
-    $http.get('/admin/subject/api')
+var process=angular.module('class',[]);
+process.controller('classController',function($scope,$http){
+    $http.get('/admin/class/api')
         .success(function(data){
-            $scope.classes=data.rows;
             $scope.number_page=data.number_page;
+            $scope.classes=data.rows;
         }).error(function(data){
-            console.log(err);
+            console.log(data);
         });
     $scope.setPage=function(n){
         if(n<=3){
@@ -31,7 +22,7 @@ process.controller('SubjectController',function($scope,$filter,$http){
             $scope.page_num=n;
             $scope.page_show=n-2;
         }
-        $http.get('/admin/subject/api?page_num='+$scope.page_num+'&page_length='+$scope.page_length)
+        $http.get('/admin/class/api?page_num='+$scope.page_num+'&page_length='+$scope.page_length)
             .success(function(data){
                 $scope.classes=data.rows;
                 $scope.number_page=data.number_page;
@@ -42,8 +33,9 @@ process.controller('SubjectController',function($scope,$filter,$http){
                 if($scope.page_show+4>$scope.number_page){
                     $scope.page_show=$scope.number_page-4;
                 }
+                $scope.check();
             }).error(function(data){
-                console.log(err);
+                console.log(data);
             });
     }
     $scope.Prev=function(){
@@ -57,12 +49,13 @@ process.controller('SubjectController',function($scope,$filter,$http){
                 $scope.page_show=$scope.page_num;
             }
         }
-        $http.get('/admin/subject/api?page_num='+$scope.page_num+'&page_length='+$scope.page_length)
+        $http.get('/admin/class/api?page_num='+$scope.page_num+'&page_length='+$scope.page_length)
             .success(function(data){
+                $scope.check();
                 $scope.classes=data.rows;
                 $scope.number_page=data.number_page;
             }).error(function(data){
-                console.log(err);
+                console.log(data);
             });
     }
     $scope.Next=function(){
@@ -72,32 +65,36 @@ process.controller('SubjectController',function($scope,$filter,$http){
             $scope.page_num=$scope.page_num+1;
             if($scope.page_num>=2&&$scope.page_num<=$scope.number_page-4){
                 $scope.page_show=$scope.page_show+1;
-
             }else if($scope.page_num-$scope.page_show>4){
                 $scope.page_show=$scope.page_num-4;
             }
         }
-        $http.get('/admin/subject/api?page_num='+$scope.page_num+'&page_length='+$scope.page_length)
+        $http.get('/admin/class/api?page_num='+$scope.page_num+'&page_length='+$scope.page_length)
             .success(function(data){
                 $scope.classes=data.rows;
                 $scope.number_page=data.number_page;
+                $scope.check();
             }).error(function(data){
-                console.log(err);
+                console.log(data);
             });
     }
-    $scope.edit=function(data){
-        $scope.purpose='Chỉnh sửa môn học';
-        $scope.action='edit';
-        $scope.subject=data;
-    }
-    $scope.doAction=function(){
-        if($scope.subject){
-            $http.post('/admin/subject/api',{action:$scope.action,subject:$scope.subject})
-                .success(function(data){
-                    console.log(data);
-                }).error(function(data){
-                    console.log(err);
-                });
+    $scope.check=function(){
+        if($scope.page_show==$scope.page_num){
+            $scope.active1='active';
+            $scope.active2=$scope.active3=$scope.active4=$scope.active5='';
+        }else if($scope.page_num-$scope.page_show==1){
+            $scope.active2='active';
+            $scope.active1=$scope.active3=$scope.active4=$scope.active5='';
+        }else if($scope.page_num-$scope.page_show==2){
+            $scope.active3='active';
+            $scope.active1=$scope.active2=$scope.active4=$scope.active5='';
+        }else if($scope.page_num-$scope.page_show==3){
+            $scope.active4='active';
+            $scope.active1=$scope.active3=$scope.active2=$scope.active5='';
+        }else if($scope.page_num-$scope.page_show==4){
+            $scope.active5='active';
+            $scope.active1=$scope.active3=$scope.active4=$scope.active2='';
         }
     }
+    $scope.check();
 });

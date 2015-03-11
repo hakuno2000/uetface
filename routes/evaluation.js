@@ -4,17 +4,12 @@
 var express=require('express');
 var router=express.Router();
 var mysql=require('mysql');
-var connector=require('./connectDB');
-router.get('/',function(req,res,next){
-    if(req.session.username){
-        res.render('evaluation',{user:req.session.username});
-    }
-    else{
-        res.redirect('/');
-    }
+var connector=require('./mysql/connectDB');
+var userNotLoggedIn=require('./user_not_logged_in');
+router.get('/',userNotLoggedIn,function(req,res,next){
+     res.render('evaluation',{user:req.session.username});
 });
-router.post('/',function(req,res,next){
-    if(req.session.username){
+router.post('/',userNotLoggedIn,function(req,res,next){
         console.log(req.session.user_id);
         if(req.body.subject!=''&&req.body.sub_id!=''&&req.body.cla_id!==''&&
             req.body.tea_id!=''&&req.body.cla_name!=''&&req.body.tea_name!=''&&req.body.date!=''
@@ -67,10 +62,5 @@ router.post('/',function(req,res,next){
                 }
             });
         }
-    }
-    else{
-        res.redirect('/');
-    }
-
 });
 module.exports=router;

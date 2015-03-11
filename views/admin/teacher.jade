@@ -2,85 +2,86 @@
    Created by Phi on 2/8/2015.
 extends ../layout
 block content
-    nav(class="navbar navbar-default navbar-fixed-top")
-        div(class="container")
-            ul(class="nav navbar-nav")
-                li()
-                    a(href='/admin') Trang chủ
-                li()
-                    a(href='/admin/subject') Môn học
-                li(class="active")
-                    a(href='/admin/teacher') Giảng viên
-                li()
-                    a(href='/admin/class') Lớp học
-                li()
-                    a(href='/admin/student') Sinh viên
-            ul.nav.navbar-nav.navbar-right
-                li
-                    a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{ad}!
-                        span(class="caret")
-                    ul(class="dropdown-menu" role="menu")
-                        li
-                            a(href='/logout') Thoát ra
-    br
-    h1 Thêm Thông Tin Giảng Viên
-    div.containter
-        div.col-sm-6.col-md-6
-            form(method="post",action="",name="add_class")
-                div.form-group
-                    label
-                        |Mã giảng viên
-                    input.form-control(name="ma_giang_vien",type="text", placeholder="1")
-                div.form-group
-                    label
-                        |Họ tên
-                    input.form-control(name="ho_va_ten",type="text", placeholder="Lâu Văn La")
-                div.form-group
-                    label
-                        | Ngày sinh
-                    input.form-control(name="ngay_sinh", type="date", value="1-1-1111")
-                div.form-group
-                    label.radio-inline
-                        input#Male(name="gioi_tinh", type="radio", value="M",checked)
-                        |Nam
-                    label.radio-inline
-                        input#FeMale(name="gioi_tinh", type="radio",value="F")
-                        |Nữ
-                div.form-group
-                    label
-                        |Nơi công tác
-                    input.form-control(name="noi_cong_tac", type="text", placeholder="Khoa CNTT")
-                div.form-group
-                    label
-                        |Trang cá nhân
-                    input.form-control(name="trang_ca_nhan",type="text", placeholder="......")
-                div.form-group
-                    label
-                        |Hình ảnh
-                    input.form-control(name="hinh_anh",type="text", placeholder="......")
-                div.form-group
-                    label
-                        |Mô tả
-                    input.form-control(name="mo_ta",type="text", placeholder=".......")
-                div.form-group
-                    label
-                        |Hoạt động
-                    input.form-control(name="hoat_dong",type="text", placeholder="......")
-                div.form-group
-                    label
-                        |Học vị
-                    input.form-control(name="hoc_vi",type="text", placeholder=".....")
-                div.form-group
-                    label
-                        |Tính cách
-                    input.form-control(name="tinh_cach",type="text", placeholder=".....")
-                div.form-group
-                    label
-                        |Lời khuyên khi học tập
-                    input.form-control(name="loi_khuyen",type="text", placeholder=".....")
-                div.form-group
-                    label
-                        |Công trình nghiên cứu
-                    input.form-control(name="nghien_cuu",type="text", placeholder="....")
-                div.form-group
-                    input.btn.btn-default(name="add_submit", type="submit", value="Tạo giảng viên")
+    div.container
+        nav(class="navbar navbar-default navbar-fixed-top")
+            div.container
+                ul(class="nav navbar-nav")
+                    li()
+                        a(href='/admin') Trang chủ
+                    li()
+                        a(href='/admin/subject') Môn học
+                    li(class="active")
+                        a(href='/admin/teacher') Giảng viên
+                    li()
+                        a(href='/admin/class') Lớp học
+                    li()
+                        a(href='/admin/student') Sinh viên
+                ul.nav.navbar-nav.navbar-right
+                    li
+                        a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{ad}!
+                            span(class="caret")
+                        ul(class="dropdown-menu" role="menu")
+                            li
+                                a(href='/logout') Thoát ra
+        br
+        h1 Thêm Thông Tin Giảng Viên
+        div.containter
+            div.col-sm-6.col-md-6
+                form(method="post",action="",name="add_class")
+                    div.form-group
+                        label
+                            |Mã giảng viên
+                        input.form-control(name="ma_giang_vien",type="text", placeholder="1")
+                    div.form-group
+                        label
+                            |Họ tên
+                        input.form-control(name="ho_va_ten",type="text", placeholder="Lâu Văn La")
+                    div.form-group
+                        label
+                            | Ngày sinh
+                        input.form-control(name="ngay_sinh", type="date", value="1-1-1111")
+                    div.form-group
+                        label.radio-inline
+                            input#Male(name="gioi_tinh", type="radio", value="M",checked)
+                            |Nam
+                        label.radio-inline
+                            input#FeMale(name="gioi_tinh", type="radio",value="F")
+                            |Nữ
+                    div.form-group
+                        label
+                            |Nơi công tác
+                        input.form-control(name="noi_cong_tac", type="text", placeholder="Khoa CNTT")
+                    div.form-group
+                        label
+                            |Trang cá nhân
+                        input.form-control(name="trang_ca_nhan",type="text", placeholder="......")
+                    div.form-group
+                        label
+                            |Hình ảnh
+                        input.form-control(name="hinh_anh",type="text", placeholder="......")
+                    div.form-group
+                        label
+                            |Mô tả
+                        input.form-control(name="mo_ta",type="text", placeholder=".......")
+                    div.form-group
+                        label
+                            |Hoạt động
+                        input.form-control(name="hoat_dong",type="text", placeholder="......")
+                    div.form-group
+                        label
+                            |Học vị
+                        input.form-control(name="hoc_vi",type="text", placeholder=".....")
+                    div.form-group
+                        label
+                            |Tính cách
+                        input.form-control(name="tinh_cach",type="text", placeholder=".....")
+                    div.form-group
+                        label
+                            |Lời khuyên khi học tập
+                        input.form-control(name="loi_khuyen",type="text", placeholder=".....")
+                    div.form-group
+                        label
+                            |Công trình nghiên cứu
+                        input.form-control(name="nghien_cuu",type="text", placeholder="....")
+                    div.form-group
+                        input.btn.btn-default(name="add_submit", type="submit", value="Tạo giảng viên")

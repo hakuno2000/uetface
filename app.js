@@ -29,6 +29,7 @@ app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret:'deo ai biet dau',resave:false, saveUninitialized: true}));
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/logout',logout);

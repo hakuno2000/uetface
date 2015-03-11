@@ -3,7 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
-var connection=require('./../connectDB');
+var connection=require('./../mysql/connectDB');
 var mysql=require('mysql');
 router.get('/',function(req,res,next){
     if(req.session.level) {
@@ -13,31 +13,18 @@ router.get('/',function(req,res,next){
     }
 });
 router.post('/',function(req,res,next){
-    if(req.body.login&&req.body.user!=''&&req.body.pass!=''){
-        var connector=connection(mysql);
-        connector.query('select * from admin where username="'+req.body.user+'"',function(err,rows,fields){
+    var admin=require('./../data/models/admin');
+    if(req.body.user!=''&&req.body.pass!=''){
+        admin.findOne({'username':req.body.user},function(err,result){
             if(err) res.render('admin/admin',{title:"Quản trị viên",log_rp:'Lỗi đăng nhập.'});
-            if(rows.length>0){
-                if(rows.length>1) res.redirect('/admmin');
-                rows.forEach(function(row){
-                    if(row.password==req.body.pass){
-                        req.session.user_ad=req.body.user;
-                        req.session.level=row.level;
-                        res.render('admin/dashboard',{title:'Quản trị viên',ad:req.session.user_ad});
-                    }else{
-                        res.redirect('/admin');
-                    }
-                });
-            }
-            else{
+            if(result.password==req.body.pass){
+               req.session.user_ad=req.body.user;
+               req.session.level=result.level;
+               res.render('admin/dashboard',{title:'Quản trị viên',ad:req.session.user_ad});
+            }else{
                 res.redirect('/admin');
             }
         });
-        connector.end(function(err){
-            if(err){
-                res.redirect('/admin');
-            }
-        })
     }
     else{
         res.redirect('/admin');

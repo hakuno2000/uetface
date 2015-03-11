@@ -1,9 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var mysql=require('mysql');
-var connector=require('./connectDB');
-var dbURL = 'mongodb://localhost/uetface';
-var db = require('mongoose').connect(dbURL);
 /* GET home page. */
 router.get('/', function(req, res, next) {
     if(req.session.username){
@@ -14,26 +10,21 @@ router.get('/', function(req, res, next) {
 });
 router.post('/',function(req,res,next){
     if(req.body.username!=''&&req.body.password&&req.body.login!='') {
-        var connection = connector(mysql);
-        connection.query("select * from sinhvien where tai_khoan='"+req.body.username+"'",
-            function (err, rows, fields) {
-                if (err) throw err;
-                if(rows.length==0||rows.length>1) res.render('index',{title:'UETFace',Log_rp:'Tài khoản hoặc mật khẩu không đúng!'});
-                rows.forEach(function (row) {
-                    console.log(row);
-                    if (req.body.password == row.mat_khau) {
-                        req.session.username = req.body.username;
-                        req.session.password = req.body.password;
-                        req.session.user_id =row.ma_sinh_vien;
-                        res.redirect('/users');
-                    }else{
-                        res.redirect('/');
-                    }
-                });
+        var user_login=require('./data/models/user_login');
+        user_login.findOne({'tai_khoan':req.body.username},function(err,result){
+            if (err) res.render('index');
+            var isNull=require('./isNull');
+            if(!isNull(result)){
+                if (req.body.password == result.mat_khau) {
+                    req.session.username = req.body.username;
+                    req.session.password = req.body.password;
+                    //req.session.user_id =row.ma_sinh_vien;
+
+                    res.redirect('/users');
+                }
+            }else{
+                res.redirect('/');
             }
-        );
-        connection.end(function(err){
-            if(err) throw err;
         });
     }else if(req.body.login){
         res.render('index',{title:'UETFace',Log_rp:'Chưa nhập tài khoản hoặc mật khẩu!'});
