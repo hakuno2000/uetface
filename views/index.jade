@@ -19,10 +19,11 @@ block content
           input#login.btn.btn-default(name="login", type="submit", value="Đăng nhập")
 
   div.container
+      br
       div.col-sm-6.col-md-6
-          p Welcome to #{title}
       div.col-sm-6.col-md-6
           div.form-group
+              h2(style="color:red;") #{Reg_rp}
               h1 Đăng Ký
           form(method="post", action"/", name="reg_form")
               div.input-group.form-group
@@ -35,10 +36,8 @@ block content
                   input.form-control(name="std_name",type="text", placeholder="Họ tên")
               div.input-group.form-group
                   span.input-group-addon
-                      span.glyphicon K
-                  input.form-control(name="std_grade", type="text", placeholder="Khóa")
-                  span.input-group-addon -
-                  input.form-control(name="std_class", type="text", placeholder="Lớp")
+                      span.glyphicon.glyphicon-book
+                  input.form-control(name="std_grade", type="text", placeholder="Lớp khóa học")
               div.input-group.form-group
                   span.input-group-addon
                       span.glyphicon.glyphicon-user
@@ -53,11 +52,10 @@ block content
                   input.form-control(name="reg_pass", type="password", placeholder="Mật khẩu")
               div.input-group.form-group
                   label.radio-inline
-                        input#Male(name="sex", type="radio", value="M",checked)
+                        input#Male(name="sex", type="radio", value="nam",checked)
                         |Nam
                   label.radio-inline
-                        input#FeMale(name="sex", type="radio",value="F")
+                        input#FeMale(name="sex", type="radio",value="nữ")
                         |Nữ
               div.input-group.form-group
                 input.btn.btn-default(name="register", type="submit", value="Đăng ký")
-      h1(style="color:red;") #{Reg_rp}
