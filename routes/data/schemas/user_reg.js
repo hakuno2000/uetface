@@ -13,3 +13,4 @@ var user_reg=new mongoose.Schema({
     active: Number,
     ngay_sinh: Date
 });
+module.exports=user_reg;

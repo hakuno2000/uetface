@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongoose=require('mongoose');
 var dbURL=require('./data/dbURL');
+var md5=require('./decode/md5');
+var secretKey=require('./secretKey');
 /* GET home page. */
 router.get('/', function(req, res, next) {
     if(req.session.username){
@@ -18,9 +20,9 @@ router.post('/',function(req,res,next){
             if (err) console.log(err);
             var isNull=require('./isNull');
             if(!isNull(result)){
-                if (req.body.password == result.mat_khau) {
+                if (md5.MD5(req.body.password+secretKey).toString() == result.mat_khau) {
                     req.session.username = req.body.username;
-                    req.session.password = req.body.password;
+                    //req.session.password = req.body.password;
                     //req.session.user_id =row.ma_sinh_vien;
                     res.redirect('/users');
                 }
@@ -33,48 +35,10 @@ router.post('/',function(req,res,next){
         res.render('index',{title:'UETFace',Log_rp:'Chưa nhập tài khoản hoặc mật khẩu!'});
     }else if(req.body.reg_user!=''&&req.body.reg_email!=''&&req.body.reg_pass!=''&&req.body.std_name!=''
             &&req.body.std_grade!=''&&req.body.std_class!=''&&req.body.std_id!=''){
-        var connection = connector(mysql);
-        connection.query('select * from sinhvien where tai_khoan=\"'+req.body.reg_user+'\"',
-            function(err,rows,fields){
-                if(err) throw err;
-                if(rows.length==0) {
-                    connection.query('select * from sinhvien where email=\"'+req.body.reg_email+'\"',
-                        function(err,rows,fields){
-                            if(err) throw err;
-                            if(rows.length==0){
-
-
-                                connection.query('select * from sinhvien where ma_sinh_vien=\"'+req.body.std_id+'\"',function(err,rows,fields){
-                                    if(err) throw err;
-                                    if(rows.length==0) {
-                                        var newUser={
-                                            ma_sinh_vien:req.body.std_id,
-                                            tai_khoan:req.body.reg_user,
-                                            email:req.body.reg_email,
-                                            mat_khau:req.body.reg_pass,
-                                            gioi_tinh:req.body.sex,
-                                            ho_va_ten:req.body.std_name,
-                                            khoa_nam_hoc: req.body.std_grade,
-                                            lop_khoa_hoc: req.body.std_class
-                                        }
-                                        console.log(newUser);
-                                        Register(req,res,newUser,connection);
-                                    }
-                                    else{
-                                        res.render('index',{title:'UETFace',Reg_rp:'Mã SV đã tồn tại.'});
-                                    }
-                                });
-                            }
-                            else {
-                                res.render('index',{title:'UETFace',Reg_rp:'Email đã tồn tại.'});
-                            }
-                        }
-                    );
-                }else{
-                    res.render('index',{title:'UETFace',Reg_rp:'Tài khoản đã tồn tại.'});
-                }
-            }
-        );
+        var user_reg=require('./data/models/user_reg');
+        usr_reg.findOne({'ma_sinh_vien':req.body.std_id},function(err,result){
+            if(!isNull(result)){ res.render('index',{})};
+        });
     }
     else{
         res.render('index',{title:'Uet Face',Reg_rp:'Bạn đã nhập thiếu thông tin.'});
