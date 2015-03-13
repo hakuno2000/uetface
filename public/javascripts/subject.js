@@ -20,28 +20,28 @@ process.controller('SubjectController',function($scope,$filter,$http){
             var temp=[];
             temp=data.rows;
 
-            for(var i=0;i<temp.length;i++){
-                if(temp[i].mota!=''&&temp[i].mota!=undefined)
-                {
-                    var content = temp[i].mo_ta;
-                    temp[i].mo_ta={};
-                    if (content.length > showChar) {
-                        var c = content.substr(0, showChar);
-                        temp[i].mo_ta.showless=c+' ...';
-                        temp[i].mo_ta.showmore=content;
-                        temp[i].more=false;
-                        temp[i].less=true;
-                    }else{
-                        temp[i].mo_ta.showmore=content;
-                        temp[i].more=true;
-                        temp[i].special=false;
-                    }
-                }
-                else{
-                    temp[i].mo_ta={};
-                    temp[i].mo_ta.showmore='';
-                }
-            }
+            //for(var i=0;i<temp.length;i++){
+            //    if(temp[i].mota!=''&&temp[i].mota!=undefined)
+            //    {
+            //        var content = temp[i].mo_ta;
+            //        temp[i].mo_ta={};
+            //        if (content.length > showChar) {
+            //            var c = content.substr(0, showChar);
+            //            temp[i].mo_ta.showless=c+' ...';
+            //            temp[i].mo_ta.showmore=content;
+            //            temp[i].more=false;
+            //            temp[i].less=true;
+            //        }else{
+            //            temp[i].mo_ta.showmore=content;
+            //            temp[i].more=true;
+            //            temp[i].special=false;
+            //        }
+            //    }
+            //    else{
+            //        temp[i].mo_ta={};
+            //        temp[i].mo_ta.showmore='';
+            //    }
+            //}
             $scope.subjects=temp;
         }).error(function(data){
             console.log(data);

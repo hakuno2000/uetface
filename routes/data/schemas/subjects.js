@@ -7,6 +7,7 @@ var subject=new mongoose.Schema({
     ma_mon:String,
     ten_mon: String,
     khoa: String,
+    ma_danh_gia:String,
     tin_chi:Number,
     mo_ta:String
 });

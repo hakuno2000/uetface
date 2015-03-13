@@ -14,16 +14,17 @@ router.get('/', function(req, res, next) {
     }
 });
 router.post('/',function(req,res,next){
+    console.log(req.body);
     if(req.body.username!=''&&req.body.password&&req.body.login!='') {
         var user_login=require('./data/models/user_login');
         if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
-        user_login.findOne({'tai_khoan':req.body.username},function(err,result){
+        user_login.findOne({'tai_khoan':req.body.username},{_id:0,ma_sinh_vien:1,mat_khau:1},function(err,result){
             if (err) console.log(err);
             if(!isNull(result)){
                 if (md5.MD5(req.body.password+secretKey).toString() == result.mat_khau) {
                     req.session.username = req.body.username;
-                    //req.session.password = req.body.password;
-                    //req.session.user_id =row.ma_sinh_vien;
+                    req.session.user_id =result.ma_sinh_vien;
+                    console.log(result);
                     res.redirect('/users');
                 }
             }else{
@@ -45,7 +46,7 @@ router.post('/',function(req,res,next){
                 res.render('index',{title:'UETFACE',Reg_rp:'Mật khẩu nhỏ hơn 6 kí tự.'});
                 if(mongoose.connection.readyState==1) mongoose.disconnect();
             }else{
-                user_reg.findOne({'ma_sinh_vien':req.body.std_id},function(err,result){
+                user_reg.findOne({'ma_sinh_vien':req.body.std_id},{_id:0,active:1},function(err,result){
                     if(err) {
                         res.render('index',{title:'UETFACE',Reg_rp:'Đã có lỗi xảy ra. Mời bạn thao tác lại'});
                         if(mongoose.connection.readyState==1) mongoose.disconnect();
@@ -53,7 +54,7 @@ router.post('/',function(req,res,next){
                     if(isNull(result)){ res.render('index',{title:'UETFACE',Reg_rp:'Mã sinh viên không tồn tại'});}
                     else{
                         if(result.active==0){
-                            user_reg.findOne({'tai_khoan':req.body.reg_user.toLowerCase()},function(err,result){
+                            user_reg.findOne({'tai_khoan':req.body.reg_user.toLowerCase()},{_id:0},function(err,result){
                                 if(err) {
                                     res.render('index',{title:'UETFACE',Reg_rp:'Đã có lỗi xảy ra. Mời bạn thao tác lại'});
                                     if(mongoose.connection.readyState==1) mongoose.disconnect();
@@ -99,6 +100,5 @@ router.post('/',function(req,res,next){
     else{
         res.render('index',{title:'Uet Face',Reg_rp:'Bạn đã nhập thiếu thông tin.'});
     }
-
 });
 module.exports = router;

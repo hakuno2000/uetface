@@ -43,10 +43,12 @@ block content
                         th.col-sm-2
                             a(href="",ng-click="reverse=!reverse;order('khoa', reverse)") Khoa
                         th.col-sm-2
+                            a(href="",ng-click="reverse=!reverse;order('ma_danh_gia', reverse)") Mã đánh giá
+                        th.col-sm-2
                             center
                                 a(href="",ng-click="reverse=!reverse;order('tin_chi', reverse)") Tín chỉ
-                        th.col-sm-3
-                            a(href="",ng-click="reverse=!reverse;order('', reverse)") Mô tả
+                        //th.col-sm-3
+                        //    a(href="",ng-click="reverse=!reverse;order('', reverse)") Mô tả
                         th.col-sm-1
                             center
                                 a() Chỉnh sửa
@@ -57,15 +59,16 @@ block content
                         td(ng-bind="subject.ma_mon")
                         td(ng-bind="subject.ten_mon")
                         td(ng-bind="subject.khoa")
+                        td(ng-bind="subject.ma_danh_gia")
                         td.text-center(ng-bind="subject.tin_chi")
-                        td
-                            span(ng-show="subject.less")
-                                div(ng-bind="subject.mo_ta.showless")
-                                a(ng-click="more(class)") more
-                            span(ng-show="subject.more")
-                                div(ng-bind="subject.mo_ta.showmore")
-                                span(ng-show='subject.special')
-                                    a(ng-click="more(subject)") less
+                        //td
+                        //    span(ng-show="subject.less")
+                        //        div(ng-bind="subject.mo_ta.showless")
+                        //        a(ng-click="more(class)") more
+                        //    span(ng-show="subject.more")
+                        //        div(ng-bind="subject.mo_ta.showmore")
+                        //        span(ng-show='subject.special')
+                        //            a(ng-click="more(subject)") less
                         td
                             center
                                 a.glyphicon.glyphicon-pencil(href="#Add_Subject", ng-click="edit(subject)")
@@ -113,11 +116,15 @@ block content
                         input.form-control(name="khoa", type="text",ng-model='subject.khoa', placeholder="Công nghệ thônng tin")
                     div.form-group
                         label
+                            |Mã đánh giá
+                        input.form-control(name="ma_danh_gia", type="text",ng-model='subject.ma_danh_gia', placeholder="101")
+                    div.form-group
+                        label
                             |Tín chỉ
                         input.form-control(name="tin_chi", type="number",ng-model='subject.tin_chi', placeholder="2")
-                    div.form-group
-                        label Mô tả
-                        textarea.form-control(name="mo_ta",ng-model='subject.mo_ta.showmore',placeholder="...",rows="3")
+                    //div.form-group
+                    //    label Mô tả
+                    //    textarea.form-control(name="mo_ta",ng-model='subject.mo_ta.showmore',placeholder="...",rows="3")
                     div.form-group
                         input.btn.btn-default(name="add_submit", type="submit", ng-click='doAction()', value="{{submit}}")
                         input.btn.btn-default(name='reset',type='submit',ng-click='reset()', value='Hủy', ng-hide='!enable')

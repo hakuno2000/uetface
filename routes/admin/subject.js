@@ -4,6 +4,7 @@
 var express=require('express');
 var router=express.Router();
 var mongoose=require('mongoose');
+
 router.get('/', function (req,res,next) {
     if(req.session.level){
         res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad});
@@ -27,53 +28,46 @@ router.get('/api',function(req,res,next){
     if(mongoose.connection.readyState==0) mongoose.connect('mongodb://localhost/uetface');
     subject.paginate({}, page_num, page_length, function(error, pageCount, paginatedResults, itemCount) {
         if (error) {
-            console.error(error);
+            res.json({type:'error',rp:'Đã có lỗi xảy ra!'});
         } else {
             data.rows=[];
             data.rows=paginatedResults;
             data.number_page=pageCount;
-            console.log(data);
             res.json(data);
             if(mongoose.connection.readyState==1){
                 mongoose.disconnect();
             }
         }
-    });
+    },{columns:{'_id':0,'ma_mon':1,'ten_mon':1,'ma_danh_gia':1,'tin_chi':1,'khoa':1}});
 });
 router.post('/api',function(req,res,next){
     if(req.session.level){
         if(req.body.subject){
             if(req.body.action=='add'){
-                if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.khoa!=''&&req.body.subject.tin_chi!=''){
-                    var check_subject=connect(mysql);
-                    check_subject.query('select * from monhoc where ma_mon="'+req.body.subject.ma_mon+'"',function(err,rows,fields){
-                        if(err) res.json({type:'error',rp:'Lỗi truy vấn.'});
-                        if(rows.length>0){
-                            res.json({type:'error',rp:'Mã môn đã tồn tại.'});
-                        }
-                        if(rows.length==0) {
-                            var create_subject = connect(mysql);
-                            var subject = {
-                                ma_mon: req.body.subject.ma_mon,
-                                ten_mon: req.body.subject.ten_mon,
-                                khoa: req.body.subject.khoa,
-                                tin_chi: req.body.subject.tin_chi,
-                                mo_ta: req.body.subject.mo_ta.showmore
-                            };
-                            create_subject.query('INSERT INTO monhoc SET ?',subject,function(err,result){
-                                if(err) res.json({type:'error',rp:'Đã xảy ra lỗi.'});
-                                else{
-                                    res.json({type:'success',rp:'Môn học thêm thành công.'});
-                                }
-                            });
-                            create_subject.end(function(err){
-                                if(err) console.log(err);
-                            });
-                        }
-                    });
-                    check_subject.end(function(err){
-                        if(err) console.log(err);
-                    });
+                if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.tin_chi!=''){
+                    if(req.body.subject.ma_mon&&req.body.subject.ten_mon&&req.body.subject.tin_chi){
+                        var subject=require('./../data/models/subjects');
+                        if(mongoose.connection.readyState==0) mongoose.connect('mongodb://localhost/uetface');
+                        subject.count({'ma_mon':req.body.subject.ma_mon},function(err,result){
+                            if(err){
+                                res.json({type:'error',rp:'Đã có lỗi xảy ra!'});
+                                if(mongoose.connection.readyState==1) mongoose.disconnect();
+                            }
+                            if(result>=1){
+                                res.json({type:'error',rp:'Môn học đã tồn tại!'})
+                                if(mongoose.connection.readyState==1) mongoose.disconnect();
+                            }else{
+                                var newSubject= new subject(req.body.subject);
+                                newSubject.save(function(err){
+                                    if(err) res.json({type:'error',rp:'Đã có lỗi xảy ra!'});
+                                    res.json({type:'success',rp:'Thêm môn học thành công!'})
+                                    if(mongoose.connection.readyState==1) mongoose.disconnect();
+                                });
+                            }
+                        });
+                    }else{
+                        res.json({type:'error',rp:'Bạn đã nhập thiếu thông tin.'})
+                    }
                 }else{
                     res.json({type:'error',rp:'Bạn đã nhập thiếu thông tin.'})
                 }
