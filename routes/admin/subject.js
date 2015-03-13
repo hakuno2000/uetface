@@ -3,8 +3,7 @@
  */
 var express=require('express');
 var router=express.Router();
-var mysql=require('mysql');
-var connect=require('./../mysql/connectDB');
+var mongoose=require('mongoose');
 router.get('/', function (req,res,next) {
     if(req.session.level){
         res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad});
@@ -24,22 +23,21 @@ router.get('/api',function(req,res,next){
     }else{
         var page_length=10;
     }
-    var list=connect(mysql);
-    list.query('select * from monhoc',function(err,rows,fields) {
-        data.number_page=Math.ceil(rows.length/page_length);
-        if(page_num>data.number_page) page_num=data.number_page;
-        var list2=connect(mysql);
-        list2.query('select * from monhoc limit '+((page_num-1)*page_length)+','+(page_length),function(err,rows2,fields2){
-            if(err) ;
-            data.rows=rows2;
+    var subject=require('./../data/models/subjects');
+    if(mongoose.connection.readyState==0) mongoose.connect('mongodb://localhost/uetface');
+    subject.paginate({}, page_num, page_length, function(error, pageCount, paginatedResults, itemCount) {
+        if (error) {
+            console.error(error);
+        } else {
+            data.rows=[];
+            data.rows=paginatedResults;
+            data.number_page=pageCount;
+            console.log(data);
             res.json(data);
-        });
-        list2.end(function(err){
-            if(err) console.log(err);
-        });
-    });
-    list.end(function(err){
-        if(err) console.log(err);
+            if(mongoose.connection.readyState==1){
+                mongoose.disconnect();
+            }
+        }
     });
 });
 router.post('/api',function(req,res,next){
