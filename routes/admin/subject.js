@@ -44,8 +44,7 @@ router.post('/api',function(req,res,next){
     if(req.session.level){
         if(req.body.subject){
             if(req.body.action=='add'){
-                if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.tin_chi!=''){
-                    if(req.body.subject.ma_mon&&req.body.subject.ten_mon&&req.body.subject.tin_chi){
+                if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.tin_chi!=''&&req.body.subject.ma_mon&&req.body.subject.ten_mon&&req.body.subject.tin_chi){
                         var subject=require('./../data/models/subjects');
                         if(mongoose.connection.readyState==0) mongoose.connect('mongodb://localhost/uetface');
                         subject.count({'ma_mon':req.body.subject.ma_mon},function(err,result){
@@ -65,9 +64,6 @@ router.post('/api',function(req,res,next){
                                 });
                             }
                         });
-                    }else{
-                        res.json({type:'error',rp:'Bạn đã nhập thiếu thông tin.'})
-                    }
                 }else{
                     res.json({type:'error',rp:'Bạn đã nhập thiếu thông tin.'})
                 }
@@ -83,39 +79,9 @@ router.post('/api',function(req,res,next){
 router.put('/api',function(req,res,next){
     if(req.session.level){
         if(req.body.action=='edit'){
-            if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.khoa!=''&&req.body.subject.tin_chi!=''){
-                var check_subject=connect(mysql);
-                check_subject.query('select * from monhoc where ma_mon="'+req.body.subject.change+'"',function(err,rows,fields){
-                    if(err) res.json({type:'error',rp:'Lỗi truy vấn.'});
-                    if(rows.length!=1){
-                        res.json({type:'error',rp:'Môn học không tồn tại.'});
-                    }
-                    if(rows.length==1) {
-                        var update_subject = connect(mysql);
-                        var subject = {
-                            ma_mon_thay_doi: req.body.subject.change,
-                            ma_mon: req.body.subject.ma_mon,
-                            ten_mon: req.body.subject.ten_mon,
-                            khoa: req.body.subject.khoa,
-                            tin_chi: req.body.subject.tin_chi,
-                            mo_ta: req.body.subject.mo_ta.showmore
-                        };
-                        var query='UPDATE monhoc SET ma_mon="'+subject.ma_mon+'",ten_mon="'+subject.ten_mon+'",khoa="'+subject.khoa+'",tin_chi="'+subject.tin_chi+'",mo_ta="'+subject.mo_ta+'" where ma_mon="'+subject.ma_mon_thay_doi+'"';
-                        console.log(query)
-                        update_subject.query(query,function(err,result){
-                            if(err) res.json({type:'error',rp:'Đã xảy ra lỗi.'});
-                            else{
-                                res.json({type:'success',rp:'Chỉnh sửa môn học thành công.'});
-                            }
-                        });
-                        update_subject.end(function(err){
-                            if(err) console.log(err);
-                        });
-                    }
-                });
-                check_subject.end(function(err){
-                    if(err) console.log(err);
-                });
+            if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.tin_chi!=''&&req.body.subject.ma_mon&&req.body.subject.ten_mon&&req.body.subject.tin_chi){
+
+
             }else{
                 res.json({type:'error',rp:'Bạn đã nhập thiếu thông tin.'})
             }
