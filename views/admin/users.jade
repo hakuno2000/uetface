@@ -1,0 +1,32 @@
+//
+   Created by PHI on 16/03/2015.
+//- users.jade
+extends ../layout
+block content
+    h1 #{pageCount}
+    h1 #{paginate.hasNextPages(pageCount)}
+    h1 #{paginate.hasPreviousPages}
+
+    //a(href=paginate.href({sort: 'name'})) Sort by name
+    //a(href=paginate.href({sort: req.query.age === '1' ? -1 : 1})) Sort by age
+    table.table.table-responsive.table-striped.table-hover
+        tr
+            th.col-sm-1
+                a(href="",ng-click="reverse=!reverse;order('ma_mon', reverse)") Mã môn
+            th.col-sm-2
+                a(href="",ng-click="reverse=!reverse;order('ten_mon', reverse)") Tên môn
+            th.col-sm-2
+                a(href="",ng-click="reverse=!reverse;order('khoa', reverse)") Khoa
+            th.col-sm-2
+                a(href="",ng-click="reverse=!reverse;order('ma_danh_gia', reverse)") Mã đánh giá
+            th.col-sm-2
+                center
+                    a(href="",ng-click="reverse=!reverse;order('tin_chi', reverse)") Tín chỉ
+        each user in users
+            tr
+                td= user.ma_mon
+                td= user.ten_mon
+                td=user.khoa
+                td=user.ma_danh_gia
+                td=user.tin_chi
+    include _paginate

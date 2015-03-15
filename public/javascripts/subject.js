@@ -162,7 +162,6 @@ process.controller('SubjectController',function($scope,$filter,$http){
                         console.log(data);
                     });
             }else if($scope.action=='edit'){
-                console.log($scope.subject);
                 $http.put('/admin/subject/api',{action:$scope.action,subject:$scope.subject})
                     .success(function(data){
                         $scope.rp=data.rp;
@@ -184,7 +183,6 @@ process.controller('SubjectController',function($scope,$filter,$http){
     }
     $scope.reset=function(){
         $scope.subject=angular.copy({});
-        $scope.type_rp='color:green';
         $scope.enable=false;
         $scope.action='add';
         $scope.purpose='Thêm môn học';
@@ -192,10 +190,14 @@ process.controller('SubjectController',function($scope,$filter,$http){
     };
     $scope.remove=function(data){
         if(window.confirm('Bạn có chắc chắn không?')){
-            console.log("it's ok");
             $http.delete('/admin/subject/api?ma_mon='+data.ma_mon,{})
                 .success(function(data){
-                    console.log(data);
+                    $scope.rp=data.rp;
+                    if(data.type=='error'){
+                        $scope.type_rp='color:red';
+                    }else{
+                        $scope.type_rp='color:green';
+                    }
                     $http.get('/admin/subject/api')
                         .success(function(data){
                             $scope.subjects=data.rows;
