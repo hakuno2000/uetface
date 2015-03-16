@@ -47,8 +47,6 @@ block content
                         th.col-sm-2
                             center
                                 a(href="",ng-click="reverse=!reverse;order('tin_chi', reverse)") Tín chỉ
-                        //th.col-sm-3
-                        //    a(href="",ng-click="reverse=!reverse;order('', reverse)") Mô tả
                         th.col-sm-1
                             center
                                 a() Chỉnh sửa
@@ -61,35 +59,13 @@ block content
                         td(ng-bind="subject.khoa")
                         td(ng-bind="subject.ma_danh_gia")
                         td.text-center(ng-bind="subject.tin_chi")
-                        //td
-                        //    span(ng-show="subject.less")
-                        //        div(ng-bind="subject.mo_ta.showless")
-                        //        a(ng-click="more(class)") more
-                        //    span(ng-show="subject.more")
-                        //        div(ng-bind="subject.mo_ta.showmore")
-                        //        span(ng-show='subject.special')
-                        //            a(ng-click="more(subject)") less
                         td
                             center
                                 a.glyphicon.glyphicon-pencil(href="#Add_Subject", ng-click="edit(subject)")
                         td
                             center
                                 a.glyphicon.glyphicon-remove(ng-click='remove(subject)')
-                ul.pagination(ng-app='pagination')
-                    li(ng-click='Prev()')
-                        a(href='') «
-                    li(ng-init='page_num=1;page_show=1',class='{{active1}}')
-                        a(href='',ng-click='setPage(page_show);', ng-bind='page_show', ng-model='page_num')
-                    li(ng-click='page_active(page_show+1)',class='{{active2}}')
-                        a(href='',ng-click='setPage(page_show+1);', ng-bind='page_show+1')
-                    li(ng-click='setPage(page_show+2)',class='{{active3}}')
-                        a(href='', ng-bind='page_show+2')
-                    li(ng-click='setPage(page_show+3)',class='{{active4}}')
-                        a(href='', ng-bind='page_show+3')
-                    li(ng-click='setPage(page_show+4)',class='{{active5}}')
-                        a(href='', ng-bind='page_show+4')
-                    li(ng-click='Next()')
-                        a(href='') »
+                include paginate
         br
         h2(ng-bind='purpose')
         h3(style='{{type_rp}}') {{rp}}

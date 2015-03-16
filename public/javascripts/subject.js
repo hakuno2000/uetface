@@ -2,12 +2,13 @@
  * Created by Phi on 2/16/2015.
  */
 var process=angular.module('Subject',[]);
+
 process.controller('SubjectController',function($scope,$filter,$http){
     var orderBy = $filter('orderBy');
     $scope.action="add";
     $scope.submit='Thêm môn học';
     $scope.purpose='Thêm môn học';
-    $scope.number_page='1';
+    $scope.number_page=1;
     $scope.order = function(predicate, reverse) {
         $scope.subjects = orderBy($scope.subjects, predicate, reverse);
     };
@@ -50,6 +51,16 @@ process.controller('SubjectController',function($scope,$filter,$http){
         data.less=!data.less;
         data.more=!data.more;
         data.special=!data.special;
+    }
+    $scope.hasNextPages = function hasNextPages(number) {
+        console.log($scope.number_page);
+        console.log(number);
+        if (typeof $scope.number_page !== 'number' || $scope.number_page < 0)
+            throw new Error('express-paginate: `pageCount` is not a number >= 0');
+        return number < $scope.number_page;
+    };
+    $scope.hasPrevPages=function hasPrevPages(number){
+        return number>1;
     }
     $scope.setPage=function(n){
         if(n<=3){
@@ -162,7 +173,6 @@ process.controller('SubjectController',function($scope,$filter,$http){
                         console.log(data);
                     });
             }else if($scope.action=='edit'){
-                console.log($scope.subject);
                 $http.put('/admin/subject/api',{action:$scope.action,subject:$scope.subject})
                     .success(function(data){
                         $scope.rp=data.rp;
@@ -184,7 +194,6 @@ process.controller('SubjectController',function($scope,$filter,$http){
     }
     $scope.reset=function(){
         $scope.subject=angular.copy({});
-        $scope.type_rp='color:green';
         $scope.enable=false;
         $scope.action='add';
         $scope.purpose='Thêm môn học';
@@ -192,10 +201,14 @@ process.controller('SubjectController',function($scope,$filter,$http){
     };
     $scope.remove=function(data){
         if(window.confirm('Bạn có chắc chắn không?')){
-            console.log("it's ok");
             $http.delete('/admin/subject/api?ma_mon='+data.ma_mon,{})
                 .success(function(data){
-                    console.log(data);
+                    $scope.rp=data.rp;
+                    if(data.type=='error'){
+                        $scope.type_rp='color:red';
+                    }else{
+                        $scope.type_rp='color:green';
+                    }
                     $http.get('/admin/subject/api')
                         .success(function(data){
                             $scope.subjects=data.rows;

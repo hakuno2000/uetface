@@ -6,22 +6,25 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session=require('express-session');
 var routes = require('./routes/index');
+
 var users = require('./routes/users');
 var logout=require('./routes/logout');
 var evaluation=require('./routes/evaluation');
 var admin=require('./routes/admin/admin');
 var ad_dashboard=require('./routes/admin/dashboard');
-var app = express();
 var subject=require('./routes/admin/subject');
 var ad_class=require('./routes/admin/ad_class');
 var teacher=require('./routes/admin/teacher');
 var student=require('./routes/admin/student');
+
+var app = express();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
