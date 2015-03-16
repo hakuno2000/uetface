@@ -21,41 +21,46 @@ block content
   div.container
       br
       div.col-sm-6.col-md-6
+          br
+          br
+          img(src='images/logo.png')
       div.col-sm-6.col-md-6
-          div.form-group
-              h2(style="color:red;") #{Reg_rp}
-              h1 Đăng Ký
-          form(method="post", action"/", name="reg_form")
-              div.input-group.form-group
-                  span.input-group-addon
-                      span.glyphicon.glyphicon-barcode
-                  input.form-control(name="std_id", type="text", placeholder="Mã sinh viên")
-              div.input-group.form-group
-                  span.input-group-addon
-                      span.glyphicon.glyphicon-education
-                  input.form-control(name="std_name",type="text", placeholder="Họ tên")
-              div.input-group.form-group
-                  span.input-group-addon
-                      span.glyphicon.glyphicon-book
-                  input.form-control(name="std_grade", type="text", placeholder="Lớp khóa học")
-              div.input-group.form-group
-                  span.input-group-addon
-                      span.glyphicon.glyphicon-user
-                  input.form-control(name="reg_user", type="text", placeholder="Tài khoản mới")
-              div.input-group.form-group
-                  span.input-group-addon
-                      span.glyphicon.glyphicon-envelope
-                  input.form-control(name="reg_email", type="email", placeholder="Email")
-              div.input-group.form-group
-                  span.input-group-addon
-                      span.glyphicon.glyphicon-lock
-                  input.form-control(name="reg_pass", type="password", placeholder="Mật khẩu")
-              div.input-group.form-group
-                  label.radio-inline
-                        input#Male(name="sex", type="radio", value="nam",checked)
-                        |Nam
-                  label.radio-inline
-                        input#FeMale(name="sex", type="radio",value="nữ")
-                        |Nữ
-              div.input-group.form-group
-                input.btn.btn-default(name="register", type="submit", value="Đăng ký")
+          br
+          div.register_form
+              div.form-group
+                  h2(style="color:red;") #{Reg_rp}
+                  h1 Đăng Ký
+              form(method="post", action"/", name="reg_form")
+                  div.input-group.form-group
+                      span.input-group-addon
+                          span.glyphicon.glyphicon-barcode
+                      input.form-control(name="std_id", type="text", placeholder="Mã sinh viên")
+                  div.input-group.form-group
+                      span.input-group-addon
+                          span.glyphicon.glyphicon-education
+                      input.form-control(name="std_name",type="text", placeholder="Họ tên")
+                  div.input-group.form-group
+                      span.input-group-addon
+                          span.glyphicon.glyphicon-book
+                      input.form-control(name="std_grade", type="text", placeholder="Lớp khóa học")
+                  div.input-group.form-group
+                      span.input-group-addon
+                          span.glyphicon.glyphicon-user
+                      input.form-control(name="reg_user", type="text", placeholder="Tài khoản mới")
+                  div.input-group.form-group
+                      span.input-group-addon
+                          span.glyphicon.glyphicon-envelope
+                      input.form-control(name="reg_email", type="email", placeholder="Email")
+                  div.input-group.form-group
+                      span.input-group-addon
+                          span.glyphicon.glyphicon-lock
+                      input.form-control(name="reg_pass", type="password", placeholder="Mật khẩu")
+                  div.input-group.form-group
+                      label.radio-inline
+                            input#Male(name="sex", type="radio", value="nam",checked)
+                            |Nam
+                      label.radio-inline
+                            input#FeMale(name="sex", type="radio",value="nữ")
+                            |Nữ
+                  div.input-group.form-group
+                    input.btn.btn-default(name="register", type="submit", value="Đăng ký")

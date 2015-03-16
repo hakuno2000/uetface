@@ -24,59 +24,59 @@ block content
                             li
                                 a(href='/logout') Thoát ra
         h1 Danh sách lớp
-        select(ng-model="page_length", ng-click="setPage(page_num)", ng-init="page_length=10")
-            option(value='5') 5
-            option(value='10') 10
-            option(value='20') 20
-            option(value='40') 40
-            option(value='60') 60
-            option(value='100') 100
-        table.table.table-responsive.table-striped.table-hover
-            tr
-                th.col-sm-1 Mã lớp
-                th.col-sm-1 Mã môn
-                th.col-sm-3 Tên môn
-                th.col-sm-1 Tiết
-                th.col-sm-1 Thứ
-                th.col-sm-2 Giảng đường
-                th.col-sm-2
-                    center Chỉnh sửa
-                th.col-sm-1
-                    center Xóa
-            tr(ng-repeat='class in classes')
-                td.col-sm-1(ng-bind='class.ma_lop')
-                td.col-sm-1(ng-bind='class.ma_mon')
-                td.col-sm-3(ng-bind='class.ten_mon')
-                td.col-sm-1
-                    span(ng-bind='class.tiet_bat_dau')
-                    span -
-                    span(ng-bind='class.tiet_ket_thuc')
-                td.col-sm-2(ng-bind='class.ngay_hoc')
-                td.col-sm-2(ng-bind='class.giang_duong')
-                td.col-sm-1
-                    center
-                        a.glyphicon.glyphicon-pencil(ng-click='edit(class)')
-                td.col-sm-1
-                    center
-                        a.glyphicon.glyphicon-remove(ng-click='remove(class)')
-        ul.pagination(ng-app='pagination')
-            li(ng-click='Prev()')
-                a(href='') «
-            li(ng-init='page_num=1;page_show=1',class='{{active1}}')
-                a(href='',ng-click='setPage(page_show);', ng-bind='page_show', ng-model='page_num')
-            li(ng-click='page_active(page_show+1)',class='{{active2}}')
-                a(href='',ng-click='setPage(page_show+1);', ng-bind='page_show+1')
-            li(ng-click='setPage(page_show+2)',class='{{active3}}')
-                a(href='', ng-bind='page_show+2')
-            li(ng-click='setPage(page_show+3)',class='{{active4}}')
-                a(href='', ng-bind='page_show+3')
-            li(ng-click='setPage(page_show+4)',class='{{active5}}')
-                a(href='', ng-bind='page_show+4')
-            li(ng-click='Next()')
-                a(href='') »
+        div.container.list_class
+            select(ng-model="page_length", ng-click="setPage(page_num)", ng-init="page_length=10")
+                option(value='5') 5
+                option(value='10') 10
+                option(value='20') 20
+                option(value='40') 40
+                option(value='60') 60
+                option(value='100') 100
+            table.table.table-responsive.table-striped.table-hover.cols-sm-12
+                tr
+                    th.col-sm-1 Mã lớp
+                    th.col-sm-1 Mã môn
+                    th.col-sm-3 Tên môn
+                    th.col-sm-1 Tiết
+                    th.col-sm-1 Thứ
+                    th.col-sm-2 Giảng đường
+                    th.col-sm-2
+                        center Chỉnh sửa
+                    th.col-sm-1
+                        center Xóa
+                tr(ng-repeat='class in classes')
+                    td.col-sm-1(ng-bind='class.ma_lop')
+                    td.col-sm-1(ng-bind='class.ma_mon')
+                    td.col-sm-3(ng-bind='class.ten_mon')
+                    td.col-sm-1
+                        span(ng-bind='class.tiet_bat_dau')
+                        span -
+                        span(ng-bind='class.tiet_ket_thuc')
+                    td.col-sm-2(ng-bind='class.ngay_hoc')
+                    td.col-sm-2(ng-bind='class.giang_duong')
+                    td.col-sm-1
+                        center
+                            a.glyphicon.glyphicon-pencil(ng-click='edit(class)')
+                    td.col-sm-1
+                        center
+                            a.glyphicon.glyphicon-remove(ng-click='remove(class)')
+            ul.pagination(ng-app='pagination')
+                li(ng-click='Prev()')
+                    a(href='') «
+                li(ng-init='page_num=1;page_show=1',class='{{active1}}')
+                    a(href='',ng-click='setPage(page_show);', ng-bind='page_show', ng-model='page_num')
+                li(ng-click='page_active(page_show+1)',class='{{active2}}')
+                    a(href='',ng-click='setPage(page_show+1);', ng-bind='page_show+1')
+                li(ng-click='setPage(page_show+2)',class='{{active3}}')
+                    a(href='', ng-bind='page_show+2')
+                li(ng-click='setPage(page_show+3)',class='{{active4}}')
+                    a(href='', ng-bind='page_show+3')
+                li(ng-click='setPage(page_show+4)',class='{{active5}}')
+                    a(href='', ng-bind='page_show+4')
+                li(ng-click='Next()')
+                    a(href='') »
         h1 Thêm lớp
-        div.containter
-            div.col-sm-6.col-md-6
+        div.containter.add_class
                 form(method="post",action="",name="add_class")
                     div.form-group
                         label
