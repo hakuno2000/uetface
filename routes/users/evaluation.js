@@ -4,10 +4,10 @@
 var express=require('express');
 var router=express.Router();
 var mysql=require('mysql');
-var connector=require('./mysql/connectDB');
+var connector=require('./../mysql/connectDB');
 var userNotLoggedIn=require('./user_not_logged_in');
 router.get('/',userNotLoggedIn,function(req,res,next){
-     res.render('evaluation',{user:req.session.username});
+     res.render('evaluation',{user:req.session.username,title:'Đánh giá môn học'});
 });
 router.post('/',userNotLoggedIn,function(req,res,next){
         console.log(req.session.user_id);

@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');
 var session=require('express-session');
 var routes = require('./routes/index');
 
-var users = require('./routes/users');
+var users = require('./routes/users/users');
 var logout=require('./routes/logout');
-var evaluation=require('./routes/evaluation');
+var evaluation=require('./routes/users/evaluation');
 var admin=require('./routes/admin/admin');
 var ad_dashboard=require('./routes/admin/dashboard');
 var subject=require('./routes/admin/subject');

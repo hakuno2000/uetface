@@ -43,39 +43,39 @@ block content
                     td
                         | Môn học:
                     td
-                        input#subject(name='subject', type='text', placeholder='môn học')
+                        input#subject(name='subject', type='text', placeholder='Môn học')
                     td
-                        input#subject_ID(name='sub_id', type='text', placeholder='mã môn học')
+                        input#subject_ID(name='sub_id', type='text', placeholder='Mã môn học')
                     td
-                        input#class_ID(name='cla_id', type='text', placeholder='mã lớp')
+                        input#class_ID(name='cla_id', type='text', placeholder='Mã lớp')
                     td
-                        input#teacher_ID(name='tea_id' type='text', placeholder='mã giảng viên')
+                        input#teacher_ID(name='tea_id' type='text', placeholder='Mã giảng viên')
                 tr
                     td
-                        | Lớp/ Nhóm:
+                        | Lớp môn học:
                     td
-                        input#class_Name(name='cla_name', type='text', placeholder='tên lớp')
+                        input#teacher_Name(name='cla_name', type='text', placeholder='Lớp môn học')
                 tr
                     td
                         | Giảng viên:
                     td
-                        input#teacher_Name(name='tea_name', type='text', placeholder='Giảng Viên')
+                        input#student_Name(name='tea_name', type='text', placeholder='Giảng viên')
                 tr
                     td
-                        | Sinh viên( không bắt buộc)
+                        | Mã sinh viên:
                     td
-                        input#student_Name(name='stu_name', type='text', placeholder='Sinh viên( không bắt buộc)')
+                        input#date(name='stu_id',type='text', placeholder='Mã sinh viên')
                 tr
                     td
-                        | Ngày khảo sát
-                    td
-                        input#date(name='date',type='date', placeholder='Ngày khảo sát')
-                tr
-                    td
-                        p (SV hoàn thành các nội dung trên sau đó
-                        p tô kín vào các ô của mã số tương ứng)
-            p Bạn dùng 1 trong 5 mức đánh giá sau để trả lời các câu hỏi từ 1 đến 23, tô kín ô được lựa chọn:
-            p Các mức: 1: Hoàn toàn không đồng ý; 2: Cơ bản không đồng ý; 3: Đồng ý một phần; 4: Cơ bản đồng ý; 5: Hoàn toàn đồng ý
+                        p (Chú ý: Sinh viên hoàn thành các nội dung trên sau đó ghi đầy đủ
+                        p    các Mã môn học, Mã lớp, Mã giảng viên bằng cách tô kín vào
+                        p    các ô của mã số tương ứng.
+                        p   Chúng tôi xin đảm bảo các câu trả lời sẽ được giữ kín, chúng tôi chỉ
+                        p    công bố kết quả tổng hợp trong bản báo cáo của nhà trường.
+            p Thang đánh giá:
+            p Các mức: 1: Hoàn toàn không đồng ý; 2: Cơ bản không đồng ý; 3: Phân vân; 4: Cơ bản đồng ý; 5: Hoàn toàn đồng ý
+            p Đề nghị cho biết ý kiến của bạn bằng cách tô kín số tương ứng trong bảng dưới đây về từng vấn đề trong
+            p    quá trình học môn học này.
 
             table#evuluation(border='')
                 tr
@@ -84,7 +84,7 @@ block content
                     td(colspan='5')
                         | Trả lời
 
-                each nb_qs,value in {1:'Giảng đường đáp ứng nhu cầu của môn học.',2:'Các thiết bị tại giảng đường đáp ứng nhu cầu giảng dạy và học tập.',3:'Bạn được tư vấn và hỗ trợ kịp thời về phương pháp học tập trong quá trình học.',4:'Mục tiêu của môn học nêu rõ những kiến thức, kĩ năng, thái độ SV cần đạt được.',5:'Thời lượng môn học được phân bổ hợp lí cho các hình thức học tập (lí thuyết, bài tập, thực hành, tự học,...).',6:'Đề cương môn học, các tài liệu giảng dạy được phổ biến cho SV',7:'Môn học cung cấp cho bạn những kiến thức cần thiết.',8:'Môn học giúp bạn phát triển kĩ năng tự học và làm việc độc lập.',9:'Thời lượng (số tiết) của môn học là phù hợp.',10:'Giảng viên có phương pháp truyền đạt rõ ràng, dễ hiểu.',11:' Giảng viên đưa ra các hoạt động (hoặc các bài tập, thí nghiệm) đòi hỏi tính sáng tạo của bạn trong quá trình học tập.',12:'Giảng viên tạo cơ hội để bạn chủ động tham gia vào quá trình học trong và ngoài lớp. ',13:'Giảng viên rèn luyện cho bạn cách liên hệ thực tiễn với nội dung môn học.',14:'Giảng viên sử dụng hiệu quả phương tiện dạy học. ',15:'Giảng viên quan tâm đến giáo dục đạo đức, ý thức tổ chức kỷ luật cho người học. ',16:'GV thường xuyên lên lớp đúng kế hoạch giảng dạy (nghỉ học có báo trước và có học bù).',17:'Có sự thống nhất giữa mục tiêu của môn học và những điều GV giảng ở trên lớp.',18:'Giảng viên thể hiện tính chuẩn mực trong tác phong nhà giáo.',19:'Bạn có được thông báo hình thức, thời gian kiểm tra, đánh giá kết quả môn học ngay từ khi bắt đầu môn học.',20:'Kết quả học tập của sinh viên được đánh giá bằng nhiều hình thức khác nhau.',21:'Các bài tập, bài kiểm tra của bạn được GV nhận xét/đánh giá rõ ràng chính xác. ',22:'Điểm kiểm tra đánh giá thường xuyên và giữa kì được GV công bố kịp thời',23:'Thông tin phản hồi từ kiểm tra/đánh giá giúp bạn cải thiện kết quả học tập.'}
+                each nb_qs,value in {1:'Giảng đường đáp ứng nhu cầu của môn học.',2:'Các thiết bị tại giảng đường đáp ứng nhu cầu giảng dạy và học tập.',3:'Bạn được hỗ trợ kịp thời trong quá trình học môn này',4:'Mục tiêu của môn học nêu rõ kiến thức và kĩ năng người học cần đạt được.',5:'Thời lượng môn học được phân bổ hợp lí cho các hình thức học tập.',6:'Các tài liệu phục vụ môn học được cập nhật.',7:'Môn học góp phần trang bị kiến thức, kĩ năng nghề nghiệp cho bạn.',8:'Giảng viên hướng dẫn cho bạn phương pháp học tập khi bắt đầu môn học.',9:'Phương pháp giảng dạy của giảng viên giúp bạn phát triển tư duy phê phán',10:'Giảng viên tạo cơ hội để bạn chủ động tham gia vào quá trình học tập',11:'Giảng viên giúp bạn phát triển kĩ năng làm việc độc lập',12:'Giảng viên rèn luyện cho bạn phương pháp liên hệ giữa các vấn đề trong môn học với thực tiễn',13:'Giảng viên sử dụng hiệu quả phương tiện dạy học',14:'Giảng viên quan tâm giáo dục tư cách, phẩm chất nghề nghiệp của người học',15:'Bạn hiểu những vấn đề được truyền tải trên lớp ',16:'Kết quả học tập của người học được đánh giá bằng nhiều hình thức phù hợp với tính chất và đặc thù môn học',17:'Nội dung kiểm tra đánh giá tổng hợp được các kiến thức và kĩ năng mà người học phải đạt được theo yêu cầu',18:'Thông tin phản hồi từ kiểm tra đánh giá giúp bạn cải thiện kết quả học tập'}
                     +print_question(nb_qs,value)
 
             mixin print_question(question,stt)
