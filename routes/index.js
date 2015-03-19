@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
     }
 });
 router.post('/',function(req,res,next){
-    console.log(req.body);
     if(req.body.username!=''&&req.body.password&&req.body.login!='') {
         var user_login=require('./data/models/user_login');
         if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
@@ -99,6 +98,30 @@ router.post('/',function(req,res,next){
     }
     else{
         res.render('index',{title:'Uet Face',Reg_rp:'Bạn đã nhập thiếu thông tin.'});
+    }
+});
+router.post('/login/api',function(req,res){
+    if(req.body.username!=''&&req.body.password&&req.body.login!='') {
+        var user_login = require('./data/models/user_login');
+        if (mongoose.connection.readyState == 0) mongoose.connect(dbURL);
+        user_login.findOne({'tai_khoan': req.body.username}, {
+            _id: 0,
+            ma_sinh_vien: 1,
+            mat_khau: 1
+        }, function (err, result) {
+            if (err) console.log(err);
+            if (!isNull(result)) {
+                if (md5.MD5(req.body.password + secretKey).toString() == result.mat_khau) {
+                    req.session.username = req.body.username;
+                    req.session.user_id = result.ma_sinh_vien;
+                    console.log(result);
+                    res.redirect('/users');
+                }
+            } else {
+                res.redirect('/');
+            }
+            if (mongoose.connection.readyState == 1) mongoose.disconnect();
+        });
     }
 });
 module.exports = router;
