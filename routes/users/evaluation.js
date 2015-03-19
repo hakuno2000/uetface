@@ -9,6 +9,22 @@ var userNotLoggedIn=require('./user_not_logged_in');
 router.get('/',userNotLoggedIn,function(req,res,next){
      res.render('evaluation',{user:req.session.username,title:'Đánh giá môn học'});
 });
+router.get('/demo',function(req,res,next){
+    var options = {
+        root: __dirname + './../../public/',
+        dotfiles: 'deny',
+        headers: {
+            'x-timestamp': Date.now(),
+            'x-sent': true
+        }
+    };
+
+    res.sendFile('dgmh.htm', options, function (err) {
+        if (err) {
+            console.log(err);
+            res.status(err.status).end();
+        }});
+});
 router.post('/',userNotLoggedIn,function(req,res,next){
         console.log(req.session.user_id);
         if(req.body.subject!=''&&req.body.sub_id!=''&&req.body.cla_id!==''&&
