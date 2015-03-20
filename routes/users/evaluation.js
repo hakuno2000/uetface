@@ -19,7 +19,7 @@ router.get('/demo',function(req,res,next){
         }
     };
 
-    res.sendFile('dgmh.htm', options, function (err) {
+    res.sendFile('dgmh.html', options, function (err) {
         if (err) {
             console.log(err);
             res.status(err.status).end();

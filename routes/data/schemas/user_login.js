@@ -5,6 +5,7 @@ var mongoose=require('mongoose');
 var user_login=new mongoose.Schema({
     tai_khoan:String,
     mat_khau:String,
-    ma_sinh_vien: String
+    ma_sinh_vien: String,
+    token: String
 });
 module.exports=user_login;
