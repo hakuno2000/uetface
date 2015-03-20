@@ -23,7 +23,6 @@ router.post('/',function(req,res,next){
                 if (md5.MD5(req.body.password+secretKey).toString() == result.mat_khau) {
                     req.session.username = req.body.username;
                     req.session.user_id =result.ma_sinh_vien;
-                    console.log(result);
                     res.redirect('/users');
                 }
             }else{
@@ -101,27 +100,46 @@ router.post('/',function(req,res,next){
     }
 });
 router.post('/login/api',function(req,res){
-    if(req.body.username!=''&&req.body.password&&req.body.login!='') {
-        var user_login = require('./data/models/user_login');
-        if (mongoose.connection.readyState == 0) mongoose.connect(dbURL);
-        user_login.findOne({'tai_khoan': req.body.username}, {
-            _id: 0,
-            ma_sinh_vien: 1,
-            mat_khau: 1
-        }, function (err, result) {
-            if (err) console.log(err);
-            if (!isNull(result)) {
-                if (md5.MD5(req.body.password + secretKey).toString() == result.mat_khau) {
-                    req.session.username = req.body.username;
-                    req.session.user_id = result.ma_sinh_vien;
-                    console.log(result);
-                    res.redirect('/users');
+    if(req.body.action!='',req.body.username!=''&&req.body.password) {
+        if(req.body.username&&req.body.password){
+            var user_login=require('./data/models/user_login');
+            if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
+            user_login.findOne({'tai_khoan':req.body.username},{_id:0,ma_sinh_vien:1,mat_khau:1},function(err,result){
+                if (err) {
+                    console.log(err);
+                    if(mongoose.connection.readyState==1) mongoose.disconnect();
                 }
-            } else {
-                res.redirect('/');
-            }
-            if (mongoose.connection.readyState == 1) mongoose.disconnect();
-        });
+                //console.log(result);
+                if(!isNull(result)){
+                    if (md5.MD5(req.body.password+secretKey).toString() == result.mat_khau) {
+                        //make token
+                        var now=new Date();
+                        var makeToken=require('./decode/sha256');
+                        var token=makeToken.SHA256(now.toJSON()+result.mat_khau).toString();
+                        user_login.update({'tai_khoan':req.body.username},{$set:{token:token}},function(err,result){
+                            if(err) {
+                                res.json({type:'error',content:'Lỗi server!'})
+                            }
+                            res.json({type:'success',token:token});
+
+                            if(mongoose.connection.readyState==1) mongoose.disconnect();
+                        });
+                    }else{
+                        res.json({type:'error',content:'Mật khẩu không đúng!'});
+                    }
+                }else{
+                    res.json({type:'error',content:'Tài khoản không tồn tại!'});
+                }
+            });
+        }else{
+            res.json({type:'error',content:'Bạn chưa nhập đủ thông tin!'});
+        }
+
+    }else{
+        res.json({type:'error',content:'Bạn chưa nhập đủ thông tin!'});
     }
+});
+router.post('/register/api',function(req,res){
+
 });
 module.exports = router;

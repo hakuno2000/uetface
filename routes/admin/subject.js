@@ -4,7 +4,7 @@
 var express=require('express');
 var router=express.Router();
 var mongoose=require('mongoose');
-
+var dbURL=require('./../data/dbURL');
 router.get('/', function (req,res,next) {
     if(req.session.level){
         res.render('admin/subject',{title:'Quản lí môn học',ad:req.session.user_ad});
@@ -25,7 +25,7 @@ router.get('/api',function(req,res,next){
         var page_length=10;
     }
     var subject=require('./../data/models/subjects');
-    if(mongoose.connection.readyState==0) mongoose.connect('mongodb://localhost/uetface');
+    if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
     subject.paginate({}, page_num, page_length, function(error, pageCount, paginatedResults, itemCount) {
         if (error) {
             res.json({type:'error',rp:'Đã có lỗi xảy ra!'});
@@ -46,7 +46,7 @@ router.post('/api',function(req,res,next){
             if(req.body.action=='add'){
                 if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.tin_chi!=''&&req.body.subject.ma_mon&&req.body.subject.ten_mon&&req.body.subject.tin_chi){
                         var subject=require('./../data/models/subjects');
-                        if(mongoose.connection.readyState==0) mongoose.connect('mongodb://localhost/uetface');
+                    if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
                         subject.count({'ma_mon':req.body.subject.ma_mon},function(err,result){
                             if(err){
                                 res.json({type:'error',rp:'Đã có lỗi xảy ra!'});
@@ -82,7 +82,7 @@ router.put('/api',function(req,res,next){
             if(req.body.subject.ma_mon!=''&&req.body.subject.ten_mon!=''&&req.body.subject.tin_chi!=''&&req.body.subject.change!=''
                 &&req.body.subject.ma_mon&&req.body.subject.ten_mon&&req.body.subject.tin_chi&&req.body.subject.change){
                 var subject=require('./../data/models/subjects');
-                if(mongoose.connection.readyState==0) mongoose.connect('mongodb://localhost/uetface');
+                if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
                 subject.count({'ma_mon':req.body.subject.change},function(err,result){
                     if(err){
                         res.json({type:'error',rp:'Đã có lỗi xảy ra!'});
@@ -117,7 +117,7 @@ router.delete('/api',function(req,res){
 
         var ma_mon=req.query.ma_mon;
         var subject=require('./../data/models/subjects');
-        if(mongoose.connection.readyState==0) mongoose.connect('mongodb://localhost/uetface');
+        if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
         subject.count({'ma_mon':req.query.ma_mon},function(err,result){
             if(err){
                 res.json({type:'error',rp:'Đã có lỗi xảy ra!'});

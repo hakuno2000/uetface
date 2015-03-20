@@ -9,8 +9,23 @@ var userNotLoggedIn=require('./user_not_logged_in');
 router.get('/',userNotLoggedIn,function(req,res,next){
      res.render('evaluation',{user:req.session.username,title:'Đánh giá môn học'});
 });
+router.get('/demo',function(req,res,next){
+    var options = {
+        root: __dirname + './../../public/',
+        dotfiles: 'deny',
+        headers: {
+            'x-timestamp': Date.now(),
+            'x-sent': true
+        }
+    };
+
+    res.sendFile('dgmh.html', options, function (err) {
+        if (err) {
+            console.log(err);
+            res.status(err.status).end();
+        }});
+});
 router.post('/',userNotLoggedIn,function(req,res,next){
-        console.log(req.session.user_id);
         if(req.body.subject!=''&&req.body.sub_id!=''&&req.body.cla_id!==''&&
             req.body.tea_id!=''&&req.body.cla_name!=''&&req.body.tea_name!=''&&req.body.date!=''
             &&req.body.q1!=''&&req.body.q2!=''&&req.body.q3!=''&&req.body.q4!=''&&req.body.q5!=''&&req.body.q6!=''
@@ -48,7 +63,6 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                 comment:req.body.comment,
                 date:req.body.date
             };
-            console.log(form);
             var connection=connector(mysql);
             connection.query('INSERT INTO ketquadanhgia SET ?',form,function(err,results){
                 if(err) throw err;

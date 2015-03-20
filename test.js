@@ -41,6 +41,7 @@ function doit(next){
 //var md5=require('./routes/decode/md5');
 //var test=md5.MD5('khoa'+'uetface').toString();
 //console.log(test);
+/*
 var mongoose=require('mongoose');
 var MyModel = require('./routes/data/models/subjects');;
 if(mongoose.connection.readyState==0) mongoose.connect('mongodb://localhost/uetface');
@@ -52,3 +53,7 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCou
         console.log(paginatedResults);
     }
 });
+    */
+var day=new Date();
+var makeToken=require('./routes/decode/sha256');
+console.log(makeToken.SHA256(day.toJSON()+'macode').toString());
