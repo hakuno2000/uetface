@@ -11,6 +11,7 @@ var user_reg=new mongoose.Schema({
     ho_va_ten: String,
     lop_khoa_hoc: String,
     active: Number,
-    ngay_sinh: Date
+    ngay_sinh: Date,
+    token: String
 });
 module.exports=user_reg;

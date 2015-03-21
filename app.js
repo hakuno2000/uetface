@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var session=require('express-session');
 var routes = require('./routes/index');
 
+var api=require('./routes/api/api');
 var users = require('./routes/users/users');
 var logout=require('./routes/logout');
 var evaluation=require('./routes/users/evaluation');
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret:'deo ai biet dau',resave:false, saveUninitialized: true}));
 
 app.use('/', routes);
+app.use('/api',api);
 app.use('/users', users);
 app.use('/logout',logout);
 app.use('/evaluation',evaluation);
