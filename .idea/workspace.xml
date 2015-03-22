@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3fded2d3-7433-425a-a475-19937f02c171" name="Default" comment="" />
-    <ignored path="UETFace.iws" />
-    <ignored path=".idea/workspace.xml" />
+    <list default="true" id="3fded2d3-7433-425a-a475-19937f02c171" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+    </list>
     <ignored path=".idea/" />
     <ignored path=".c9/" />
+    <ignored path="node_modules/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,8 +82,8 @@
       <file leaf-file-name="findById.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/api/findById.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5945946" vertical-offset="0" max-vertical-offset="740">
-              <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.5405405" vertical-offset="0" max-vertical-offset="740">
+              <caret line="22" column="3" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
               <folding>
                 <element signature="e#0#39#0" expanded="false" />
               </folding>
@@ -367,7 +368,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="FullScreen" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.c9" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -850,8 +851,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/api/findById.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5945946" vertical-offset="0" max-vertical-offset="740">
-          <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.5405405" vertical-offset="0" max-vertical-offset="740">
+          <caret line="22" column="3" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
           <folding>
             <element signature="e#0#39#0" expanded="false" />
           </folding>
