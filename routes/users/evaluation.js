@@ -5,7 +5,7 @@ var express=require('express');
 var router=express.Router();
 var userNotLoggedIn=require('./user_not_logged_in');
 router.get('/',userNotLoggedIn,function(req,res,next){
-     res.render('evaluation',{user:req.session.username,title:'Đánh giá môn học'});
+     res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học'});
 });
 router.get('/demo',function(req,res,next){
     var options = {
