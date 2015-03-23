@@ -54,6 +54,7 @@ MyModel.paginate({}, 2, 10, function(error, pageCount, paginatedResults, itemCou
     }
 });
     */
-var day=new Date();
-var makeToken=require('./routes/decode/sha256');
-console.log(makeToken.SHA256(day.toJSON()+'macode').toString());
+var crypto=require('crypto');
+var now=new Date();
+var ex=crypto.createHash('sha256').update(now.toJSON()).digest('hex');
+console.log(ex);

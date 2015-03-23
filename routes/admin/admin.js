@@ -6,7 +6,7 @@ var router = express.Router();
 var mongoose=require('mongoose');
 var dbURL=require('./../data/dbURL');
 var secretKey=require('./../secretKey');
-var md5=require('./../decode/md5');
+var crypto=require('crypto');
 router.get('/',function(req,res,next){
     if(req.session.level) {
         res.render('admin/dashboard',{title:'Quản trị viên',ad:req.session.user_ad});
@@ -20,7 +20,7 @@ router.post('/',function(req,res,next){
     if(req.body.user!=''&&req.body.pass!=''){
         admin.findOne({'username':req.body.user},function(err,result){
             if(err) res.render('admin/admin',{title:"Quản trị viên",log_rp:'Lỗi đăng nhập.'});
-            if(result.password==md5.MD5(req.body.pass+secretKey).toString()){
+            if(result.password==crypto.createHash('md5').update(req.body.pass+secretKey).digest('hex')){
                req.session.user_ad=req.body.user;
                req.session.level=result.level;
                res.render('admin/dashboard',{title:'Quản trị viên',ad:req.session.user_ad});
