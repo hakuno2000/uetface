@@ -4,4 +4,6 @@
 var process=angular.module('evaluate',[]);
 process.controller('list',function($scope,$http){
 
+}).controller('create',function($scope,$http){
+
 });
