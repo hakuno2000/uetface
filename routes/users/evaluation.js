@@ -44,6 +44,7 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                 var form= new dgmh({
                     ma_mon:req.body.sub_id,
                     ma_giang_vien:req.body.tea_id,
+                    ma_lop:req.body.cla_id,
                     ma_sinh_vien:req.session.user_id,
                     1:req.body.q1,
                     2:req.body.q2,

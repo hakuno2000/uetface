@@ -3,6 +3,9 @@
  */
 var express=require('express');
 var router=express.Router();
+var dbURL=require('./../../data/dbURL');
+var mongoose=require('mongoose');
+var isNull=require('./../../isNull');
 router.post('/',function(req,res){
     if(req.body.reg_user!=''&&req.body.reg_email!=''&&req.body.reg_pass!=''&&req.body.std_id!=''){
         var user_reg=require('./../../data/models/user_reg');

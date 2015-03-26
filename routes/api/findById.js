@@ -19,6 +19,7 @@ router.get('/:std_id',function(req,res){
         else{
             res.json(result);
         }
+        if(mongoose.connection.readyState==1) mongoose.disconnect();
     });
 });
 
