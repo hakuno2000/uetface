@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  script(src="javascripts/index.js")
   nav(class="navbar navbar-default navbar-fixed-top")
     div.container
       ul(class="nav navbar-nav")
@@ -30,7 +31,7 @@ block content
               div.form-group
                   h2(style="color:red;") #{Reg_rp}
                   h1 Đăng Ký
-              form(method="post", action="/", name="reg_form")
+              form(method="post", action="/", name="reg_form", ng-app="form")
                   div.input-group.form-group
                       span.input-group-addon
                           span.glyphicon.glyphicon-barcode

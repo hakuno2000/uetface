@@ -3,10 +3,13 @@
  */
 var express=require('express');
 var router=express.Router();
-var findById=require('./findById');
+var findStudentById=require('./findStudentById');
+var findSubjectById=require('./findSubjectById');
 var session=require('./session/session');
 var user=require('./user/user');
-router.use('/findById',findById);
+//routes
+router.use('/findSubjectById',findSubjectById);
+router.use('/findStudentById',findStudentById);
 router.use('/user',user);
 router.use('/session',session);
 module.exports=router;
