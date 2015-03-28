@@ -22,16 +22,18 @@ block content
         h2=Rp_Form
         script(src="javascripts/evaluation.js").
         div(ng-controller="list")
-            div(ng-init="add=true", ng-click="add=!add;")
+            div(ng-init="add=false; count=0;", ng-click="add=!add;")
                 div {{dgmh_rp}}
                 div.input-group
                     span.input-group-addon(style="background:none; border:none;")
                         span.glyphicon.glyphicon-plus(ng-show="add")
                         span.glyphicon.glyphicon-minus(ng-show="!add")
                     span(style="font-size:1.5em") Danh sách đánh giá
-            ul(ng-repeat="member in list")
-                li {{member.ma_mon}}
-                li {{member.ma_giang_vien}}
+            div(ng-hide="add")
+                ul(ng-repeat="member in list")
+                    strong {{member.ten_mon}}
+                    li {{member.ma_mon}}
+                    li {{member.ma_giang_vien}}
             h3 {{list_rp}}
         div(ng-controller="create")
             div(ng-init="add=true", ng-click="add=!add;")
