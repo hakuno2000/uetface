@@ -22,7 +22,7 @@ router.post('/',function(req,res){
                     if (crypto.createHash('md5').update(req.body.password+secretKey).digest('hex') == result.mat_khau) {
                         //make token
                         var now=new Date();
-                        var token=crypto.createHash('sha256').update(now.toJSON()+result.mat_khau).digest('hex');
+                        var token=crypto.createHash('sha256').update(now.toJSON()+result.mat_khau+result.ma_sinh_vien).digest('hex');
                         user_login.update({'tai_khoan':req.body.username},{$set:{token:token}},function(err,result){
                             if(err) {
                                 res.json({type:'error',content:'Lỗi server!'})
