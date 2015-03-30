@@ -18,6 +18,12 @@ block content
                         li
                             a(href='/logout') Thoát ra
     br
-    div.container.hello
-        | Chào mừng bạn đã vào trang web của chúng tôi, <strong>#{user}</strong>!
-    div.container.timetable
+    div.container.timetable(ng-app="user", ng-controller="timetable")
+        h1 Thời khóa biểu của bạn:
+        ul(ng-repeat="practice in practices") Lớp thực hành
+            li Mã lớp: {{practice.ma_lop}}
+            li Nhóm: {{practice.ghi_chu}}
+        ul(ng-repeat="theory in theories") Lớp lí thuyết
+            li Mã lớp: {{theory.ma_lop}}
+            li Nhóm: {{theory.ghi_chu}}
+    script(src="/javascripts/user.js").

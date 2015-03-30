@@ -4,5 +4,5 @@
 var mongoose=require('./../db');
 var practice_Schema=require('./../schemas/practice');
 
-var practice=mongoose.model('theory',practice_Schema,'sinhvien_lopthuchanh');
+var practice=mongoose.model('practice',practice_Schema,'sinhvien_lopthuchanh');
 module.exports=practice;
