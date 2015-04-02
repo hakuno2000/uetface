@@ -21,6 +21,7 @@ process.controller('list',function($scope,$http){
                         }).error(function(data){
                             console.log(data);
                         });
+                    $http.get('/');
                 });
                 $scope.list=data;
             }
