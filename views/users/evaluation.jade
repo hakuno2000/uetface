@@ -32,8 +32,12 @@ block content
             div(ng-hide="add")
                 ul(ng-repeat="member in list")
                     strong {{member.ten_mon}}
-                    li {{member.ma_mon}}
-                    li {{member.ma_giang_vien}}
+                    li Mã lớp: {{member.ma_lop}}
+                    li(ng-init="mh=true;", ng-click="mh=!close-mh;") Mã đánh giá môn: {{member.ma_mon}}
+                        ul(ng-hide="mh")
+                            li Tên môn: {{member.ten_mon}}
+                            li Mã môn: {{member.ma_mon_hoc}}
+                    li Mã giảng viên: {{member.ma_giang_vien}}
             h3 {{list_rp}}
         div(ng-controller="create")
             div(ng-init="add=true", ng-click="add=!add;")

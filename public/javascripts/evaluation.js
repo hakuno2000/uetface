@@ -15,7 +15,7 @@ process.controller('list',function($scope,$http){
                                 $scope.dgmh_rp=data.content;
                             }else{
                                 var temp=data;
-                                value.ma_mon+=' - '+temp[0].ma_mon + ' - '+temp[0].ten_mon;
+                                value.ma_mon_hoc=temp[0].ma_mon;
                                 value.ten_mon=temp[0].ten_mon;
                             }
                         }).error(function(data){

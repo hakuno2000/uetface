@@ -10,6 +10,7 @@ var theory_info=new mongoose.Schema({
     tiet_ket_thuc:Number,
     thu: String,
     giang_duong: String,
-    si_so:Number
+    si_so:Number,
+    ma_danh_gia:String
 });
 module.exports=theory_info;

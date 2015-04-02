@@ -3,7 +3,7 @@
  */
 function userNotLoggedIn(req,res,next){
     if(!req.session.username){
-        res.end('Unauthorized',401);
+        res.redirect('/');
     }else{
         next();
     }

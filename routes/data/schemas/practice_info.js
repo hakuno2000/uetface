@@ -8,6 +8,7 @@ var practice_info=new mongoose.Schema({
     tiet_bat_dau: Number,
     tiet_ket_thuc: Number,
     giang_duong: String,
-    thu: String
+    thu: String,
+    ma_danh_gia:String
 });
 module.exports=practice_info;

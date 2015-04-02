@@ -2,28 +2,28 @@
    Created by PHI on 1/28/2015.
 extends ../layout
 block content
-
-    nav(class="navbar navbar-default navbar-fixed-top")
-        div(class="container")
-            ul(class="nav navbar-nav")
-                li(class="active")
-                    a(href='/users') Trang chủ
-                li()
-                    a(href='/evaluation') Đánh giá môn học
-            ul.nav.navbar-nav.navbar-right
-                li
-                    a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{user}!
-                        span(class="caret")
-                    ul(class="dropdown-menu" role="menu")
-                        li
-                            a(href='/logout') Thoát ra
-    br
-    div.container.timetable(ng-app="user", ng-controller="timetable")
-        h1 Thời khóa biểu của bạn:
-        ul(ng-repeat="practice in practices") Lớp thực hành
-            li Mã lớp: {{practice.ma_lop}}
-            li Nhóm: {{practice.ghi_chu}}
-        ul(ng-repeat="theory in theories") Lớp lí thuyết
-            li Mã lớp: {{theory.ma_lop}}
-            li Nhóm: {{theory.ghi_chu}}
-    script(src="/javascripts/user.js").
+    div.container
+        nav(class="navbar navbar-default navbar-fixed-top")
+            div(class="container")
+                ul(class="nav navbar-nav")
+                    li(class="active")
+                        a(href='/users') Trang chủ
+                    li()
+                        a(href='/evaluation') Đánh giá môn học
+                ul.nav.navbar-nav.navbar-right
+                    li
+                        a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{user}!
+                            span(class="caret")
+                        ul(class="dropdown-menu" role="menu")
+                            li
+                                a(href='/logout') Thoát ra
+        br
+        h2 Thời khóa biểu của bạn:
+        div.container.timetable(ng-app="user", ng-controller="timetable")
+            ul(ng-repeat="practice in practices") Lớp thực hành
+                li Mã lớp: {{practice.ma_lop}}
+                li Nhóm: {{practice.ghi_chu}}
+            ul(ng-repeat="theory in theories") Lớp lí thuyết
+                li Mã lớp: {{theory.ma_lop}}
+                li Nhóm: {{theory.ghi_chu}}
+        script(src="/javascripts/user.js").
