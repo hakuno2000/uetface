@@ -42,24 +42,20 @@ router.get('/:practice_id',function(req,res){
     practice_info.find({'ma_danh_gia':practice_id},{_id:0},function(err,result){
         if(err) {
             res.json({type:'error',content:'Lỗi server!'});
-            if(mongoose.connection.readyState==1) mongoose.disconnect();
         }
         else if(isNull(result)){
             practice_info.find({'ma_lop':practice_id},{_id:0},function(err,result){
                 if(err) {
                     res.json({type:'error',content:'Lỗi server!'});
-                    if(mongoose.connection.readyState==1) mongoose.disconnect();
                 }
                 else if(isNull(result)){ res.json({type:'error',content:'Mã lớp không tồn tại'});}
                 else{
                     res.json(result);
                 }
-                if(mongoose.connection.readyState==1) mongoose.disconnect();
             });
         }
         else{
             res.json(result);
-            if(mongoose.connection.readyState==1) mongoose.disconnect();
         }
     });
 });

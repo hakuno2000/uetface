@@ -12,18 +12,18 @@ router.post('/',function(req,res){
         user_login.findOne({'token':req.body.token},function(err,result){
             if (err) {
                 console.log(err);
-                if(mongoose.connection.readyState==1) mongoose.disconnect();
+                
             }
             if(!isNull(result)){
                 res.json({type:'error',content:'Phiên làm việc không tồn tại'});
-                if(mongoose.connection.readyState==1) mongoose.disconnect();
+                
             }else{
                 user_login.update({'token':req.body.token},{$set:{token:''}},function(err,result){
                     if (err) {
                         console.log(err);
-                        if(mongoose.connection.readyState==1) mongoose.disconnect();
+                        
                     }
-                    if(mongoose.connection.readyState==1) mongoose.disconnect();
+                    
                 });
             }
         });

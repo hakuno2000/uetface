@@ -13,24 +13,20 @@ router.get('/:theory_id',function(req,res){
     theory_info.find({'ma_lop':theory_id},{_id:0},function(err,result){
         if(err) {
             res.json({type:'error',content:'Lỗi server!'});
-            if(mongoose.connection.readyState==1) mongoose.disconnect();
         }
         else if(isNull(result)){
             theory_info.find({'ma_danh_gia':theory_id},{_id:0},function(err,result){
                 if(err) {
                     res.json({type:'error',content:'Lỗi server!'});
-                    if(mongoose.connection.readyState==1) mongoose.disconnect();
                 }
                 else if(isNull(result)){ res.json({type:'error',content:'Mã lớp không tồn tại'});}
                 else{
                     res.json(result);
                 }
-                if(mongoose.connection.readyState==1) mongoose.disconnect();
             });
         }
         else{
             res.json(result);
-            if(mongoose.connection.readyState==1) mongoose.disconnect();
         }
     });
 });

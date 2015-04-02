@@ -16,7 +16,7 @@ router.post('/',function(req,res){
             user_login.findOne({'tai_khoan':req.body.username},{_id:0,ma_sinh_vien:1,mat_khau:1},function(err,result){
                 if (err) {
                     console.log(err);
-                    if(mongoose.connection.readyState==1) mongoose.disconnect();
+                    
                 }
                 if(!isNull(result)){
                     if (crypto.createHash('md5').update(req.body.password+secretKey).digest('hex') == result.mat_khau) {
@@ -28,7 +28,7 @@ router.post('/',function(req,res){
                                 res.json({type:'error',content:'Lỗi server!'})
                             }
                             res.json({type:'success',token:token});
-                            if(mongoose.connection.readyState==1) mongoose.disconnect();
+                            
                         });
                     }else{
                         res.json({type:'error',content:'Mật khẩu không đúng!'});

@@ -12,13 +12,13 @@ router.get('/',function(req,res){
     dgmh.find({'ma_sinh_vien':new RegExp(req.session.user_id, 'i')},function(err,result){
         if(err) {
             res.json({type:'error',content:'Lỗi server!'});
-            if(mongoose.connection.readyState==1) mongoose.disconnect();
+            
         }
         if(isNull(result)){ res.json({type:'error',content:'Bạn chưa có đánh giá nào.'});}
         else{
             res.json(result);
         }
-        if(mongoose.connection.readyState==1) mongoose.disconnect();
+        
     });
 });
 

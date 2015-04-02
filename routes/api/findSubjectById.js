@@ -16,40 +16,44 @@ router.get('/:sbj_id',function(req,res){
     subjects.find({'ma_danh_gia':new RegExp(rq_id, 'i')},{_id:0},function(err,result){
         if(err) {
             res.json({type:'error',content:'Lỗi server!'});
-            if(mongoose.connection.readyState==1) mongoose.disconnect();
         }
-        if(isNull(result)){
+        else if(isNull(result)){
             subjects.find({ten_mon:new RegExp(rq_id,'i')},{_id:0},function(err,result2){
                 if(err) {
                     res.json({type:'error',content:'Lỗi server!'});
-                    if(mongoose.connection.readyState==1) mongoose.disconnect();
                 }
                 if(isNull(result2)){
                     subjects.find({ma_mon:new RegExp(rq_id,'i')},{_id:0},function(err,result3){
                         if(err) {
                             res.json({type:'error',content:'Lỗi server!'});
-                            if(mongoose.connection.readyState==1) mongoose.disconnect();
                         }
                         if(isNull(result3)){
                             res.json({type:'error',content:'Không có thông tin liên quan'});
-                            if(mongoose.connection.readyState==1) mongoose.disconnect();
                         }
                         else{
                             res.json(result3);
-                            if(mongoose.connection.readyState==1) mongoose.disconnect();
                         }
                     });
                 }
                 else{
                     res.json(result2);
-                    if(mongoose.connection.readyState==1) mongoose.disconnect();
                 }
             });
         }
         else{
             res.json(result);
-            if(mongoose.connection.readyState==1) mongoose.disconnect();
         }
+    });
+    process.on('SIGINT', function() {
+        mongoose.connection.close(function () {
+            console.log('Mongoose disconnected on app termination');
+            process.exit(0);
+        });
+    }).on('SIGTERM',function() {
+        mongoose.connection.close(function () {
+            console.log('Mongoose disconnected on app termination');
+            process.exit(0);
+        });
     });
 });
 

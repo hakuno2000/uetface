@@ -72,7 +72,7 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                         res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Đã có lỗi xảy ra!'});
                     }
                     res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Mẫu đánh giá tạo thành công!'});
-                    if(mongoose.connection.readyState==1) mongoose.disconnect();
+                    
                 });
             }else{
             res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Bạn đã nhập thiếu thông tin!'});

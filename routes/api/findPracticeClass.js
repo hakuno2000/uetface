@@ -9,16 +9,16 @@ var isNull=require('./../isNull');
 router.get('/',function(req,res){
     var practice=require('./../data/models/practice');
     if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
-    practice.find({'ma_sinh_vien':new RegExp(req.session.user_id, 'i')},{_id:0},function(err,result){
+    practice.find({'ma_sinh_vien':req.session.user_id},{_id:0},function(err,result){
         if(err) {
             res.json({type:'error',content:'Lỗi server!'});
-            if(mongoose.connection.readyState==1) mongoose.disconnect();
+            //if(mongoose.connection.readyState==1) mongoose.disconnect();
         }
         else if(isNull(result)){ res.json({type:'error',content:'Mã sinh viên không tồn tại'});}
         else{
             res.json(result);
         }
-        if(mongoose.connection.readyState==1) mongoose.disconnect();
+        //if(mongoose.connection.readyState==1) mongoose.disconnect();
     });
 });
 

@@ -28,7 +28,7 @@ router.post('/',function(req,res,next){
             }else{
                 res.redirect('/');
             }
-            if(mongoose.connection.readyState==1) mongoose.disconnect();
+            
         });
     }else if(req.body.login){
         res.render('index',{title:'4UET',Log_rp:'Chưa nhập tài khoản hoặc mật khẩu!'});
@@ -38,16 +38,16 @@ router.post('/',function(req,res,next){
         if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
         if(req.body.reg_user.length<6){
             res.render('index',{title:'4UET',Reg_rp:'Tài khoản nhỏ hơn 6 kí tự.'});
-            if(mongoose.connection.readyState==1) mongoose.disconnect();
+            
         }else{
             if(req.body.reg_pass.length<6){
                 res.render('index',{title:'4UET',Reg_rp:'Mật khẩu nhỏ hơn 6 kí tự.'});
-                if(mongoose.connection.readyState==1) mongoose.disconnect();
+                
             }else{
                 user_reg.findOne({'ma_sinh_vien':req.body.std_id},{_id:0,active:1},function(err,result){
                     if(err) {
                         res.render('index',{title:'4UET',Reg_rp:'Đã có lỗi xảy ra. Mời bạn thao tác lại'});
-                        if(mongoose.connection.readyState==1) mongoose.disconnect();
+                        
                     }
                     if(isNull(result)){ res.render('index',{title:'4UET',Reg_rp:'Mã sinh viên không tồn tại'});}
                     else{
@@ -55,21 +55,21 @@ router.post('/',function(req,res,next){
                             user_reg.findOne({'tai_khoan':req.body.reg_user.toLowerCase()},{_id:0},function(err,result){
                                 if(err) {
                                     res.render('index',{title:'4UET',Reg_rp:'Đã có lỗi xảy ra. Mời bạn thao tác lại'});
-                                    if(mongoose.connection.readyState==1) mongoose.disconnect();
+                                    
                                 }
                                 if(!isNull(result)){
                                     res.render('index',{title:'4UET',Reg_rp:'Tên tài khoản đã được đăng kí. Mời bạn chọn tài khoản khác.'});
-                                    if(mongoose.connection.readyState==1) mongoose.disconnect();
+                                    
                                 }
                                 else{
                                     user_reg.findOne({'email':req.body.reg_email.toLowerCase()},function(err,result){
                                         if(err) {
                                             res.render('index',{title:'4UET',Reg_rp:'Đã có lỗi xảy ra. Mời bạn thao tác lại'});
-                                            if(mongoose.connection.readyState==1) mongoose.disconnect();
+                                            
                                         }
                                         if(!isNull(result)){
                                             res.render('index',{title:'4UET',Reg_rp:'Email đã được đăng kí. Mời bạn chọn email khác.'});
-                                            if(mongoose.connection.readyState==1) mongoose.disconnect();
+                                            
                                         }else{
                                             user_reg.update({'ma_sinh_vien':req.body.std_id},{$set:{'tai_khoan':req.body.reg_user,
                                                 'mat_khau':crypto.createHash('md5').update(req.body.password+secretKey).digest('hex'),'email':req.body.reg_email.toLowerCase(),
@@ -77,10 +77,10 @@ router.post('/',function(req,res,next){
                                                 if(err) {
                                                     console.log(err);
                                                     res.render('index',{title:'4UET',Reg_rp:'Đã có lỗi 1 xảy ra. Mời bạn thao tác lại'});
-                                                    if(mongoose.connection.readyState==1) mongoose.disconnect();
+                                                    
                                                 }
                                                 res.render('index',{title:'4UET',Reg_rp:'Chúc mừng bạn đã đăng kí tài khoản thành công!'});
-                                                if(mongoose.connection.readyState==1) mongoose.disconnect();
+                                                
                                             });
                                         }
                                     });
@@ -88,7 +88,7 @@ router.post('/',function(req,res,next){
                             });
                         }else{
                             res.render('index',{title:'4UET',Reg_rp:'Tài khoản đã được đăng kí!'});
-                            if(mongoose.connection.readyState==1) mongoose.disconnect();
+                            
                         }
                     }
                 });

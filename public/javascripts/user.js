@@ -6,12 +6,14 @@ user.controller('timetable',function($scope,$http){
     $http.get('./api/findTheoryClass')
         .success(function(data){
             $scope.theories=data;
-            $http.get('./api/findPracticeClass')
-                .success(function(data){
-                    $scope.practices=data;
-                }).error(function(data){
-                    console.log(data);
-                });
+
+
+        }).error(function(data){
+            console.log(data);
+        });
+    $http.get('./api/findPracticeClass')
+        .success(function(data){
+            $scope.practices=data;
         }).error(function(data){
             console.log(data);
         });
