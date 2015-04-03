@@ -20,10 +20,14 @@ block content
         br
         h2 Thời khóa biểu của bạn:
         div.container.timetable(ng-app="user", ng-controller="timetable")
-            ul(ng-repeat="practice in practices") Lớp thực hành
+            ul(ng-repeat="practice in practices") {{practice.ten_mon}}
                 li Mã lớp: {{practice.ma_lop}}
                 li Nhóm: {{practice.ghi_chu}}
-            ul(ng-repeat="theory in theories") Lớp lí thuyết
+                li Tiết: {{practice.tiet_bat_dau+'-'+ practice.tiet_ket_thuc}}
+                li Giảng đường: {{ practice.giang_duong}}
+            ul(ng-repeat="theory in theories") {{theory.ten_mon}}
                 li Mã lớp: {{theory.ma_lop}}
                 li Nhóm: {{theory.ghi_chu}}
+                li Tiết: {{theory.tiet_bat_dau+'-'+ theory.tiet_ket_thuc}}
+                li Giảng đường: {{ theory.giang_duong}}
         script(src="/javascripts/user.js").

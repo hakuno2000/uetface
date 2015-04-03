@@ -21,7 +21,39 @@ process.controller('list',function($scope,$http){
                         }).error(function(data){
                             console.log(data);
                         });
-                    $http.get('/');
+                    $http.get('/api/findtheoryinfo/'+value.ma_lop)
+                        .success(function(data){
+                            if(data.type=="error"){
+                            }else{
+                                value.tiet_bat_dau=data[0].tiet_bat_dau;
+                                value.tiet_ket_thuc=data[0].tiet_ket_thuc;
+                                value.thu=data[0].thu;
+                                value.giang_duong=data[0].giang_duong;
+                            }
+                        }).error(function(data){
+                            console.log(data);
+                        });
+                    $http.get('/api/findpracticeinfo/'+value.ma_lop)
+                        .success(function(data){
+                            if(data.type=="error"){
+                            }else{
+                                value.tiet_bat_dau=data[0].tiet_bat_dau;
+                                value.tiet_ket_thuc=data[0].tiet_ket_thuc;
+                                value.thu=data[0].thu;
+                                value.giang_duong=data[0].giang_duong;
+                            }
+                        }).error(function(data){
+                            console.log(data);
+                        })
+                    $http.get('/api/findteacher/'+value.ma_giang_vien)
+                        .success(function(data){
+                            if(data.type=="error"){
+                            }else{
+                                value.ten_giang_vien=data[0].ho_va_ten;
+                            }
+                        }).error(function(data){
+                            console.log(data);
+                        })
                 });
                 $scope.list=data;
             }

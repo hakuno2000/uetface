@@ -32,12 +32,31 @@ block content
             div(ng-hide="add")
                 ul(ng-repeat="member in list")
                     strong {{member.ten_mon}}
-                    li Mã lớp: {{member.ma_lop}}
-                    li(ng-init="mh=true;", ng-click="mh=!close-mh;") Mã đánh giá môn: {{member.ma_mon}}
+                    div(ng-init="ml=true;", ng-click="ml=!ml;")
+                        span.input-group-addon(style="background:none; border:none;")
+                        span.glyphicon.glyphicon-chevron-right(ng-show="ml")
+                        span.glyphicon.glyphicon-chevron-down(ng-show="!ml")
+                        span Mã lớp: {{member.ma_lop}}
+                        ul(ng-hide="ml")
+                            li Tiết học: {{member.tiet_bat_dau+'-'+member.tiet_ket_thuc}}
+                            li Thứ: {{member.thu}}
+                            li Giảng đường: {{member.giang_duong}}
+
+                    div(ng-init="mh=true;", ng-click="mh=!mh;")
+                        span.input-group-addon(style="background:none; border:none;")
+                        span.glyphicon.glyphicon-chevron-right(ng-show="mh")
+                        span.glyphicon.glyphicon-chevron-down(ng-show="!mh")
+                        span Mã đánh giá môn: {{member.ma_mon}}
                         ul(ng-hide="mh")
                             li Tên môn: {{member.ten_mon}}
                             li Mã môn: {{member.ma_mon_hoc}}
-                    li Mã giảng viên: {{member.ma_giang_vien}}
+                    div(ng-init="gv=true;", ng-click="gv=!gv;")
+                        span.input-group-addon(style="background:none; border:none;")
+                        span.glyphicon.glyphicon-chevron-right(ng-show="gv")
+                        span.glyphicon.glyphicon-chevron-down(ng-show="!gv")
+                        span Mã giảng viên: {{member.ma_giang_vien}}
+                        ul(ng-hide="gv")
+                            li Tên giảng viên: {{member.ten_giang_vien}}
             h3 {{list_rp}}
         div(ng-controller="create")
             div(ng-init="add=true", ng-click="add=!add;")

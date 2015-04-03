@@ -9,6 +9,7 @@ var findTheoryClass=require('./findTheoryClass');
 var findPracticeClass=require('./findPracticeClass');
 var findTheoryInfo=require('./findTheoryInfo');
 var findPracticeInfo=require('./findPracticeInfo');
+var findTeacherById=require('./findTeacherById');
 var session=require('./session/session');
 var user=require('./user/user');
 
@@ -18,6 +19,7 @@ router.use('/findStudentById',findStudentById);
 router.use('/findtheoryclass',findTheoryClass);
 router.use('/findPracticeClass',findPracticeClass);
 router.use('/findTheoryInfo',findTheoryInfo);
+router.use('/findTeacher',findTeacherById);
 router.use('/findPracticeInfo',findPracticeInfo);
 router.use('/user',user);
 router.use('/session',session);
