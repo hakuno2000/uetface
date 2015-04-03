@@ -23,11 +23,13 @@ block content
             ul(ng-repeat="practice in practices") {{practice.ten_mon}}
                 li Mã lớp: {{practice.ma_lop}}
                 li Nhóm: {{practice.ghi_chu}}
+                li Thứ: {{practice.thu}}
                 li Tiết: {{practice.tiet_bat_dau+'-'+ practice.tiet_ket_thuc}}
                 li Giảng đường: {{ practice.giang_duong}}
             ul(ng-repeat="theory in theories") {{theory.ten_mon}}
                 li Mã lớp: {{theory.ma_lop}}
                 li Nhóm: {{theory.ghi_chu}}
+                li Thứ: {{theory.thu}}
                 li Tiết: {{theory.tiet_bat_dau+'-'+ theory.tiet_ket_thuc}}
                 li Giảng đường: {{ theory.giang_duong}}
         script(src="/javascripts/user.js").
