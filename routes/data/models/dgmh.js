@@ -4,4 +4,5 @@
 var mongoose=require('./../db');
 var dgmh_schema=require('./../schemas/dgmh');
 var dgmh=mongoose.model('dgmh',dgmh_schema,'dgmh');
+
 module.exports=dgmh;
