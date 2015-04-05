@@ -3,17 +3,11 @@
  */
 var user=angular.module('user',[]);
 user.controller('timetable',function($scope,$http,$q){
-    $http.get('/api/findTheoryClass')
+    $http.get('/api/user/find_class')
         .success(function(data){
-            $scope.theories=data;
+            $scope.theories=data[0];
+            $scope.practices=data[1];
         }).error(function(data){
             console.log(data);
         });
-    $http.get('/api/findPracticeClass')
-        .success(function(data){
-            $scope.practices=data;
-        }).error(function(data){
-            console.log(data);
-        });
-
 });
