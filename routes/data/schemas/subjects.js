@@ -3,6 +3,7 @@
  */
 var mongoose=require('mongoose');
 var mongoosePaginate=require('mongoose-paginate');
+var deepPopulate = require('mongoose-deep-populate');
 var subject=new mongoose.Schema({
     ma_mon:String,
     ten_mon: String,
@@ -12,4 +13,5 @@ var subject=new mongoose.Schema({
     mo_ta:String
 });
 subject.plugin(mongoosePaginate);
+subject.plugin(deepPopulate);
 module.exports=subject;

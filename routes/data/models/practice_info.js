@@ -3,5 +3,6 @@
  */
 var mongoose=require('./../db');
 var practice_info_schema=require('./../schemas/practice_info')
-var practice_info=mongoose.model('practice_info',practice_info_schema,'lopthuchanh');
+var practice_info=mongoose.model('lopthuchanh',practice_info_schema,'lopthuchanh');
+
 module.exports=practice_info;

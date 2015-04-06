@@ -3,5 +3,6 @@
  */
 var mongoose=require('./../db');
 var subjects_Schema=require('./../schemas/subjects');
-var subjects=mongoose.model('subjects',subjects_Schema,'monhoc');
+var subjects=mongoose.model('monhoc',subjects_Schema,'monhoc');
+
 module.exports=subjects;
