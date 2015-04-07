@@ -1,6 +1,7 @@
 extends layout
 
 block content
+
   script(src="javascripts/index.js")
   nav(class="navbar navbar-default navbar-fixed-top")
     div.container
@@ -20,30 +21,35 @@ block content
           input#login.btn.btn-default(name="login", type="submit", value="Đăng nhập")
 
   div.container
+
       br
       div.col-sm-6.col-md-6
           br
           br
-          img(src='images/logo.png' width='500px' height='400px')
+          img(src='images/logo.png')
       div.col-sm-6.col-md-6
           br
           div.register_form
               div.form-group
                   h2(style="color:red;") #{Reg_rp}
                   h1 Đăng Ký
-              form(method="post", action="/", name="reg_form", ng-app="form")
+
+
+              form(method="post", action="/", name="reg_form" , ng-app = "myApp" , ng-controller="myCtrl")
                   div.input-group.form-group
                       span.input-group-addon
                           span.glyphicon.glyphicon-barcode
-                      input.form-control(name="std_id", type="text", placeholder="Mã sinh viên")
+                      input.form-control(name="std_id",id = "msv" , maxlength= 8 ,type="text", placeholder="Mã sinh viên" , ng-blur = "check_MSV()" , ng-model="msv")
+
+                  p {{checkMSV}}
                   div.input-group.form-group
                       span.input-group-addon
                           span.glyphicon.glyphicon-education
-                      input.form-control(name="std_name",type="text", placeholder="Họ tên")
+                      input.form-control(name="std_name",id = "name" , type="text",disabled , placeholder="Họ tên" , ng-model="name")
                   div.input-group.form-group
                       span.input-group-addon
                           span.glyphicon.glyphicon-book
-                      input.form-control(name="std_grade", type="text", placeholder="Lớp khóa học")
+                      input.form-control(name="std_grade",id = "lop" type="text",disabled, placeholder="Lớp khóa học" , ng-model="lop")
                   div.input-group.form-group
                       span.input-group-addon
                           span.glyphicon.glyphicon-user
@@ -51,11 +57,14 @@ block content
                   div.input-group.form-group
                       span.input-group-addon
                           span.glyphicon.glyphicon-envelope
-                      input.form-control(name="reg_email", type="email", placeholder="Email")
+                      input.form-control(name="reg_email", type="email", placeholder="Email"  )
+
                   div.input-group.form-group
                       span.input-group-addon
                           span.glyphicon.glyphicon-lock
-                      input.form-control(name="reg_pass", type="password", placeholder="Mật khẩu")
+                      input.form-control(name="reg_pass", type="password", placeholder="Mật khẩu" , ng-blur="check_pass()" , ng-model="pass")
+                  p {{checkPass}}
+
                   div.input-group.form-group
                       label.radio-inline
                             input#Male(name="sex", type="radio", value="nam",checked)
@@ -64,4 +73,12 @@ block content
                             input#FeMale(name="sex", type="radio",value="nữ")
                             |Nữ
                   div.input-group.form-group
-                    input.btn.btn-default(name="register", type="submit", value="Đăng ký")
+                    input.btn.btn-default(name="register", type="submit", value="Đăng ký" , ng-disabled="isDisabled")
+
+
+
+
+
+
+
+
