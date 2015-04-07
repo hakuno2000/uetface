@@ -9,70 +9,33 @@ process.controller('list',function($scope,$http){
                 $scope.dgmh_rp=data.content;
             }else{
                 data.forEach(function(value){
-                    $http.get('/api/findSubjectById/'+value.ma_mon)
-                        .success(function(data){
-                            if(data.type=="error"){
-                                $scope.dgmh_rp=data.content;
-                            }else{
-                                var temp=data;
-                                value.ma_mon_hoc=temp[0].ma_mon;
-                                value.ten_mon=temp[0].ten_mon;
-                            }
-                        }).error(function(data){
-                            console.log(data);
-                        });
-                    $http.get('/api/findtheoryinfo/'+value.ma_lop)
-                        .success(function(data){
-                            if(data.type=="error"){
-                            }else{
-                                value.tiet_bat_dau=data[0].tiet_bat_dau;
-                                value.tiet_ket_thuc=data[0].tiet_ket_thuc;
-                                value.thu=data[0].thu;
-                                value.giang_duong=data[0].giang_duong;
-                            }
-                        }).error(function(data){
-                            console.log(data);
-                        });
-                    $http.get('/api/findpracticeinfo/'+value.ma_lop)
-                        .success(function(data){
-                            if(data.type=="error"){
-                            }else{
-                                value.tiet_bat_dau=data[0].tiet_bat_dau;
-                                value.tiet_ket_thuc=data[0].tiet_ket_thuc;
-                                value.thu=data[0].thu;
-                                value.giang_duong=data[0].giang_duong;
-                            }
-                        }).error(function(data){
-                            console.log(data);
-                        })
-                    $http.get('/api/findteacher/'+value.ma_giang_vien)
-                        .success(function(data){
-                            if(data.type=="error"){
-                            }else{
-                                value.ten_giang_vien=data[0].ho_va_ten;
-                            }
-                        }).error(function(data){
-                            console.log(data);
-                        })
+                    if(!value.hasOwnProperty('ma_lop_thuc_hanh')){
+                        var temp=value.ma_lop_mon_hoc;
+                        value.ma_lop=temp.ma_danh_gia;
+                        value.tiet_bat_dau=temp.tiet_bat_dau;
+                        value.tiet_ket_thuc=temp.tiet_ket_thuc;
+                        value.thu=temp.thu;
+                        value.giang_duong=temp.giang_duong;
+                        value.ma_mon=temp.thong_tin_mon.ma_danh_gia;
+                        value.ten_mon=temp.thong_tin_mon.ten_mon;
+                        value.ma_mon_hoc=temp.thong_tin_mon.ma_mon;
+                    }else{
+                        var temp=value.ma_lop_thuc_hanh;
+                        value.ma_lop=temp.ma_danh_gia;
+                        value.tiet_bat_dau=temp.tiet_bat_dau;
+                        value.tiet_ket_thuc=temp.tiet_ket_thuc;
+                        value.thu=temp.thu;
+                        value.giang_duong=temp.giang_duong;
+                        value.ma_mon=temp.thong_tin_mon.ma_danh_gia;
+                        value.ten_mon=temp.thong_tin_mon.ten_mon;
+                        value.ma_mon_hoc=temp.thong_tin_mon.ma_mon;
+                    }
                 });
                 $scope.list=data;
             }
         }).error(function(data){
            console.log(data);
         });
-    $scope.SubjectName=function(subjectId){
-        $http.get('/api/findSubjectById/'+subjectId)
-            .success(function(data){
-                if(data.type=="error"){
-                    $scope.dgmh_rp=data.content;
-                }else{
-                    return (data);
-
-                }
-            }).error(function(data){
-                console.log(data);
-            });
-    }
 }).controller('create',function($scope,$http){
 
 });

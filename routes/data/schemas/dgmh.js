@@ -1,10 +1,12 @@
-/**
+/*
  * Created by Phi on 3/25/2015.
  */
 var mongoose=require('mongoose');
+var deepPopulate = require('mongoose-deep-populate');
 var dgmh=new mongoose.Schema({
-    ma_mon:String,
-    ma_giang_vien:String,
+    ma_lop_mon_hoc:{type: mongoose.Schema.Types.ObjectId ,ref:'lopmonhoc'},
+    ma_lop_thuc_hanh: {type: mongoose.Schema.Types.ObjectId ,ref:'lopthuchanh'},
+    ma_giang_vien: {type: mongoose.Schema.Types.ObjectId ,ref:'giangvien'},
     ma_sinh_vien:String,
     1:Number,
     2:Number,
@@ -26,4 +28,5 @@ var dgmh=new mongoose.Schema({
     18:Number,
     comment:String
 });
+dgmh.plugin(deepPopulate);
 module.exports=dgmh;

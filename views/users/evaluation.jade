@@ -54,9 +54,9 @@ block content
                         span.input-group-addon(style="background:none; border:none;")
                         span.glyphicon.glyphicon-chevron-right(ng-show="gv")
                         span.glyphicon.glyphicon-chevron-down(ng-show="!gv")
-                        span Mã giảng viên: {{member.ma_giang_vien}}
+                        span Mã giảng viên: {{member.ma_giang_vien.ma_giang_vien}}
                         ul(ng-hide="gv")
-                            li Tên giảng viên: {{member.ten_giang_vien}}
+                            li Tên giảng viên: {{member.ma_giang_vien.ho_va_ten}}
             h3 {{list_rp}}
         div(ng-controller="create")
             div(ng-init="add=true", ng-click="add=!add;")
