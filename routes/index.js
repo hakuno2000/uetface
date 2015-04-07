@@ -24,6 +24,8 @@ router.post('/',function(req,res,next){
                     req.session.username = req.body.username;
                     req.session.user_id =result.ma_sinh_vien;
                     res.redirect('/users');
+                }else{
+                    res.render('index',{title:'4UET',Reg_rp:'Mật khẩu không đúng.'});
                 }
             }else{
                 res.redirect('/');
@@ -71,8 +73,9 @@ router.post('/',function(req,res,next){
                                             res.render('index',{title:'4UET',Reg_rp:'Email đã được đăng kí. Mời bạn chọn email khác.'});
                                             
                                         }else{
+                                            console.log(crypto.createHash('md5').update(req.body.reg_pass+secretKey).digest('hex'));
                                             user_reg.update({'ma_sinh_vien':req.body.std_id},{$set:{'tai_khoan':req.body.reg_user,
-                                                'mat_khau':crypto.createHash('md5').update(req.body.password+secretKey).digest('hex'),'email':req.body.reg_email.toLowerCase(),
+                                                'mat_khau':crypto.createHash('md5').update(req.body.reg_pass+secretKey).digest('hex'),'email':req.body.reg_email,
                                                 'active':1,'gioi_tinh':req.body.sex.toLowerCase()}},function(err,result){
                                                 if(err) {
                                                     console.log(err);

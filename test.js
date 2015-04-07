@@ -100,23 +100,34 @@ function doit(next){
 //var now=new Date();
 //var ex=crypto.createHash('sha256').update(now.toJSON()).digest('hex');
 //console.log(ex);
-var async=require('async');
-var mongoose=require('mongoose');
-var subjects =require('./routes/data/models/subjects');
-async.parallel([
-    function getIdTeacher(cb){
-        var teacher=require('./routes/data/models/teacher');
-        teacher.findOne({ma_giang_vien:'048'},{_id:1,ho_va_ten:1}).exec(cb);
-    },function getIdTheoryClass(cb){
-        var theory_info=require('./routes/data/models/theory_info');
-        theory_info.findOne({ma_danh_gia:'001'}).deepPopulate('thong_tin_mon').exec(cb);
-    },function getIdPracticeClass(cb){
-        var practice_info=require('./routes/data/models/practice_info');
-        practice_info.findOne({ma_danh_gia:'001'}).deepPopulate('thong_tin_mon').exec(cb);
-    }
-],function(err,result){
-    console.log(result[0])
-    var isNull=require('./routes/isNull');
-    console.log(isNull(result[1]));
-
-});
+//var async=require('async');
+//var mongoose=require('mongoose');
+//var subjects =require('./routes/data/models/subjects');
+//async.parallel([
+//    function getIdTeacher(cb){
+//        var teacher=require('./routes/data/models/teacher');
+//        teacher.findOne({ma_giang_vien:'048'},{_id:1,ho_va_ten:1}).exec(cb);
+//    },function getIdTheoryClass(cb){
+//        var theory_info=require('./routes/data/models/theory_info');
+//        theory_info.findOne({ma_danh_gia:'002'}).deepPopulate('thong_tin_mon').exec(cb);
+//    },function getIdPracticeClass(cb){
+//        var practice_info=require('./routes/data/models/practice_info');
+//        practice_info.findOne({ma_danh_gia:'002'}).deepPopulate('thong_tin_mon').exec(cb);
+//    }
+//],function(err,result){
+//    console.log(result[0])
+//    var isNull=require('./routes/isNull');
+//    if(isNull(result[1])&&isNull(result[2])){
+//        console.log('hu cau');
+//    }else{
+//        if(isNull(result[1])){
+//            console.log(result[2])
+//        }else{
+//            console.log(result[1]);
+//        }
+//    }
+//
+//
+//});
+var crypt=require('crypto');
+console.log(crypt.createHash('md5').update('Hongphi94'+'uetface').digest('hex'))

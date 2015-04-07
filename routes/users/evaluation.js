@@ -49,10 +49,10 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                         teacher.findOne({ma_giang_vien:req.body.tea_id},{_id:1,ho_va_ten:1}).exec(cb);
                     },function getIdTheoryClass(cb){
                         var theory_info=require('./../data/models/theory_info');
-                        theory_info.findOne({ma_danh_gia:req.body.cla_id}).deepPopulation('thong_tin_mon'),exec(cb);
+                        theory_info.findOne({ma_danh_gia:req.body.cla_id}).deepPopulate('thong_tin_mon').exec(cb);
                     },function getIdPracticeClass(cb){
                         var practice_info=require('./../data/models/practice_info');
-                        practice_info.findOne({ma_danh_gia:req.body.cla_id}).deepPopulation('thong_tin_mon'),exec(cb);
+                        practice_info.findOne({ma_danh_gia:req.body.cla_id}).deepPopulate('thong_tin_mon').exec(cb);
                     }
                 ],function(err,result){
                     var isNull=require('./../isNull');
@@ -64,10 +64,9 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                             res.json({type:'error',content:'Không có môn học phù hợp!'})
                         }else{
                             if(isNull(result[1])){
-                                var mlh=result[2]._id;
                                 var form= new dgmh({
                                     ma_giang_vien:mgv,
-                                    ma_lop:mlh,
+                                    ma_lop_thuc_hanh:result[2]._id,
                                     ma_sinh_vien:req.session.user_id,
                                     1:req.body.q1,
                                     2:req.body.q2,
@@ -95,13 +94,11 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                                         res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Đã có lỗi xảy ra!'});
                                     }
                                     res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Mẫu đánh giá tạo thành công!'});
-
                                 });
                             }else{
-                                var mlh=result[1]._id;
                                 var form= new dgmh({
                                     ma_giang_vien:mgv,
-                                    ma_lop:mlh,
+                                    ma_lop_mon_hoc:result[1]._id,
                                     ma_sinh_vien:req.session.user_id,
                                     1:req.body.q1,
                                     2:req.body.q2,
@@ -129,7 +126,6 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                                         res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Đã có lỗi xảy ra!'});
                                     }
                                     res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Mẫu đánh giá tạo thành công!'});
-
                                 });
                             }
                         }
