@@ -12,11 +12,9 @@ router.post('/',function(req,res){
         if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
         if(req.body.reg_user.length<6){
             res.json({type:'error',content:'Tài khoản nhỏ hơn 6 kí tự.'});
-            
         }else{
             if(req.body.reg_pass.length<6){
                 res.json({type:'error',content:'Mật khẩu nhỏ hơn 6 kí tự.'});
-                
             }else{
                 user_reg.findOne({'ma_sinh_vien':req.body.std_id},{_id:0,active:1},function(err,result){
                     if(err) {
@@ -51,10 +49,8 @@ router.post('/',function(req,res){
                                                 if(err) {
                                                     console.log(err);
                                                     res.json({type:'error',content:'Lỗi server!'});
-                                                    
                                                 }
                                                 res.json({type:'success',token:token});
-                                                
                                             });
                                         }
                                     });
@@ -62,7 +58,6 @@ router.post('/',function(req,res){
                             });
                         }else{
                             res.json({type:'error',content:'Tài khoản đã được đăng kí!'});
-                            
                         }
                     }
                 });

@@ -13,6 +13,13 @@ router.get('/', function(req, res, next) {
         res.render('index', { title: '4UET' });
     }
 });
+router.get('/demo', function(req, res, next) {
+    if(req.session.username){
+        res.redirect('/users');
+    }else {
+        res.render('index2');
+    }
+});
 router.post('/',function(req,res,next){
     if(req.body.username!=''&&req.body.password&&req.body.login!='') {
         var user_login=require('./data/models/user_login');
