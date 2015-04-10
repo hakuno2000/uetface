@@ -470,6 +470,23 @@ inputs input:focus {
   outline: none;
   box-shadow: 0 0 0 1px #e8c291 inset;
 }
+nav #register-content {
+	display: none;
+	position: absolute;
+	top: 50px;
+	right: 0;
+	z-index: 999;
+	background: #fff;
+	background-image: linear-gradient(top, #fff, #eee);
+	padding: 15px;
+	box-shadow: 0 2px 2px -1px rgba(0,0,0,.9);
+	border-radius: 3px 0 3px 3px;
+}
+nav li #login-register {
+	right: 0;
+	width: 250px;
+	background-color:#F3F3F3;
+}
 
 /*--------------------*/
 
@@ -477,7 +494,7 @@ inputs input:focus {
   margin: 10px 0 0 0;
 }
 
-#login #submit {    
+#login #submit {
   background-color: #d14545;
   background-image: linear-gradient(top, #e97171, #d14545);
   -moz-border-radius: 3px;
@@ -496,12 +513,12 @@ inputs input:focus {
 }
 
 #login #submit:hover,
-#login #submit:focus {    
+#login #submit:focus {
   background-color: #e97171;
   background-image: linear-gradient(top, #d14545, #e97171);
 } 
 
-#login #submit:active {   
+#login #submit:active {
   outline: none;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;   
 }
