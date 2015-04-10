@@ -21,9 +21,7 @@ router.post('/',function(req,res){
                 user_login.update({'token':req.body.token},{$set:{token:''}},function(err,result){
                     if (err) {
                         console.log(err);
-                        
                     }
-                    
                 });
             }
         });

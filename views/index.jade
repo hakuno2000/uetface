@@ -6,8 +6,8 @@ block content
   nav(class="navbar navbar-default navbar-fixed-top")
     div.container
       ul(class="nav navbar-nav")
-          li(class="active")
-            h1.navbar-header #{title}
+          a.navbar-brand
+            img(src="images/logo.png")
 
       form.navbar-form.navbar-right.form-inline(method="post", action="", name="login_form")
           div.input-group.form-group
@@ -26,7 +26,6 @@ block content
       div.col-sm-6.col-md-6
           br
           br
-          img(src='images/logo.png')
       div.col-sm-6.col-md-6
           br
           div.register_form
@@ -74,11 +73,3 @@ block content
                             |Nữ
                   div.input-group.form-group
                     input.btn.btn-default(name="register", type="submit", value="Đăng ký" , ng-disabled="isDisabled")
-
-
-
-
-
-
-
-
