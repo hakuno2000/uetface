@@ -482,7 +482,7 @@ nav #register-content {
 	box-shadow: 0 2px 2px -1px rgba(0,0,0,.9);
 	border-radius: 3px 0 3px 3px;
 }
-nav li #login-register {
+nav li #register-content {
 	right: 0;
 	width: 250px;
 	background-color:#F3F3F3;

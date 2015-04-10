@@ -25,7 +25,10 @@
   },
   "description": "uetface project. he thong danh gia mon hoc cua truong dai hoc cong nghe",
   "main": "app.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "1st mem": "phi ph",
+    "2st mem": "phong nt"
+  },
   "repository": {
     "type": "git",
     "url": "http://bitbucket.org/phiph_57/uetface.git"
