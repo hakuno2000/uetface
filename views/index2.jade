@@ -16,18 +16,19 @@ html(lang='en')
       // Preloader
       link(rel='stylesheet', href='stylesheets/preloader.css', type='text/css', media='screen, print')
       // Icon Font
-      link(href='stylesheets/style2.css', rel='stylesheet', type='text/css')
+
       link(rel='stylesheet', href='stylesheets/owl.carousel.css')
       link(rel='stylesheet', href='stylesheets/owl.theme.default.css')
       // Animate CSS
       link(rel='stylesheet', href='stylesheets/animate.css')
       // Bootstrap
       link(href='stylesheets/bootstrap.min.css', rel='stylesheet')
+      link(href='stylesheets/style2.css', rel='stylesheet', type='text/css')
       // Style
       //link(href='stylesheets/style.css', rel='stylesheet')
       // Responsive CSS
       link(href='stylesheets/responsive.css', rel='stylesheet')
-      script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js')
+      //script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js')
       // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
       // WARNING: Respond.js doesn't work if you view the page via file://
       //if lt IE 9
@@ -70,14 +71,23 @@ html(lang='en')
                            a#login-trigger Đăng nhập
                            #login-content
                               form(action="/" method="POST")
-                                 fieldset#inputs
-                                    input#username.form-control(type='text', name='username', placeholder='Username', required='')
-                                    input#password.form-control(type='password', name='password', placeholder='Password', required='')
-                                 fieldset#actions
-                                    input#submit.btn.btn-default(type='submit', value='Log in')
+                                 fieldset.inputs
+                                    input.username.form-control(type='text', name='username', placeholder='Username', required='')
+                                    input.password.form-control(type='password', name='password', placeholder='Password', required='')
+                                 fieldset.actions
+                                    input.submit.btn.btn-default(type='submit', value='Đăng nhập')
                                     label
                                        input(type='checkbox', checked='checked')
                                        |  Keep me signed in
+                        li
+                           a#register-trigger Đăng ký
+                           #register-content
+                              form(action="/" method="POST")
+                                 fieldset
+                                    input.form-control(type='text', name='username', placeholder='Username', required='')
+                                    input.form-control(type='password', name='password', placeholder='Password', required='')
+                                 fieldset
+                                    input.submit.btn.btn-default(type='submit', value='Đăng ký')
             .container
                .row
                   .col-md-12.text-center
@@ -304,7 +314,7 @@ html(lang='en')
                      .copyright_text.wow.fadeInUp.animated
                         p
                            | © 4UET 2015.All Right Reserved By
-                           a(href='http://www.4uet.com', target='_blank') FAILED TEAM
+                           a(href='http://www.4uet.com', target='_blank')  FAILED TEAM
                         p We love code.
       //
         =========================
@@ -316,6 +326,7 @@ html(lang='en')
       script(src='javascripts/owl.carousel.js')
       script(src='javascripts/wow.js')
       script(src='javascripts/script.js')
+      //script(src='javascripts/index.js')
       script.
          $(document).ready(function () {
             $('#login-trigger').click(function () {
@@ -323,5 +334,11 @@ html(lang='en')
                $(this).toggleClass('active');
                if ($(this).hasClass('active')) $(this).find('span').html('&#x25B2;')
                else $(this).find('span').html('&#x25BC;')
+            });
+            $('#register-trigger').click(function(){
+               $(this).next('#register-content').slideToggle();
+               $(this).toggleClass('active');
+               if($(this).hasClass('active')) $(this).find('span').html('&#x25B2;');
+               else $(this).find('span').html('&#x25B2;');
             })
          });
