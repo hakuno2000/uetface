@@ -62,7 +62,7 @@ block content
                   div.input-group.form-group
                       span.input-group-addon
                           span.glyphicon.glyphicon-lock
-                      input.form-control(name="reg_pass", type="password", placeholder="Mật khẩu" , ng-blur="check_pass()" , ng-model="pass")
+                      input.form-control(name="reg_pass", type="password", placeholder="Mật khẩu" , ng-keyup="check_pass(e)" , ng-model="pass")
                   p {{checkPass}}
 
                   div.input-group.form-group
