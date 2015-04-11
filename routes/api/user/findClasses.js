@@ -33,7 +33,6 @@ router.post('/',function(req,res){
     var theory=require('./../../data/models/theory');
     var practice=require('./../../data/models/practice');
     if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
-    console.log(req.body);
     user.findOne({token:req.body.token}).exec(function(err,result){
         console.log(result);
         if(err) res.json({type:'error',content:'Có lỗi xảy ra!'});

@@ -2,9 +2,8 @@
    Created by Phi on 1/30/2015.
 extends ../layout
 block content
-
     header#HOME(style='background: none;')
-        .section_overlay
+        section
             nav.navbar.navbar-default.navbar-fixed-top
                 .container
                     // Brand and toggle get grouped for better mobile display
@@ -80,22 +79,22 @@ block content
                             span(style="font-size:1.5em") Tạo mới mẫu đánh giá
                     div(ng-hide="!add", style="font-size:25px")
                         br
-                        form(method="post",action="", name="danhgia")
+                        form()
                             div.row
                                 div.col-sm-2.col-md-2
                                     strong Môn học:
                                 div.col-sm-4.col-md-4
-                                    input.form-control#subject(name='subject', type='text', placeholder='Môn học',autocomplete="false")
+                                    input.form-control(name='subject', type='text', placeholder='Môn học',autocomplete="false",ng-model="form.subject")
                             div.row
                                 div.col-sm-2.col-md-2
                                     strong Lớp môn học:
                                 div.col-sm-4.col-md-4
-                                    input.form-control#teacher_Name(name='cla_name', type='text', placeholder='Lớp môn học',autocomplete="false")
+                                    input.form-control( type='text', placeholder='Lớp môn học',autocomplete="false",ng-model="form.cla_id")
                             div.row
                                 div.col-sm-2.col-md-2
                                     strong Giảng viên:
                                 div.col-sm-4.col-md-4
-                                    input.form-control#student_Name(name='tea_name', type='text', placeholder='Giảng viên',autocomplete="false")
+                                    input.form-control( type='text', placeholder='Giảng viên',autocomplete="false",ng-model="form.tea_id")
                             div.row
                                 label.col-sm-2.col-md-2
                                     strong Mã sinh viên:
@@ -112,15 +111,15 @@ block content
                                         span.question
                                             strong=question
                                     td(style="float:right; min-width:180px;")
-                                        input.css-checkbox(type='radio', name='q'+stt, id="radio1"+stt)
+                                        input.css-checkbox(type='radio', name='q'+stt, id="radio1"+stt,value=1,ng-model='form.q'+stt)
                                         label.css-label.radGroup2(for='radio1'+stt) 1
-                                        input.css-checkbox(type='radio', name='q'+stt, id="radio2"+stt)
+                                        input.css-checkbox(type='radio', name='q'+stt, id="radio2"+stt,value=2,ng-model='form.q'+stt)
                                         label.css-label.radGroup2(for='radio2'+stt) 2
-                                        input.css-checkbox(type='radio', name='q'+stt, id="radio3"+stt)
+                                        input.css-checkbox(type='radio', name='q'+stt, id="radio3"+stt,value=3,ng-model='form.q'+stt)
                                         label.css-label.radGroup2(for='radio3'+stt) 3
-                                        input.css-checkbox(type='radio', name='q'+stt,id="radio4"+stt)
+                                        input.css-checkbox(type='radio', name='q'+stt,id="radio4"+stt,value=4,ng-model='form.q'+stt)
                                         label.css-label.radGroup2(for='radio4'+stt) 4
-                                        input.css-checkbox(type='radio', name='q'+stt, id="radio5"+stt)
+                                        input.css-checkbox(type='radio', name='q'+stt, id="radio5"+stt,value=5,ng-model='form.q'+stt)
                                         label.css-label.radGroup2(for='radio5'+stt) 5
                             style.
                                 input[type=radio].css-checkbox {
@@ -150,13 +149,10 @@ block content
                                     -ms-user-select: none;
                                     user-select: none;
                                 }
-                            .container
-                                |Nếu bạn có ý kiến đóng góp khác, thì tô kín vào ô số 1, sau đó ghi ở dưới đây:
-                                span(style="float:right")
-                                    input.css-checkbox(type='radio', name='q'+stt, id="comment")
-                                    label.css-label.radGroup2(for='comment') 1
+                            tr
+                                |Nếu bạn có ý kiến đóng góp khác, xin mời ghi ở dưới đây:
                                 br
-                                textarea(name='comment', rows='4', cols='80')
+                                textarea(name='comment', rows='4',style="width:100%;",ng-mode="form.comment")
                                 br
                                 center Cám ơn những ý kiến đóng góp quý báu của bạn!
-                                input(type="submit", name="submit_form", value="gửi đi")
+                                input(type="submit", name="submit_form", value="gửi đi",ng-click="submit(form)")

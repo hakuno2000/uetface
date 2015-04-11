@@ -37,5 +37,12 @@ process.controller('list',function($scope,$http){
            console.log(data);
         });
 }).controller('create',function($scope,$http){
-
+    $scope.submit=function(data){
+        $http.post('/evaluation',data)
+            .success(function(data){
+            console.log(data);
+            }).error(function(data){
+                console.log(data);
+            })
+    }
 });

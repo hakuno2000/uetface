@@ -28,15 +28,13 @@ router.get('/demo',function(req,res,next){
 });
 router.post('/',userNotLoggedIn,function(req,res,next){
         console.log(req.body);
-        if(req.body.subject!=''&&req.body.sub_id!=''&&req.body.cla_id!==''&&
-            req.body.tea_id!=''&&req.body.cla_name!=''&&req.body.tea_name!=''
+        if(req.body.cla_id!==''&& req.body.tea_id!=''
             &&req.body.q1!=''&&req.body.q2!=''&&req.body.q3!=''&&req.body.q4!=''&&req.body.q5!=''&&req.body.q6!=''
             &&req.body.q7!=''&&req.body.q8!=''&&req.body.q9!=''&&req.body.q10!=''&&req.body.q11!=''&&req.body.q12!=''
             &&req.body.q13!=''&&req.body.q14!=''&&req.body.q15!=''&&req.body.q16!=''&&req.body.q17!=''
             &&req.body.q18!=''
         ){
-            if(req.body.subject&&req.body.sub_id&&req.body.cla_id&&
-                req.body.tea_id&&req.body.cla_name&&req.body.tea_name
+            if(req.body.cla_id&&req.body.tea_id
                 &&req.body.q1&&req.body.q2&&req.body.q3&&req.body.q4&&req.body.q5&&req.body.q6
                 &&req.body.q7&&req.body.q8&&req.body.q9&&req.body.q10&&req.body.q11&&req.body.q12
                 &&req.body.q13&&req.body.q14&&req.body.q15&&req.body.q16&&req.body.q17&&req.body.q18){
@@ -61,7 +59,7 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                     }else{
                         var mgv=result[0]._id;
                         if(isNull(result[1])&&isNull(result[2])){
-                            res.json({type:'error',content:'Không có môn học phù hợp!'})
+                            res.json({type:'error',content:'Không có lớp môn học phù hợp!'})
                         }else{
                             if(isNull(result[1])){
                                 var form= new dgmh({
@@ -91,9 +89,9 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                                 form.save(function(err){
                                     if(err) {
                                         console.log(err);
-                                        res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Đã có lỗi xảy ra!'});
+                                        res.json({type:'error',content:'Lỗi server!'});
                                     }
-                                    res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Mẫu đánh giá tạo thành công!'});
+                                    res.json({type:'success',content:'Mẫu đánh giá tạo thành công!'});
                                 });
                             }else{
                                 var form= new dgmh({
@@ -123,19 +121,19 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                                 form.save(function(err){
                                     if(err) {
                                         console.log(err);
-                                        res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Đã có lỗi xảy ra!'});
+                                        res.json({type:'error',content:'Lỗi server!'});
                                     }
-                                    res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Mẫu đánh giá tạo thành công!'});
+                                    res.json({type:'success',content:'Mẫu đánh giá tạo thành công!'});
                                 });
                             }
                         }
                     }
                 })
             }else{
-            res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Bạn đã nhập thiếu thông tin!'});
+                res.json({type:'error',content:'Bạn đã nhập thiếu thông tin!'});
             }
         }else{
-            res.render('users/evaluation',{user:req.session.username,title:'Đánh giá môn học',std_id:req.session.user_id,Rp_Form:'Bạn đã nhập thiếu thông tin!'});
+            res.json({type:'error',content:'Bạn đã nhập thiếu thông tin!'});
         }
 });
 
