@@ -5,10 +5,13 @@ var day, i , number;
 function xoa(tiet ,so_tiet){
     var part = tiet.split("_");
     var so = parseInt(part[1]);
-
+    //console.log(tiet + "  " + so_tiet);
     for (var i = 1; i < so_tiet; i++){
         var phantu = document.getElementById(part[0] + "_" + (so + i));
-        phantu.parentNode.removeChild(phantu);
+        //console.log(part[0] + "_" + (so + i));
+        var xoaPhantu = phantu.parentNode;
+        xoaPhantu.removeChild(phantu);
+        //phantu.parentNode.removeChild(phantu);
     }
     document.getElementById(tiet).setAttribute("rowspan",so_tiet);
 }
@@ -19,7 +22,7 @@ function chuyen(thu){
     if(thu == 5) return "thu";
     if(thu == 6) return "fri";
     if(thu == 7) return "sat";
-    if(thu == "Ch? nh?t") return "sun";
+    if(thu == "CN") return "sun";
 }
 var user=angular.module('user',[]);
 user.controller('timetable',function($scope,$http,$q){
@@ -34,8 +37,8 @@ user.controller('timetable',function($scope,$http,$q){
                 day = chuyen($scope.theories[i].thong_tin_lop.thu )+ "_" + $scope.theories[i].thong_tin_lop.tiet_bat_dau;
                 number = $scope.theories[i].thong_tin_lop.tiet_ket_thuc - $scope.theories[i].thong_tin_lop.tiet_bat_dau + 1 ;
                 xoa(day,number);
-
                 $("#"+day).html($scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon +"<br>(" + $scope.theories[i].thong_tin_lop.giang_duong + ")");
+
             }
 
 
