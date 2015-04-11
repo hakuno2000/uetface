@@ -44,7 +44,10 @@ index.controller('myCtrl',function($scope,$http){
     $scope.check_pass = function(){
         $scope.isDisabled = true;
         test_pass = false;
-
+        if($scope.pass.length < 6){
+            $scope.checkPass = "Mật khẩu phải có ít nhất 6 ký tự !";
+        }
+        /*
         var p1 = /[a-z]/.test($scope.pass);
         if(p1 == false){
             $scope.checkPass = "Mật khẩu cần có chữ cái thường !";
@@ -59,8 +62,8 @@ index.controller('myCtrl',function($scope,$http){
         if(p3 == false){
             $scope.checkPass = "Mật khẩu cần có chữ số !";
         }
-
-        if (p1 == true && p2 == true && p3 == true){
+        */
+        else {
             $scope.checkPass = "";
             test_pass = true;
             if(test_msv == true && test_pass == true){
