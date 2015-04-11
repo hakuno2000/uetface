@@ -8,9 +8,8 @@ function xoa(tiet ,so_tiet){
     //console.log(tiet + "  " + so_tiet);
     for (var i = 1; i < so_tiet; i++){
         var phantu = document.getElementById(part[0] + "_" + (so + i));
-        console.log(part[0] + "_" + (so + i));
+        //console.log(part[0] + "_" + (so + i));
         var xoaPhantu = phantu.parentNode;
-
         xoaPhantu.removeChild(phantu);
         //phantu.parentNode.removeChild(phantu);
     }
