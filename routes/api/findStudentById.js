@@ -10,7 +10,7 @@ router.get('/:std_id',function(req,res){
     var rq_id=req.params.std_id;
     var user_reg=require('./../data/models/user_reg');
     if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
-    user_reg.find({'ma_sinh_vien':new RegExp(rq_id, 'i')},{_id:0,ho_va_ten:1,lop_khoa_hoc:1},function(err,result){
+    user_reg.find({'ma_sinh_vien':rq_id},{_id:0,ho_va_ten:1,lop_khoa_hoc:1},function(err,result){
         if(err) {
             res.json({type:'error',content:'Lỗi server!'});
         }
@@ -18,17 +18,6 @@ router.get('/:std_id',function(req,res){
         else{
             res.json(result);
         }
-    });
-    process.on('SIGINT', function() {
-        mongoose.connection.close(function () {
-            console.log('Mongoose disconnected on app termination');
-            process.exit(0);
-        });
-    }).on('SIGTERM',function() {
-        mongoose.connection.close(function () {
-            console.log('Mongoose disconnected on app termination');
-            process.exit(0);
-        });
     });
 });
 

@@ -3,148 +3,109 @@
 extends ../layout
 block content
 
-    nav(class="navbar navbar-default navbar-fixed-top")
-        div.container
-            ul(class="nav navbar-nav")
-                li()
-                    a(href='/users') Trang chủ
-                li(class="active")
-                    a(href='/evaluation') Đánh giá môn học
-            ul.nav.navbar-nav.navbar-right
-                li
-                    a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{user}!
-                        span(class="caret")
-                    ul(class="dropdown-menu" role="menu")
-                        li
-                            a(href='/logout') Thoát ra
-    br
-    div.container.evaluate(ng-app="evaluate")
-        h2=Rp_Form
-        script(src="javascripts/evaluation.js").
-        div(ng-controller="list")
-            div(ng-init="add=false; count=0;", ng-click="add=!add;")
-                div {{dgmh_rp}}
-                div.input-group
-                    span.input-group-addon(style="background:none; border:none;")
-                        span.glyphicon.glyphicon-plus(ng-show="add")
-                        span.glyphicon.glyphicon-minus(ng-show="!add")
-                    span(style="font-size:1.5em") Danh sách đánh giá
-            div(ng-hide="add")
-                ul(ng-repeat="member in list")
-                    strong {{member.ten_mon}}
-                    div(ng-init="ml=true;", ng-click="ml=!ml;")
-                        span.input-group-addon(style="background:none; border:none;")
-                        span.glyphicon.glyphicon-chevron-right(ng-show="ml")
-                        span.glyphicon.glyphicon-chevron-down(ng-show="!ml")
-                        span Mã lớp: {{member.ma_lop}}
-                        ul(ng-hide="ml")
-                            li Tiết học: {{member.tiet_bat_dau+'-'+member.tiet_ket_thuc}}
-                            li Thứ: {{member.thu}}
-                            li Giảng đường: {{member.giang_duong}}
+    header#HOME(style='background: none;')
+        .section_overlay
+            nav.navbar.navbar-default.navbar-fixed-top
+                .container
+                    // Brand and toggle get grouped for better mobile display
+                    .navbar-header
+                        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+                            span.sr-only Toggle navigation
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        a.navbar-brand(href='#')
+                            img(src='images/logo.png', alt='')
+                    // Collect the nav links, forms, and other content for toggling
+                    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+                        ul.nav.navbar-nav.navbar-right
+                            li
+                                a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{user}!
+                                    span(class="caret")
+                                ul(class="dropdown-menu" role="menu")
+                                    li
+                                        a(href='/logout') Thoát ra
+                        ul.nav.navbar-nav.navbar-right
+                            li
+                                a(href='/') TRANG CHỦ
+                            li()
+                                a(href='/evaluation') Đánh giá môn học
+        section#SERVICE.services
+            .container.evaluate(ng-app="evaluate")
+                h2=Rp_Form
+                script(src="javascripts/evaluation.js").
+                div(ng-controller="list")
+                    div(ng-init="add=false; count=0;", ng-click="add=!add;")
+                        div {{dgmh_rp}}
+                        div.input-group
+                            span.input-group-addon(style="background:none; border:none;")
+                                span.glyphicon.glyphicon-plus(ng-show="add")
+                                span.glyphicon.glyphicon-minus(ng-show="!add")
+                            span(style="font-size:1.5em") Danh sách đánh giá
+                    div(ng-hide="add")
+                        ul(ng-repeat="member in list")
+                            strong {{member.ten_mon}}
+                            div(ng-init="ml=true;", ng-click="ml=!ml;")
+                                span.input-group-addon(style="background:none; border:none;")
+                                span.glyphicon.glyphicon-chevron-right(ng-show="ml")
+                                span.glyphicon.glyphicon-chevron-down(ng-show="!ml")
+                                span Mã lớp: {{member.ma_lop}}
+                                ul(ng-hide="ml")
+                                    li Tiết học: {{member.tiet_bat_dau+'-'+member.tiet_ket_thuc}}
+                                    li Thứ: {{member.thu}}
+                                    li Giảng đường: {{member.giang_duong}}
 
-                    div(ng-init="mh=true;", ng-click="mh=!mh;")
-                        span.input-group-addon(style="background:none; border:none;")
-                        span.glyphicon.glyphicon-chevron-right(ng-show="mh")
-                        span.glyphicon.glyphicon-chevron-down(ng-show="!mh")
-                        span Mã đánh giá môn: {{member.ma_mon}}
-                        ul(ng-hide="mh")
-                            li Tên môn: {{member.ten_mon}}
-                            li Mã môn: {{member.ma_mon_hoc}}
-                    div(ng-init="gv=true;", ng-click="gv=!gv;")
-                        span.input-group-addon(style="background:none; border:none;")
-                        span.glyphicon.glyphicon-chevron-right(ng-show="gv")
-                        span.glyphicon.glyphicon-chevron-down(ng-show="!gv")
-                        span Mã giảng viên: {{member.ma_giang_vien.ma_giang_vien}}
-                        ul(ng-hide="gv")
-                            li Tên giảng viên: {{member.ma_giang_vien.ho_va_ten}}
-            h3 {{list_rp}}
-        div(ng-controller="create")
-            div(ng-init="add=true", ng-click="add=!add;")
-                div.input-group
-                    span.input-group-addon(style="background:none; border:none;")
-                        span.glyphicon.glyphicon-plus(ng-show="add")
-                        span.glyphicon.glyphicon-minus(ng-show="!add")
-                    span(style="font-size:1.5em") Tạo mới mẫu đánh giá
-            div(ng-hide="add")
-                br
-                form(method="post",action="", name="danhgia")
-                    table#info(border)
-                        div.row
-                            div.col-sm-4.col-md-4
-                                strong
-                                    center ĐẠI HỌC QUỐC GIA HÀ NỘI
-                                    center TRƯỜNG ĐẠI HỌC CÔNG NGHỆ
-                                    br
-                                    hr
-                            div.col-sm-8.col-md-8
-                                strong
-                                    center PHIẾU ĐÁNH GIÁ
-                                    center    MÔN HỌC/HOẠT ĐỘNG GIẢNG DẠY CỦA GV
-                                    center
-                                        i Học kỳ II, Năm học 2014-2015
-                                    hr
-                        div.row
-                            div.col-sm-6.col-md-6
-                                i
-                                    strong Thông tin cá nhân( bắt buộc):
-                            div.col-sm-2.col-md-2
-                                strong Mã môn học
-                            div.col-sm-2.col-md-2
-                                strong Mã lớp
-                            div.col-sm-2.col-md-2
-                                strong Mã giảng viên
-                        div.row
-                            div.col-sm-2.col-md-2
-                                strong Môn học:
-                            div.col-sm-4.col-md-4
-                                input#subject(name='subject', type='text', placeholder='Môn học')
-                            div.col-sm-2.col-md-2
-                                input#subject_ID(name='sub_id', type='text', placeholder='Mã môn học')
-                            div.col-sm-2.col-md-2
-                                input#class_ID(name='cla_id', type='text', placeholder='Mã lớp')
-                            div.col-sm-2.col-md-2
-                                input#teacher_ID(name='tea_id' type='text', placeholder='Mã giảng viên')
-                        div.row
-                            div.col-sm-2.col-md-2
-                                strong Lớp môn học:
-                            div.col-sm-4.col-md-4
-                                input#teacher_Name(name='cla_name', type='text', placeholder='Lớp môn học')
-                        div.row
-                            div.col-sm-2.col-md-2
-                                strong Giảng viên:
-                            div.col-sm-4.col-md-4
-                                input#student_Name(name='tea_name', type='text', placeholder='Giảng viên')
-                        div.row
-                            label.col-sm-2.col-md-2
-                                strong Mã sinh viên:
-                            div.col-sm-4.col-md-4.form-group
-                                input.input-group(name='stu_id',type='text', placeholder='Mã sinh viên', value=std_id,disabled)
-                        div.row
-                            div.col-md-8
-                                p (Chú ý: Sinh viên hoàn thành các nội dung trên sau đó ghi đầy đủ
-                                p    các Mã môn học, Mã lớp, Mã giảng viên bằng cách tô kín vào
-                                p    các ô của mã số tương ứng.
-                                p   Chúng tôi xin đảm bảo các câu trả lời sẽ được giữ kín, chúng tôi chỉ
-                                p    công bố kết quả tổng hợp trong bản báo cáo của nhà trường.
-                        div.row
-                            div.col-md-12
-                                p Thang đánh giá:
-                                center
-                                    p 1: Hoàn toàn không đồng ý; 2: Cơ bản không đồng ý; 3: Phân vân; 4: Cơ bản đồng ý; 5: Hoàn toàn đồng ý
-                                    p Đề nghị cho biết ý kiến của bạn bằng cách tô kín số tương ứng trong bảng dưới đây về từng vấn đề trong
-                                    p    quá trình học môn học này.
-                    table(border).col-md-12.col-sm-12
-                        tr
-                            td(colspan='2')
-                                center
-                                    strong Nội dung đánh giá
-                            td(colspan='5')
-                                center
-                                    strong Trả lời
+                            div(ng-init="mh=true;", ng-click="mh=!mh;")
+                                span.input-group-addon(style="background:none; border:none;")
+                                span.glyphicon.glyphicon-chevron-right(ng-show="mh")
+                                span.glyphicon.glyphicon-chevron-down(ng-show="!mh")
+                                span Mã đánh giá môn: {{member.ma_mon}}
+                                ul(ng-hide="mh")
+                                    li Tên môn: {{member.ten_mon}}
+                                    li Mã môn: {{member.ma_mon_hoc}}
+                            div(ng-init="gv=true;", ng-click="gv=!gv;")
+                                span.input-group-addon(style="background:none; border:none;")
+                                span.glyphicon.glyphicon-chevron-right(ng-show="gv")
+                                span.glyphicon.glyphicon-chevron-down(ng-show="!gv")
+                                span Mã giảng viên: {{member.ma_giang_vien.ma_giang_vien}}
+                                ul(ng-hide="gv")
+                                    li Tên giảng viên: {{member.ma_giang_vien.ho_va_ten}}
+                    h3 {{list_rp}}
+                div(ng-controller="create")
+                    div(ng-init="add=true", ng-click="add=!add;")
+                        div.input-group
+                            span.input-group-addon(style="background:none; border:none;")
+                                span.glyphicon.glyphicon-plus(ng-show="add")
+                                span.glyphicon.glyphicon-minus(ng-show="!add")
+                            span(style="font-size:1.5em") Tạo mới mẫu đánh giá
+                    div(ng-hide="!add", style="font-size:25px")
+                        br
+                        form(method="post",action="", name="danhgia")
+                            div.row
+                                div.col-sm-2.col-md-2
+                                    strong Môn học:
+                                div.col-sm-4.col-md-4
+                                    input.form-control#subject(name='subject', type='text', placeholder='Môn học',autocomplete="false")
+                            div.row
+                                div.col-sm-2.col-md-2
+                                    strong Lớp môn học:
+                                div.col-sm-4.col-md-4
+                                    input.form-control#teacher_Name(name='cla_name', type='text', placeholder='Lớp môn học',autocomplete="false")
+                            div.row
+                                div.col-sm-2.col-md-2
+                                    strong Giảng viên:
+                                div.col-sm-4.col-md-4
+                                    input.form-control#student_Name(name='tea_name', type='text', placeholder='Giảng viên',autocomplete="false")
+                            div.row
+                                label.col-sm-2.col-md-2
+                                    strong Mã sinh viên:
+                                div.col-sm-4.col-md-4.form-group
+                                    input.form-control(name='stu_id',type='text', placeholder='Mã sinh viên', value=std_id,disabled)
+                            br
+                            each nb_qs,value in {1:'Giảng đường đáp ứng nhu cầu của môn học.',2:'Các thiết bị tại giảng đường đáp ứng nhu cầu giảng dạy và học tập.',3:'Bạn được hỗ trợ kịp thời trong quá trình học môn này',4:'Mục tiêu của môn học nêu rõ kiến thức và kĩ năng người học cần đạt được.',5:'Thời lượng môn học được phân bổ hợp lí cho các hình thức học tập.',6:'Các tài liệu phục vụ môn học được cập nhật.',7:'Môn học góp phần trang bị kiến thức, kĩ năng nghề nghiệp cho bạn.',8:'Giảng viên hướng dẫn cho bạn phương pháp học tập khi bắt đầu môn học.',9:'Phương pháp giảng dạy của giảng viên giúp bạn phát triển tư duy phê phán',10:'Giảng viên tạo cơ hội để bạn chủ động tham gia vào quá trình học tập',11:'Giảng viên giúp bạn phát triển kĩ năng làm việc độc lập',12:'Giảng viên rèn luyện cho bạn phương pháp liên hệ giữa các vấn đề trong môn học với thực tiễn',13:'Giảng viên sử dụng hiệu quả phương tiện dạy học',14:'Giảng viên quan tâm giáo dục tư cách, phẩm chất nghề nghiệp của người học',15:'Bạn hiểu những vấn đề được truyền tải trên lớp ',16:'Kết quả học tập của người học được đánh giá bằng nhiều hình thức phù hợp với tính chất và đặc thù môn học',17:'Nội dung kiểm tra đánh giá tổng hợp được các kiến thức và kĩ năng mà người học phải đạt được theo yêu cầu',18:'Thông tin phản hồi từ kiểm tra đánh giá giúp bạn cải thiện kết quả học tập'}
+                                    +print_question(nb_qs,value)
 
-                        each nb_qs,value in {1:'Giảng đường đáp ứng nhu cầu của môn học.',2:'Các thiết bị tại giảng đường đáp ứng nhu cầu giảng dạy và học tập.',3:'Bạn được hỗ trợ kịp thời trong quá trình học môn này',4:'Mục tiêu của môn học nêu rõ kiến thức và kĩ năng người học cần đạt được.',5:'Thời lượng môn học được phân bổ hợp lí cho các hình thức học tập.',6:'Các tài liệu phục vụ môn học được cập nhật.',7:'Môn học góp phần trang bị kiến thức, kĩ năng nghề nghiệp cho bạn.',8:'Giảng viên hướng dẫn cho bạn phương pháp học tập khi bắt đầu môn học.',9:'Phương pháp giảng dạy của giảng viên giúp bạn phát triển tư duy phê phán',10:'Giảng viên tạo cơ hội để bạn chủ động tham gia vào quá trình học tập',11:'Giảng viên giúp bạn phát triển kĩ năng làm việc độc lập',12:'Giảng viên rèn luyện cho bạn phương pháp liên hệ giữa các vấn đề trong môn học với thực tiễn',13:'Giảng viên sử dụng hiệu quả phương tiện dạy học',14:'Giảng viên quan tâm giáo dục tư cách, phẩm chất nghề nghiệp của người học',15:'Bạn hiểu những vấn đề được truyền tải trên lớp ',16:'Kết quả học tập của người học được đánh giá bằng nhiều hình thức phù hợp với tính chất và đặc thù môn học',17:'Nội dung kiểm tra đánh giá tổng hợp được các kiến thức và kĩ năng mà người học phải đạt được theo yêu cầu',18:'Thông tin phản hồi từ kiểm tra đánh giá giúp bạn cải thiện kết quả học tập'}
-                            +print_question(nb_qs,value)
-
+<<<<<<< HEAD
                     mixin print_question(question,stt)
                         tr
                             td
@@ -175,3 +136,31 @@ block content
                     br
                     center Cám ơn những ý kiến đóng góp quý báu của bạn!
                     input(type="submit", name="submit_form", value="Gửi đi")
+=======
+                            mixin print_question(question,stt)
+                                .contain(style="font-size:25px")
+                                    span.number(style="padding:5px") #{stt}.
+                                    span.question
+                                        strong=question
+                                    span.answer(style="float:right")
+                                        |1
+                                        input(type='radio', name='q'+stt, value='1')
+                                        |2
+                                        input(type='radio', name='q'+stt, value='2')
+                                        |3
+                                        input(type='radio', name='q'+stt, value='3')
+                                        |4
+                                        input(type='radio', name='q'+stt, value='4')
+                                        |5
+                                        input(type='radio' name='q'+stt, value='5')
+                                    br
+                            .container
+                                |Nếu bạn có ý kiến đóng góp khác, thì tô kín vào ô số 1, sau đó ghi ở dưới đây:
+                                span(style="float:right") 1
+                                    input(type='radio', name='q'+stt, value='1')
+                                br
+                                textarea(name='comment', rows='4', cols='80')
+                                br
+                                center Cám ơn những ý kiến đóng góp quý báu của bạn!
+                                input(type="submit", name="submit_form", value="gửi đi")
+>>>>>>> 815fcd28423ca754fc7f79e2f5d808506eee416f

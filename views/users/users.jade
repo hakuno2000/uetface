@@ -2,6 +2,7 @@
    Created by PHI on 1/28/2015.
 extends ../layout
 block content
+<<<<<<< HEAD
     div.container
         nav(class="navbar navbar-default navbar-fixed-top")
             div(class="container")
@@ -180,3 +181,174 @@ block content
                 align : center;
             }
         script(src="/javascripts/user.js").
+=======
+    link(rel='stylesheet', type='text/css', href='stylesheets/normalize.css')
+    link(rel='stylesheet', type='text/css', href='stylesheets/demo.css')
+    link(rel='stylesheet', type='text/css', href='stylesheets/component.css')
+    header#HOME(style='background: none;')
+        .section_overlay
+            nav.navbar.navbar-default.navbar-fixed-top
+                .container
+                    // Brand and toggle get grouped for better mobile display
+                    .navbar-header
+                        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+                            span.sr-only Toggle navigation
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        a.navbar-brand(href='#')
+                            img(src='images/logo.png', alt='')
+                    // Collect the nav links, forms, and other content for toggling
+                    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+                        ul.nav.navbar-nav.navbar-right
+                            li
+                                a(href="#", class="dropdown-toggle", data-toggle="dropdown", role="button", aria-expanded="false") Xin chào #{user}!
+                                    span(class="caret")
+                                ul(class="dropdown-menu" role="menu")
+                                    li
+                                        a(href='/logout') Thoát ra
+                        ul.nav.navbar-nav.navbar-right
+                            li
+                                a(href='/') TRANG CHỦ
+                            li()
+                                a(href='/evaluation') Đánh giá môn học
+        section#SERVICE.services
+            .container
+                h2 Thời khóa biểu của bạn:
+                div.container.timetable(ng-app="user", ng-controller="timetable")
+                    table(border='2px solid black' align="center")
+                        tr
+                            th Tiết
+                            th Thứ 2
+                            th Thứ 3
+                            th Thứ 4
+                            th Thứ 5
+                            th Thứ 6
+                            th Thứ 7
+                           // th Chủ nhật
+                        tr
+                            th 1
+                            td(id="mon_1")
+                            td(id="tue_1")
+                            td(id="wed_1")
+                            td(id="thu_1")
+                            td(id="fri_1")
+                            td(id="sat_1")
+                            //td(id="sun_1")
+                        tr
+                            th 2
+                            td(id="mon_2")
+                            td(id="tue_2")
+                            td(id="wed_2")
+                            td(id="thu_2")
+                            td(id="fri_2")
+                            td(id="sat_2")
+                            //td(id="sun_2")
+                        tr
+                            th 3
+                            td(id="mon_3")
+                            td(id="tue_3")
+                            td(id="wed_3")
+                            td(id="thu_3")
+                            td(id="fri_3")
+                            td(id="sat_3")
+                            //td(id="sun_3")
+                        tr
+                            th 4
+                            td(id="mon_4")
+                            td(id="tue_4")
+                            td(id="wed_4")
+                            td(id="thu_4")
+                            td(id="fri_4")
+                            td(id="sat_4")
+                            //td(id="sun_4")
+                        tr
+                            th 5
+                            td(id="mon_5")
+                            td(id="tue_5")
+                            td(id="wed_5")
+                            td(id="thu_5")
+                            td(id="fri_5")
+                            td(id="sat_5")
+                            //td(id="sun_5")
+                        tr
+                            th NT
+                            td(colspan="6")
+                        tr
+                            th 6
+                            td(id="mon_6")
+                            td(id="tue_6")
+                            td(id="wed_6")
+                            td(id="thu_6")
+                            td(id="fri_6")
+                            td(id="sat_6")
+                            //td(id="sun_6")
+                        tr
+                            th 7
+                            td(id="mon_7")
+                            td(id="tue_7")
+                            td(id="wed_7")
+                            td(id="thu_7")
+                            td(id="fri_7")
+                            td(id="sat_7")
+                            //td(id="sun_7")
+                        tr
+                            th 8
+                            td(id="mon_8")
+                            td(id="tue_8")
+                            td(id="wed_8")
+                            td(id="thu_8")
+                            td(id="fri_8")
+                            td(id="sat_8")
+                            //td(id="sun_8")
+                        tr
+                            th 9
+                            td(id="mon_9")
+                            td(id="tue_9")
+                            td(id="wed_9")
+                            td(id="thu_9")
+                            td(id="fri_9")
+                            td(id="sat_9")
+                            //td(id="sun_9")
+                        tr
+                            th 10
+                            td(id="mon_10")
+                            td(id="tue_10")
+                            td(id="wed_10")
+                            td(id="thu_10")
+                            td(id="fri_10")
+                            td(id="sat_10")
+                            //td(id="sun_10")
+                        tr
+                            th 11
+                            td(id="mon_11")
+                            td(id="tue_11")
+                            td(id="wed_11")
+                            td(id="thu_11")
+                            td(id="fri_11")
+                            td(id="sat_11")
+                            //td(id="sun_10")
+
+
+
+
+                style(type='text/css').
+                    th,td{
+
+                        margin: 0;
+                        text-align: center;
+                        border-collapse: collapse;
+                        outline: 1px solid #e3e3e3;
+                    }
+                    td {
+                        width : 300px;
+                        padding: 5px 10px;
+                    }
+                    th
+                    {
+                        background: #666;
+                        color: white;
+                        padding: 5px 10px;
+                    }
+                script(src="/javascripts/user.js").
+>>>>>>> 815fcd28423ca754fc7f79e2f5d808506eee416f
