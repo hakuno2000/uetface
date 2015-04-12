@@ -9,9 +9,9 @@ var isNull=require('./../../isNull');
 router.post('/',function(req,res){
     console.log(req.body);
     var user=require('./../../data/models/user_login');
-    user.findOne({token:req.body.token}).exec(function(err,result){
+    user.findOne({token:req.body.token}).exec(function(err,std){
         if(err) res.json({type:'error',content:'Có lỗi xảy ra!'});
-        else if(isNull(result)){
+        else if(isNull(std)){
             res.json({type:'error',content:'Token không tồn tại.'})
         }else {
             if (req.body.cla_id !== '' && req.body.tea_id != ''
@@ -50,7 +50,7 @@ router.post('/',function(req,res){
                                     var form = new dgmh({
                                         ma_giang_vien: mgv,
                                         ma_lop_thuc_hanh: result[2]._id,
-                                        ma_sinh_vien: req.session.user_id,
+                                        ma_sinh_vien: std.ma_sinh_vien,
                                         1: req.body.q1,
                                         2: req.body.q2,
                                         3: req.body.q3,
