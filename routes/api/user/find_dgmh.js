@@ -25,6 +25,9 @@ router.get('/',function(req,res){
 router.post('/',function(req,res){
     var dgmh=require('./../../data/models/dgmh');
     var teacher=require('./../../data/models/teacher');
+    var theory=require('./../../data/models/theory_info');
+    var practice=require('./../../data/models/practice_info');
+    var subject=require('./../../data/models/subjects');
     var user=require('./../../data/models/user_login');
     user.findOne({token:req.body.token}).exec(function(err,result){
         if(err) res.json({type:'error',content:'Có lỗi xảy ra!'});
@@ -37,7 +40,7 @@ router.post('/',function(req,res){
                     res.json({type:'error',content:'Lỗi server!'});
                     console.log(err);
                 }
-                else if(isNull(result)){ res.json({type:'error',content:'Bạn chưa có đánh giá nào.'});}
+                else if(isNull(result)){ res.json({type:'success',content:'Bạn chưa có đánh giá nào.'});}
                 else{
                     res.json(result);
                 }
