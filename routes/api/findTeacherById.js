@@ -27,6 +27,7 @@ router.get('/:tea_id',function(req,res){
                     res.json(result3);
                 }
             });
+
         }
         else{
             res.json(result2);
@@ -45,6 +46,7 @@ router.get('/',function(req,res){
         }
         if(isNull(result2)){
             res.json({type:'error',content:'Không có thông tin liên quan'});
+
         }
         else{
             res.json(result2);

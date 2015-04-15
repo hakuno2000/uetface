@@ -16,7 +16,7 @@ router.post('/',function(req,res){
             user_login.findOne({'tai_khoan':req.body.username},{_id:0,ma_sinh_vien:1,mat_khau:1},function(err,result){
                 if (err) {
                     console.log(err);
-                    
+                    res.json({type:'error',content:'Lỗi server!'})
                 }
                 if(!isNull(result)){
                     if (crypto.createHash('md5').update(req.body.password+secretKey).digest('hex') == result.mat_khau) {

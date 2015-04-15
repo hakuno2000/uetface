@@ -1,5 +1,6 @@
 body{
 	font-family: 'Patrick Hand SC', cursive;
+	font-size:18px;
 }
 p{
 	font-family: 'Roboto', sans-serif;
@@ -564,6 +565,7 @@ nav li #register-content {
 div#ascrail2000 > div{
 	background-color:#26A65B !important;
 	border-color:#26A65B !important;
+	width:7px !important;
 }
 div#ascrail2000-hr > div{
 	background-color:#26A65B !important;
