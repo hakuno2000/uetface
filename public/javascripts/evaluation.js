@@ -53,7 +53,8 @@ process.controller('list',function($scope,$http){
                             sug_mon.appendChild(li);
                             li.onclick = function(){
                                 subject.value = this.innerHTML;
-                                teacher_Name.value = check(this.innerHTML);
+                                class_id.value = check(this.innerHTML);
+                                class_name.value = check2(this.innerHTML);
                                 suggest_mon.style.display="none";
                             }
                         }
@@ -63,6 +64,13 @@ process.controller('list',function($scope,$http){
                     suggest_mon.style.display="none";
                 }
                 function check(ck){
+                    for(var i = 0 ; i < $scope.theories.length ; i++){
+                        if(ck == $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon){
+                            return $scope.theories[i].thong_tin_lop.ma_danh_gia;
+                        }
+                    }
+                }
+                function check2(ck){
                     for(var i = 0 ; i < $scope.theories.length ; i++){
                         if(ck == $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon){
                             return $scope.theories[i].ma_lop;
@@ -100,7 +108,7 @@ process.controller('list',function($scope,$http){
                                 var maso = magv[0];
                                 name_gv.style.display='block';
                                 name_gv.value = magv[1];
-                                student_Name.value = maso;
+                                teacher_id.value = maso;
                                 suggest_teacher.style.display="none";
                             }
                         }

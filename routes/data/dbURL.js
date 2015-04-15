@@ -5,4 +5,4 @@
 
 var dbURL='mongodb://localhost/uetface';
 var dbURL_mongoLab='mongodb://thesonofdeath:hongphi@ds041821.mongolab.com:41821/uetface';
-module.exports=dbURL_mongoLab;
+module.exports=dbURL;
