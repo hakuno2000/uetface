@@ -85,11 +85,7 @@ block content
                                 div.col-sm-2.col-md-2
                                     strong Môn học:
                                 div.col-sm-4.col-md-4
-                                    input.form-control#subject(name='subject', type='text', placeholder='Môn học',autocomplete="false" ,ng-keyup="mon_hoc()" , ng-model="subject")
-                                    div(id="suggest_mon" , class = "suggest")
-                                        ul(id="sug_mon")
-
-
+                                    input.form-control#subject(name='subject', type='text', placeholder='Môn học',autocomplete="false" ,ng-keydown="mon_hoc()"  ng-model="subject")
                             div.row
                                 div.col-sm-2.col-md-2
                                     strong Lớp môn học:
@@ -99,10 +95,7 @@ block content
                                 div.col-sm-2.col-md-2
                                     strong Giảng viên:
                                 div.col-sm-4.col-md-4
-                                    input.form-control#student_Name(name='tea_name', type='text', placeholder='Giảng viên',autocomplete="false" , ng-keyup="tea_name()" , ng-model="giang_vien")
-                                    div(id="suggest_teacher" , class="suggest")
-                                        ul(id="sug_tea")
-                                    //span(class="form-control ng-valid ng-dirty ng-valid-parse ng-touched" style= " display : none" , id="name_gv")
+                                    input.form-control#student_Name(name='tea_name', type='text', placeholder='Giảng viên',autocomplete="false" , ng-keyup="tea_name()",  ng-model="giang_vien")
                                     input.form-control#name_gv(style="display:none")
                             div.row
                                 label.col-sm-2.col-md-2
@@ -185,8 +178,10 @@ block content
                                     border:black 1px solid;
                                     padding:2px;
                                 }
-                                .suggest li:hover {
+                                .active, .suggest li:hover {
                                     background-color: #CFD0DD;
+
+
                                 }
                             .container
                                 |Nếu bạn có ý kiến đóng góp khác, thì tô kín vào ô số 1, sau đó ghi ở dưới đây:
@@ -198,3 +193,4 @@ block content
                                 br
                                 center Cám ơn những ý kiến đóng góp quý báu của bạn!
                                 input(type="submit", name="submit_form", value="gửi đi")
+
