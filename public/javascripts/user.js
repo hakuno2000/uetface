@@ -53,6 +53,15 @@ user.controller('timetable',function($scope,$http,$q){
         }).error(function(data){
             console.log(data);
         });
+}).controller('add_class',function($http,$scope){
+    $scope.addClass=function(data){
+        $http.post('/api/user/add_class',data)
+            .success(function(data){
+                $scope.rp=data;
+            }).error(function(data){
+
+            });
+    }
 });
 
 
