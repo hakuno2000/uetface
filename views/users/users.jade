@@ -168,11 +168,15 @@ block content
                         padding: 5px 10px;
                     }
                 script(src="/javascripts/user.js").
-        section
+        section(style="margin-bottom:50px")
             .container
-                h2 Thêm môn
+                h2 Thêm lớp
                 h3 Tên môn
-                input(type="text")
+                input(type="text",name="subject",autocomplete="off")
+                h3 Tên lớp
+                input(type="text", name='class_id',autocomplete="off")
+                h3 Ghi chú
+                input(type="text", name='ghi_chu',autocomplete="off")
                 h3 Thứ
                 select
                     option(value="t2") Thứ 2
@@ -183,4 +187,6 @@ block content
                     option(value="t7") Thứ 7
                     option(value="cn") Chủ nhật
                 br
+                h3 Tiết
+                input(type="text", name='tiet',autocomplete="off")
                 input(type="submit")
