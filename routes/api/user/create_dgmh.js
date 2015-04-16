@@ -75,7 +75,7 @@ router.post('/',function(req,res){
                                         if (err) {
                                             console.log(err);
                                             res.json({type: 'error', content: 'Lỗi server!'});
-                                        }
+                                        }else
                                         res.json({type: 'success', content: 'Mẫu đánh giá tạo thành công!'});
                                     });
                                 } else {
@@ -107,7 +107,7 @@ router.post('/',function(req,res){
                                         if (err) {
                                             console.log(err);
                                             res.json({type: 'error', content: 'Lỗi server!'});
-                                        }
+                                        }else
                                         res.json({type: 'success', content: 'Mẫu đánh giá tạo thành công!'});
                                     });
                                 }

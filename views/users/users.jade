@@ -3,7 +3,7 @@
 extends ../layout
 block content
     link(rel='stylesheet', type='text/css', href='stylesheets/component.css')
-    header#HOME(style='background: none;')
+    header#HOME(style='background: none;',ng-app="user")
         section
             nav.navbar.navbar-default.navbar-fixed-top
                 .container
@@ -34,7 +34,7 @@ block content
             .container
                 h2 Thời khóa biểu của bạn:
 
-                div.container.timetable(ng-app="user", ng-controller="timetable")
+                div.container.timetable( ng-controller="timetable")
                     table
                         tr
                             th Tiết
@@ -168,19 +168,27 @@ block content
                         padding: 5px 10px;
                     }
                 script(src="/javascripts/user.js").
-        section
+        section(style="margin-bottom:50px",ng-controller="add_class")
             .container
-                h2 Thêm môn
-                h3 Tên môn
-                input(type="text")
-                h3 Thứ
-                select
-                    option(value="t2") Thứ 2
-                    option(value="t3") Thứ 3
-                    option(value="t4") Thứ 4
-                    option(value="t5") Thứ 5
-                    option(value="t6") Thứ 6
-                    option(value="t7") Thứ 7
-                    option(value="cn") Chủ nhật
-                br
-                input(type="submit")
+                form
+                    | {{rp}}
+                    h2 Thêm lớp
+                    h3 Tên môn
+                    input(type="text",name="subject",autocomplete="off")
+                    h3 Tên lớp
+                    input(type="text", name='class_id',autocomplete="off",ng-model="form.class_id")
+                    h3 Ghi chú
+                    input(type="text", name='ghi_chu',autocomplete="off",ng-model="form.ghi_chu")
+                    h3 Thứ
+                    select
+                        option(value="t2") Thứ 2
+                        option(value="t3") Thứ 3
+                        option(value="t4") Thứ 4
+                        option(value="t5") Thứ 5
+                        option(value="t6") Thứ 6
+                        option(value="t7") Thứ 7
+                        option(value="cn") Chủ nhật
+                    br
+                    h3 Tiết
+                    input(type="text", name='tiet',autocomplete="off")
+                    input(type="submit",ng-click="add(form)")
