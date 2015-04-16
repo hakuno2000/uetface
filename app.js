@@ -47,6 +47,9 @@ app.use('/admin/subject',subject);
 app.use('/admin/class',ad_class);
 app.use('/admin/teacher',teacher);
 app.use('/admin/student',student);
+app.use('/print',function(req,res){
+    res.render('print');
+});
 app.get('/file/:name', function (req, res, next) {
 
     var options = {
