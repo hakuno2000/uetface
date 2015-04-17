@@ -71,5 +71,6 @@ index.controller('myCtrl',function($scope,$http){
             }
         }
     }
+
 });
 

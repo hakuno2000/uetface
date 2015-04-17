@@ -8,10 +8,8 @@ function xoa(tiet ,so_tiet){
     //console.log(tiet + "  " + so_tiet);
     for (var i = 1; i < so_tiet; i++){
         var phantu = document.getElementById(part[0] + "_" + (so + i));
-        //console.log(part[0] + "_" + (so + i));
         var xoaPhantu = phantu.parentNode;
         xoaPhantu.removeChild(phantu);
-        //phantu.parentNode.removeChild(phantu);
     }
     document.getElementById(tiet).setAttribute("rowspan",so_tiet);
 }
@@ -30,9 +28,6 @@ user.controller('timetable',function($scope,$http,$q){
         .success(function(data){
             $scope.theories=data[0];
             $scope.practices=data[1];
-
-            //alert($scope.theories[0].thong_tin_lop.thong_tin_mon.ten_mon);
-
             for(i = 0 ; i < $scope.theories.length ; i++){
                 day = chuyen($scope.theories[i].thong_tin_lop.thu )+ "_" + $scope.theories[i].thong_tin_lop.tiet_bat_dau;
                 number = $scope.theories[i].thong_tin_lop.tiet_ket_thuc - $scope.theories[i].thong_tin_lop.tiet_bat_dau + 1 ;
@@ -54,10 +49,14 @@ user.controller('timetable',function($scope,$http,$q){
             console.log(data);
         });
 }).controller('add_class',function($http,$scope){
-    $scope.addClass=function(data){
+    console.log(3333);
+    $http.get('/')
+    $scope.addClass = function(data){
+        console.log(222);
         $http.post('/api/user/add_class',data)
             .success(function(data){
                 $scope.rp=data;
+
             }).error(function(data){
 
             });

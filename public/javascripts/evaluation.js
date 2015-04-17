@@ -50,10 +50,28 @@ process.controller('list',function($scope,$http){
             $("#subject").autocomplete({
                 source : tenMon
             })
-            $("#teacher_Name").autocomplete({
+            $("#class_id").autocomplete({
                 source : maLop
             })
-            
+            subject.onkeydown = function(e){
+                if(e.keyCode == 13){
+                    class_id.value = check(subject.value);
+                }
+            }
+            subject.onclick = function(){
+                if(subject.value.length > 5){
+                    class_id.value = check(subject.value);
+                }
+            }
+
+            function check(e){
+                for(var i = 0 ; i < $scope.theories.length ; i++){
+                    if(e == $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon){
+                        return $scope.theories[i].ma_lop;
+                    }
+                }
+                return;
+            }
         })
 
     $http.get('/api/findteacher/')
