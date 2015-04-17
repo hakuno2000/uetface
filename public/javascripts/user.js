@@ -49,18 +49,33 @@ user.controller('timetable',function($scope,$http,$q){
             console.log(data);
         });
 }).controller('add_class',function($http,$scope){
-    console.log(3333);
-    $http.get('/')
-    $scope.addClass = function(data){
-        console.log(222);
-        $http.post('/api/user/add_class',data)
+        $http.get('/api/user/add_class')
             .success(function(data){
-                $scope.rp=data;
-
+                $scope.name_mon=data[0];
+                var tenMon = [];
+                for(var i = 0 ; i < $scope.name_mon. length ;i++){
+                    tenMon[i] = $scope.name_mon[i].thong_tin_mon.ten_mon;
+                }
+                tenMon = check(tenMon);
+                $("#subject").autocomplete({
+                    source : tenMon
+                })
+                function check(e){
+                    var name_ =[];
+                    for(var i = 0 ; i < e.length -1 ; i++){
+                        for(var j = i + 1 ; j < e.length ; j++ ){
+                            if(e[i] == e[j]){
+                                e.splice(j,1);
+                                j = j -1;
+                            }
+                        }
+                    }
+                    return e;
+                }
             }).error(function(data){
-
+                console.log("error");
             });
-    }
+
 });
 
 
