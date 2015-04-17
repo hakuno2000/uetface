@@ -40,6 +40,7 @@ process.controller('list',function($scope,$http){
     $http.get('/api/user/find_class')
         .success(function(data){
             $scope.theories = data[0];
+
             var tenMon = [];
             var maLop = [];
             for(var i = 0 ; i < $scope.theories.length ; i++){
@@ -52,7 +53,7 @@ process.controller('list',function($scope,$http){
             $("#teacher_Name").autocomplete({
                 source : maLop
             })
-
+            
         })
 
     $http.get('/api/findteacher/')
@@ -64,15 +65,14 @@ process.controller('list',function($scope,$http){
             }
             $("#student_Name" ).autocomplete({
                 source:  danhsach
-
             });
             name_gv.style.display='none';
-            student_Name.onkeydown = function(e){
-                if(e.keyCode == 13){
+            student_Name.onkeydown = function(e) {
+                if (e.keyCode == 13) {
                     //console.log()
                     var magv = student_Name.value.split("_");
                     var maso = magv[0];
-                    name_gv.style.display='block';
+                    name_gv.style.display = 'block';
                     name_gv.value = magv[1];
                     student_Name.value = maso;
 
