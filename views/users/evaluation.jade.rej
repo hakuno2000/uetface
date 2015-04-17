@@ -1,0 +1,36 @@
+diff a/views/users/evaluation.jade b/views/users/evaluation.jade	(rejected hunks)
+@@ -85,17 +85,32 @@
+                                 div.col-sm-2.col-md-2
+                                     strong Môn học:
+                                 div.col-sm-4.col-md-4
++
+                                     input.form-control#subject(name='subject', type='text', placeholder='Môn học',autocomplete="false" ,ng-keydown="mon_hoc()"  ng-model="subject")
++
++                                    input.form-control#subject(name='subject', type='text', placeholder='Môn học',autocomplete="off" ,ng-keyup="mon_hoc()" , ng-model="subject")
++                                    div(id="suggest_mon" , class = "suggest")
++                                        ul(id="sug_mon")
++
++
+                             div.row
+                                 div.col-sm-2.col-md-2
+-                                    strong Lớp môn học:
++                                    strong Mã lớp môn học:
+                                 div.col-sm-4.col-md-4
+-                                    input.form-control#teacher_Name(name='cla_name', type='text', placeholder='Lớp môn học',autocomplete="false" , ng-model="lop")
++                                    input.form-control#class_id(name='cla_id', type='text', placeholder='Mã lớp môn học',autocomplete="off" , ng-model="lop")
++                                    input.form-control#class_name(name='cla_name', type='text', placeholder='Lớp môn học',autocomplete="off")
+                             div.row
+                                 div.col-sm-2.col-md-2
+                                     strong Giảng viên:
+                                 div.col-sm-4.col-md-4
++
+                                     input.form-control#student_Name(name='tea_name', type='text', placeholder='Giảng viên',autocomplete="false" , ng-keyup="tea_name()",  ng-model="giang_vien")
++
++                                    input.form-control#teacher_id(name='tea_id', type='text', placeholder='Giảng viên',autocomplete="off" , ng-keyup="tea_name()" , ng-model="giang_vien")
++                                    div(id="suggest_teacher" , class="suggest")
++                                        ul(id="sug_tea")
++                                    //span(class="form-control ng-valid ng-dirty ng-valid-parse ng-touched" style= " display : none" , id="name_gv")
++
+                                     input.form-control#name_gv(style="display:none")
+                             div.row
+                                 label.col-sm-2.col-md-2

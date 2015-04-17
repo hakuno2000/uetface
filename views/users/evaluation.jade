@@ -91,15 +91,23 @@ block content
                                 div.col-sm-2.col-md-2
                                     strong Mã lớp môn học:
                                 div.col-sm-4.col-md-4
-                                    input.form-control#class_id(name='cla_id', type='text', placeholder='Mã lớp môn học',autocomplete="off")
+                                    input.form-control#class_id(type='text', placeholder='Mã lớp môn học',autocomplete="off")
+                            div.row
+                                div.col-sm-2.col-md-2
+                                    strong Mã đánh giá:
+                                div.col-sm-4.col-md-4
+                                    input.form-control#evaluate_id(name='cla_id', type='text', placeholder='Mã đánh giá ',autocomplete="off",disabled,required)
                             div.row
                                 div.col-sm-2.col-md-2
                                     strong Giảng viên:
                                 div.col-sm-4.col-md-4
-                                    input.form-control#student_Name(name='tea_name', type='text', placeholder='Giảng viên',autocomplete="false" , ng-keyup="tea_name()",  ng-model="giang_vien")
+                                    input.form-control#teacher_id(name='tea_id', type='text', placeholder='Giảng viên',autocomplete="off" ,  ng-model="giang_vien",required)
                                     //span(class="form-control ng-valid ng-dirty ng-valid-parse ng-touched" style= " display : none" , id="name_gv")
-
-                                    input.form-control#name_gv(style="display:none")
+                            div.row
+                                div.col-sm-2.col-md-2
+                                    strong Họ tên giảng viên:
+                                div.col-sm-4.col-md-4
+                                    input.form-control#name_gv(disabled)
                             div.row
                                 label.col-sm-2.col-md-2
                                     strong Mã sinh viên:
@@ -116,7 +124,7 @@ block content
                                         span.question
                                             strong=question
                                     td(style="float:right; min-width:180px;")
-                                        input.css-checkbox(type='radio', name='q'+stt, id="radio1"+stt)
+                                        input.css-checkbox(type='radio', name='q'+stt, id="radio1"+stt,required)
                                         label.css-label.radGroup2(for='radio1'+stt) 1
                                         input.css-checkbox(type='radio', name='q'+stt, id="radio2"+stt)
                                         label.css-label.radGroup2(for='radio2'+stt) 2
