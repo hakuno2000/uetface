@@ -48,26 +48,43 @@ process.controller('list',function($scope,$http){
                 maLop[i] = $scope.theories[i].ma_lop;
             }
             $("#subject").autocomplete({
-                source : tenMon
-            })
+                source : tenMon,
+                close: function () {
+                    if(check(subject.value)!=undefined){
+                        class_id.value = check(subject.value);
+                        evaluate_id.value=check2(subject.value);
+                    }
+                    else{
+                        class_id.value = "Không có lớp học này trong thời khóa biểu của bạn!";
+                        evaluate_id.value= "Mã không tồn tại!"
+                    }
+                }
+            });
+            class_id.onblur=function(){
+                if(check(subject.value)!=undefined){
+                    class_id.value = check(subject.value);
+                    evaluate_id.value=check2(subject.value);
+                }
+                else{
+                    class_id.value = "Không có lớp học này trong thời khóa biểu của bạn!";
+                    evaluate_id.value= "Mã không tồn tại!"
+                }
+            }
             $("#class_id").autocomplete({
                 source : maLop
             })
-            subject.onkeydown = function(e){
-                if(e.keyCode == 13){
-                    class_id.value = check(subject.value);
-                }
-            }
-            subject.onclick = function(){
-                if(subject.value.length > 5){
-                    class_id.value = check(subject.value);
-                }
-            }
-
             function check(e){
                 for(var i = 0 ; i < $scope.theories.length ; i++){
                     if(e == $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon){
                         return $scope.theories[i].ma_lop;
+                    }
+                }
+                return;
+            }
+            function check2(e){
+                for(var i = 0 ; i < $scope.theories.length ; i++){
+                    if(e == $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon){
+                        return $scope.theories[i].thong_tin_lop.ma_danh_gia;
                     }
                 }
                 return;
@@ -81,35 +98,18 @@ process.controller('list',function($scope,$http){
             for(var i = 0 ; i < $scope.teachers.length - 1  ; i++){
                 danhsach[i] = $scope.teachers[i].ma_giang_vien + "_" + $scope.teachers[i].ho_va_ten;
             }
-            $("#student_Name" ).autocomplete({
-                source:  danhsach
-            });
-            name_gv.style.display='none';
-            student_Name.onkeydown = function(e) {
-                if (e.keyCode == 13) {
+            $("#teacher_id" ).autocomplete({
+                source:  danhsach,
+                close: function() {
                     //console.log()
-                    var magv = student_Name.value.split("_");
-                    var maso = magv[0];
-                    name_gv.style.display = 'block';
-                    name_gv.value = magv[1];
-                    student_Name.value = maso;
 
-                    return false;
-                }
-                else{
-                    name_gv.style.display='none';
-                }
-            }
-            student_Name.onclick = function(){
-                if(student_Name.value.length > 5){
-                        var magv = student_Name.value.split("_");
-                        var maso = magv[0];
-                        name_gv.style.display = 'block';
-                        name_gv.value = magv[1];
-                        student_Name.value = maso;
-                }
+                    if(teacher_id.value.split("_")[1]!=undefined){
+                        name_gv.value = teacher_id.value.split("_")[1];
 
-            }
+                    }
+                    teacher_id.value = teacher_id.value.split("_")[0];
+                }
+            });
 
         })
 
