@@ -6,13 +6,7 @@ var async=require('async');
 var router=express.Router();
 var mongoose=require('mongoose');
 var isNull=require('./../../isNull');
-function userNotLoggedIn(req,res,next){
-    if(!req.session.username){
-        res.redirect('/');
-    }else{
-        next();
-    }
-}
+var userNotLoggedIn=require('./../../users/user_not_logged_in');
 router.get('/',userNotLoggedIn,function(req,res,next){
     var subjects =require('./../../data/models/subjects');
     var practice_info =require('./../../data/models/practice_info');
@@ -29,7 +23,6 @@ router.get('/',userNotLoggedIn,function(req,res,next){
     });
 })
 router.post('/',userNotLoggedIn,function(req,res,next){
-    console.log(req.body);
     if(req.body.class_id&&req.body.class_id!=''&&req.body.ghi_chu&&req.body.ghi_chu!=''){
         var subjects =require('./../../data/models/subjects');
         var practice_info =require('./../../data/models/practice_info');
@@ -48,21 +41,23 @@ router.post('/',userNotLoggedIn,function(req,res,next){
             //process save class
             if(isNull(result[0])){
                 var practice_new=new practice({
-                    ma_sinh_vien: req.session.username,
+                    ma_sinh_vien: req.session.user_id,
                     ma_lop:req.body.class_id,
                     ghi_chu: req.body.ghi_chu,
                     thong_tin_lop: result[1]._id
                 });
-                practice_new.save(function(err){
+                console.log(practice_new);
+                practice_new.save(function(err,result){
                     if(err){
                         res.json('Đã có lỗi xảy ra!');
                     }else{
                         res.json('Thêm lớp thành công!');
+                        console.log(result);
                     }
                 });
             }else{
                 var theory_new=new theory({
-                    ma_sinh_vien: req.session.username,
+                    ma_sinh_vien: req.session.user_id,
                     ma_lop:req.body.class_id,
                     ghi_chu: req.body.ghi_chu,
                     thong_tin_lop: result[0]._id
@@ -76,6 +71,8 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                 });
             }
         });
+    }else{
+        res.json('Bạn đã nhập thiếu thông tin!');
     }
 });
 
