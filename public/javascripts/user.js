@@ -54,24 +54,27 @@ user.controller('timetable',function($scope,$http,$q){
                 $scope.name_mon=data[0];
                 var tenMon = [];
                 for(var i = 0 ; i < $scope.name_mon. length ;i++){
-                    tenMon[i] = $scope.name_mon[i].thong_tin_mon.ten_mon;
+                    var obj = {};
+                    obj.label = $scope.name_mon[i].thong_tin_mon.ten_mon;
+                    obj.value = i;
+                    tenMon[i] = obj;
                 }
-                tenMon = check(tenMon);
                 $("#subject").autocomplete({
-                    source : tenMon
-                })
-                function check(e){
-                    var name_ =[];
-                    for(var i = 0 ; i < e.length -1 ; i++){
-                        for(var j = i + 1 ; j < e.length ; j++ ){
-                            if(e[i] == e[j]){
-                                e.splice(j,1);
-                                j = j -1;
-                            }
-                        }
+                    source : tenMon,
+                    focus: function( e, ui ) {
+                        var ti = "Thu " + $scope.name_mon[ui.item.value].thu + "(" + $scope.name_mon[ui.item.value].tiet_bat_dau + "-" + $scope.name_mon[ui.item.value].tiet_ket_thuc + ")";
+                        e.toElement.title = ti;
+                    },
+                    close: function() {
+                        class_id.value = $scope.name_mon[subject.value].ma_lop;
+                        thu.value = $scope.name_mon[subject.value].thu;
+                        ghi_chu.value = $scope.name_mon[subject.value].ghi_chu;
+                        tiet.value = $scope.name_mon[subject.value].tiet_bat_dau + "-" + $scope.name_mon[subject.value].tiet_ket_thuc;
+                        subject.value = $scope.name_mon[subject.value].thong_tin_mon.ten_mon;
                     }
-                    return e;
-                }
+
+                })
+
             }).error(function(data){
                 console.log("error");
             });

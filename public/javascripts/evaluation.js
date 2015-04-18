@@ -105,7 +105,6 @@ process.controller('list',function($scope,$http){
 
                     if(teacher_id.value.split("_")[1]!=undefined){
                         name_gv.value = teacher_id.value.split("_")[1];
-
                     }
                     teacher_id.value = teacher_id.value.split("_")[0];
                 }
