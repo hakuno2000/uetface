@@ -6,13 +6,7 @@ var async=require('async');
 var router=express.Router();
 var mongoose=require('mongoose');
 var isNull=require('./../../isNull');
-function userNotLoggedIn(req,res,next){
-    if(!req.session.username){
-        res.redirect('/');
-    }else{
-        next();
-    }
-}
+var userNotLoggedIn=require('./../../users/user_not_logged_in');
 router.get('/',userNotLoggedIn,function(req,res,next){
     var subjects =require('./../../data/models/subjects');
     var practice_info =require('./../../data/models/practice_info');
@@ -29,7 +23,6 @@ router.get('/',userNotLoggedIn,function(req,res,next){
     });
 })
 router.post('/',userNotLoggedIn,function(req,res,next){
-    console.log(req.body);
     if(req.body.class_id&&req.body.class_id!=''&&req.body.ghi_chu&&req.body.ghi_chu!=''){
         var subjects =require('./../../data/models/subjects');
         var practice_info =require('./../../data/models/practice_info');

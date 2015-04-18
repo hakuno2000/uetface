@@ -24,30 +24,65 @@ function chuyen(thu){
 }
 var user=angular.module('user',[]);
 user.controller('timetable',function($scope,$http,$q){
-    $http.get('/api/user/find_class')
-        .success(function(data){
-            $scope.theories=data[0];
-            $scope.practices=data[1];
-            for(i = 0 ; i < $scope.theories.length ; i++){
-                day = chuyen($scope.theories[i].thong_tin_lop.thu )+ "_" + $scope.theories[i].thong_tin_lop.tiet_bat_dau;
-                number = $scope.theories[i].thong_tin_lop.tiet_ket_thuc - $scope.theories[i].thong_tin_lop.tiet_bat_dau + 1 ;
-                xoa(day,number);
-                $("#"+day).html("<span id='lophoc'>"+$scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon +"<br>(" + $scope.theories[i].thong_tin_lop.giang_duong + ")</span>");
+    var getClass=function(){
+        $http.get('/api/user/find_class')
+            .success(function(data){
+                $scope.theories=data[0];
+                $scope.practices=data[1];
+                for(i = 0 ; i < $scope.theories.length ; i++){
+                    day = chuyen($scope.theories[i].thong_tin_lop.thu )+ "_" + $scope.theories[i].thong_tin_lop.tiet_bat_dau;
+                    number = $scope.theories[i].thong_tin_lop.tiet_ket_thuc - $scope.theories[i].thong_tin_lop.tiet_bat_dau + 1 ;
+                    xoa(day,number);
+                    $("#"+day).html("<span class='lophoc' class_id='"+$scope.theories[i].ma_lop+"' ghi_chu='"+ $scope.theories[i].ghi_chu +"'>"+$scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon +"<br>(" + $scope.theories[i].thong_tin_lop.giang_duong + ")</span>");
+                }
 
+
+                for(i = 0 ; i < $scope.practices.length ; i++){
+                    day = chuyen($scope.practices[i].thong_tin_lop.thu )+ "_" + $scope.practices[i].thong_tin_lop.tiet_bat_dau;
+                    number = $scope.practices[i].thong_tin_lop.tiet_ket_thuc - $scope.practices[i].thong_tin_lop.tiet_bat_dau + 1 ;
+                    xoa(day,number);
+
+                    $("#"+day).html("<span class='lophoc' class_id='"+$scope.practices[i].ma_lop+"' ghi_chu='"+ $scope.practices[i].ghi_chu +"'>"+$scope.practices[i].thong_tin_lop.thong_tin_mon.ten_mon +"<br>(" + $scope.practices[i].thong_tin_lop.giang_duong + ")</span>");
+                }
+
+            }).error(function(data){
+                console.log(data);
+            });
+    }
+    getClass();
+    $(function () {
+        $.contextMenu({
+            selector: '.lophoc',
+            // superseeds "global" callback
+            callback: function (key, options) {
+
+            },
+            items: {
+                "edit": {
+                    name: "Xóa môn",
+                    callback: function (key, options) {
+                        var del=confirm("Bạn có chắc chắn xóa môn này không?");
+                        if(del==true){
+                            var data={};
+                            data.class_id=$(this).attr('class_id');
+                            data.ghi_chu=$(this).attr('ghi_chu');
+                            $http.post('/api/user/remove_class',data)
+                                .success(function(data){
+                                    getClass();
+                                    location.reload();
+                                }).error(function(data){
+                                    console.log(data);
+                                });
+                        }
+
+                    }
+                },
+                "exit": {
+                    name: "Quay lại"
+                }
             }
-
-
-            for(i = 0 ; i < $scope.practices.length ; i++){
-                day = chuyen($scope.practices[i].thong_tin_lop.thu )+ "_" + $scope.practices[i].thong_tin_lop.tiet_bat_dau;
-                number = $scope.practices[i].thong_tin_lop.tiet_ket_thuc - $scope.practices[i].thong_tin_lop.tiet_bat_dau + 1 ;
-                xoa(day,number);
-
-                $("#"+day).html("<span id='lophoc'>"+$scope.practices[i].thong_tin_lop.thong_tin_mon.ten_mon +"<br>(" + $scope.practices[i].thong_tin_lop.giang_duong + ")</span>");
-            }
-
-        }).error(function(data){
-            console.log(data);
         });
+    });
 }).controller('add_class',function($http,$scope){
         $http.get('/api/user/add_class')
             .success(function(data){
@@ -85,6 +120,7 @@ user.controller('timetable',function($scope,$http,$q){
             $http.post('/api/user/add_class',data)
                 .success(function(data){
                     $scope.rp=data;
+                    location.reload();
                 }).error(function(data){
                     console.log(data);
                 });

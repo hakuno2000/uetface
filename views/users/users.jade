@@ -3,7 +3,7 @@
 extends ../layout
 block content
     link(rel='stylesheet', type='text/css', href='stylesheets/component.css')
-    link(rel='stylesheet', href='/stylesheets/context.bootstrap.css')
+    link(rel='stylesheet', href='/stylesheets/jquery.contextMenu.css')
     header#HOME(style='background: none;',ng-app="user")
         section
             nav.navbar.navbar-default.navbar-fixed-top
@@ -34,7 +34,6 @@ block content
         section#SERVICE.services
             .container
                 h2 Thời khóa biểu của bạn:
-
                 div.container.timetable( ng-controller="timetable")
                     table
                         tr
@@ -169,7 +168,7 @@ block content
         section(style="margin-bottom:50px;",ng-controller="add_class")
             .container
                 form()
-                    | {{rp}}
+                    span {{rp}}
                     h2 Thêm lớp
                     span.col-sm-1 Tên môn
                     input.col-sm-3(type="text",name="subject",autocomplete="off" , id ="subject")
@@ -185,19 +184,5 @@ block content
                     span {{class_id}}
                     span.col-sm-12
                         input(type="submit",ng-click="add(class_id,ghi_chu)")
-        section
-            span()
-        script(src="/javascripts/context.js")
-
-        script.
-            $(document).ready(function(){
-                context.init({preventDoubleContext:false});
-
-                context.attach('#lophoc',[
-                    {header: 'Thao tác'},
-                    {text:'Xóa lớp',action: function(e){
-                        
-                        //prompt()
-                    }}
-                ]);
-            })
+        script(src="/javascripts/jquery.contextMenu.js")
+        script(src="/javascripts/jquery.ui.position.js")
