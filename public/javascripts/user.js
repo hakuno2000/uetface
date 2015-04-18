@@ -112,10 +112,8 @@ user.controller('timetable',function($scope,$http,$q){
                         $scope.rp = "";
                         var maLop = $scope.name_mon[subject.value].ma_lop;
                         var thu_ = $scope.name_mon[subject.value].thu;
-
                         var ghiChu = $scope.name_mon[subject.value].ghi_chu;
                         var tenMon = $scope.name_mon[subject.value].thong_tin_mon.ten_mon;
-
                         var st = $scope.name_mon[subject.value].tiet_bat_dau;
                         var en = $scope.name_mon[subject.value].tiet_ket_thuc;
                         console.log(thu_ + " " + chuyen_tiet(st,en));
