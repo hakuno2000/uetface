@@ -103,39 +103,44 @@ function doit(next){
 var async=require('async');
 var mongoose=require('mongoose');
 var subjects =require('./routes/data/models/subjects');
-async.parallel([
-    function getIdTheoryClass(cb){
-        var theory=require('./routes/data/models/theory');
-        theory.find({ma_lop:/FLF/}).exec(cb);
-    }
-],function(err,result){
-    result[0].forEach(function(value){
-        var practice_info=require('./routes/data/models/practice_info');
-        practice_info.find({ma_lop:value.ma_lop}).exec(function(err,res){
-            //console.log(res);
-            if(err) console.log(err);
-            var practice=require('./routes/data/models/practice');
-            var el_practice1=new practice({
-                ma_sinh_vien:value.ma_sinh_vien,
-                ma_lop: value.ma_lop,
-                ghi_chu: res[0].ghi_chu,
-                thong_tin_lop: res[0]._id
-            });
-            var el_practice2=new practice({
-                ma_sinh_vien:value.ma_sinh_vien,
-                ma_lop: value.ma_lop,
-                ghi_chu: res[1].ghi_chu,
-                thong_tin_lop: res[1]._id
-            });
-            //console.log(el_practice1);
-            //console.log(el_practice2);
-            el_practice1.save(function(err,res2){
-                console.log(res2);
-            })
-            el_practice2.save(function(err,res2){
-                console.log(res2);
-            })
-        })
-
-    })
+var thoery_info=require('./routes/data/models/theory_info');
+var practice=require('./routes/data/models/theory');
+practice.find({ma_lop:'PHI1004 1'}).exec(function(err,res){
+    console.log(res);
 });
+//async.parallel([
+//    function getIdTheoryClass(cb){
+//        var theory=require('./routes/data/models/theory');
+//        theory.find({ma_lop:/FLF/}).exec(cb);
+//    }
+//],function(err,result){
+//    result[0].forEach(function(value){
+//        var practice_info=require('./routes/data/models/practice_info');
+//        practice_info.find({ma_lop:value.ma_lop}).exec(function(err,res){
+//            //console.log(res);
+//            if(err) console.log(err);
+//            var practice=require('./routes/data/models/practice');
+//            var el_practice1=new practice({
+//                ma_sinh_vien:value.ma_sinh_vien,
+//                ma_lop: value.ma_lop,
+//                ghi_chu: res[0].ghi_chu,
+//                thong_tin_lop: res[0]._id
+//            });
+//            var el_practice2=new practice({
+//                ma_sinh_vien:value.ma_sinh_vien,
+//                ma_lop: value.ma_lop,
+//                ghi_chu: res[1].ghi_chu,
+//                thong_tin_lop: res[1]._id
+//            });
+//            //console.log(el_practice1);
+//            //console.log(el_practice2);
+//            el_practice1.save(function(err,res2){
+//                console.log(res2);
+//            })
+//            el_practice2.save(function(err,res2){
+//                console.log(res2);
+//            })
+//        })
+//
+//    })
+//});

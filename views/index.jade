@@ -94,7 +94,7 @@ html(lang='en')
                                     input.form-control(name="reg_user", type="text", placeholder="Tài khoản mới",autocomplete="off")
                                     input.form-control(name="reg_email", type="email", placeholder="Email"  ,autocomplete="off")
                                     input.form-control(name="reg_pass", type="password", placeholder="Mật khẩu" , ng-blur="check_pass()" , ng-model="pass",autocomplete="off")
-                                    span(class = "form-control ng-valid ng-dirty ng-valid-parse ng-touched") {{checkPass}}
+                                    span {{checkPass}}
                                     .form-group
                                        label.radio-inline
                                            input#Male(name="sex", type="radio", value="nam",checked)
