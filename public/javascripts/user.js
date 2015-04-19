@@ -74,6 +74,14 @@ user.controller('timetable',function($scope,$http,$q){
 
             },
             items: {
+                "tài liệu môn học":{
+                    name:"Tài liệu",
+                    callback: function(key,options){
+                        var link="http://bluebee-uet.com/listOfSubject/subject?subject_code="+$(this).attr('class_id').split(" ")[0];
+                        var win=window.open(link, '_blank');
+                        win.focus();
+                    }
+                },
                 "edit": {
                     name: "Xóa môn",
                     callback: function (key, options) {
@@ -90,7 +98,6 @@ user.controller('timetable',function($scope,$http,$q){
                                     console.log(data);
                                 });
                         }
-
                     }
                 },
                 "exit": {
