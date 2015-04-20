@@ -169,22 +169,28 @@ block content
             .container
                 form()
                     span {{rp}}
-                    h2 Thêm lớp
-
-                    span.col-sm-1 Tên môn
-                    input.col-sm-3(type="text",name="subject",autocomplete="off" , id ="subject")
-                    span.col-sm-1 Thứ
-                    input.col-sm-3(type="text", name='thu',id="thu",autocomplete="off",disabled=)
-                    span.col-sm-1 Tiết
-                    input.col-sm-3(type="text", name='tiet',id="tiet",autocomplete="off",disabled=)
-                    span.col-sm-1 Mã lớp
-                    input.col-sm-3(type="text", name='class_id',id="class_id",autocomplete="off",disabled)
-                    span.col-sm-1 Ghi chú
-                    input.col-sm-3(type="text", name='ghi_chu',id="ghi_chu",autocomplete="off",disabled)
-                    span {{form}}
-                    span {{class_id}}
-                    span.col-sm-12
-                        input(type="submit",ng-click="add(class_id,ghi_chu)")
+                    div(ng-init="add=false; count=0;", ng-click="load()")
+                        div {{dgmh_rp}}
+                        div.input-group
+                            span.input-group-addon(style="background:none; border:none;")
+                                span.glyphicon.glyphicon-plus(ng-show="add")
+                                span.glyphicon.glyphicon-minus(ng-show="!add")
+                            span(style="font-size:1.5em") Thêm lớp
+                    div(ng-hide="!add")
+                        span.col-sm-1 Tên môn
+                        input.col-sm-3(type="text",name="subject",autocomplete="off" , id ="subject")
+                        span.col-sm-1 Thứ
+                        input.col-sm-3(type="text", name='thu',id="thu",autocomplete="off",disabled=)
+                        span.col-sm-1 Tiết
+                        input.col-sm-3(type="text", name='tiet',id="tiet",autocomplete="off",disabled=)
+                        span.col-sm-1 Mã lớp
+                        input.col-sm-3(type="text", name='class_id',id="class_id",autocomplete="off",disabled)
+                        span.col-sm-1 Ghi chú
+                        input.col-sm-3(type="text", name='ghi_chu',id="ghi_chu",autocomplete="off",disabled)
+                        span {{form}}
+                        span {{class_id}}
+                        span.col-sm-12
+                            input(type="submit",ng-click="add(class_id,ghi_chu)")
         script(src="/javascripts/jquery.contextMenu.js")
         script(src="/javascripts/jquery.ui.position.js")
 
