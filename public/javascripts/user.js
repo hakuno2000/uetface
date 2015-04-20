@@ -49,8 +49,13 @@ user.controller('timetable',function($scope,$http,$q){
                     day = chuyen($scope.theories[i].thong_tin_lop.thu )+ "_" + $scope.theories[i].thong_tin_lop.tiet_bat_dau;
                     number = $scope.theories[i].thong_tin_lop.tiet_ket_thuc - $scope.theories[i].thong_tin_lop.tiet_bat_dau + 1 ;
                     xoa(day,number);
-                    var lichthi=$scope.theories[i].thong_tin_lop.lich_thi.gio+" thứ "+$scope.theories[i].thong_tin_lop.lich_thi.thu+" ngày "+$scope.theories[i].thong_tin_lop.lich_thi.ngay+"\n " +
-                        "Giảng đường: "+$scope.theories[i].thong_tin_lop.lich_thi.giang_duong+"\nHình thức thi: "+$scope.theories[i].thong_tin_lop.lich_thi.HTT;
+                    if($scope.theories[i].thong_tin_lop.hasOwnProperty("lich_thi")){
+                        var lichthi=$scope.theories[i].thong_tin_lop.lich_thi.gio+" thứ "+$scope.theories[i].thong_tin_lop.lich_thi.thu+" ngày "+$scope.theories[i].thong_tin_lop.lich_thi.ngay+"\n" +
+                            "Giảng đường: "+$scope.theories[i].thong_tin_lop.lich_thi.giang_duong+"\nHình thức thi: "+$scope.theories[i].thong_tin_lop.lich_thi.HTT;
+                    }
+                    else{
+                        var lichthi="Không có dữ liệu về lịch thi";
+                    }
                     $("#"+day).html("<span class='lophoc' class_id='"+$scope.theories[i].ma_lop+"' ghi_chu='"+ $scope.theories[i].ghi_chu +"' lich_thi='"+ lichthi +"'>"+$scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon +"<br>(" + $scope.theories[i].thong_tin_lop.giang_duong + ")</span>");
                 }
 
@@ -115,7 +120,7 @@ user.controller('timetable',function($scope,$http,$q){
     });
 }).controller('add_class',function($http,$scope){
     $scope.load=function(){
-        $scope.add=!$scope.add;
+        $scope.addClass=!$scope.addClass;
         $http.get('/api/user/add_class')
             .success(function(data){
                 $scope.name_mon=data[0];
@@ -123,27 +128,6 @@ user.controller('timetable',function($scope,$http,$q){
                 var my_tenMon = [];
                 var my_thu = [];
                 var my_tiet = [];
-                $http.get('/api/user/find_class')
-                    .success(function(data1){
-                        $scope.theories=data1[0];
-                        $scope.practices = data1[1];
-                        var len = $scope.theories.length;
-                        for(var i = 0 ; i < len ; i++){
-                            my_tenMon[i] = $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon;
-                            my_thu[i] = $scope.theories[i].thong_tin_lop.thu;
-                            my_tiet[i] = chuyen_tiet($scope.theories[i].thong_tin_lop.tiet_bat_dau , $scope.theories[i].thong_tin_lop.tiet_ket_thuc);
-                        }
-                        var len_total = len + $scope.practices.length;
-                        for(var j = len ; j < len_total; j++){
-                            var k = j - len;
-                            my_tenMon[j] = $scope.practices[k].thong_tin_lop.thong_tin_mon.ten_mon;
-                            my_thu[j] = $scope.practices[k].thong_tin_lop.thu;
-                            my_tiet[j] = chuyen_tiet($scope.practices[k].thong_tin_lop.tiet_bat_dau , $scope.practices[k].thong_tin_lop.tiet_ket_thuc);
-                        }
-                    }).error(function(data1){
-                        //console.log(data);
-                    });
-
 
                 var tenMon = [];
                 for(var i = 0 ; i < $scope.name_mon. length ;i++){
@@ -202,17 +186,18 @@ user.controller('timetable',function($scope,$http,$q){
             }).error(function(data){
                 console.log("error");
             });
-    }
-    $scope.add=function(){
-        var data={};
-        data.class_id=$('#class_id').val();
-        data.ghi_chu=$('#ghi_chu').val();
-        $http.post('/api/user/add_class',data)
-            .success(function(data){
-                $scope.rp=data;
-                location.reload();
-            }).error(function(data){
-                console.log(data);
-            });
+        $scope.add=function(){
+            console.log('demo');
+            var data={};
+            data.class_id=$('#class_id').val();
+            data.ghi_chu=$('#ghi_chu').val();
+            $http.post('/api/user/add_class',data)
+                .success(function(data){
+                    $scope.rp=data;
+                    location.reload();
+                }).error(function(data){
+                    console.log(data);
+                });
+        }
     }
 });

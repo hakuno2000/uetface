@@ -176,7 +176,7 @@ block content
                                 span.glyphicon.glyphicon-plus(ng-show="add")
                                 span.glyphicon.glyphicon-minus(ng-show="!add")
                             span(style="font-size:1.5em") Thêm lớp
-                    div(ng-hide="!add")
+                    div(ng-hide="!addClass")
                         span.col-sm-1 Tên môn
                         input.col-sm-3(type="text",name="subject",autocomplete="off" , id ="subject")
                         span.col-sm-1 Thứ
@@ -190,7 +190,7 @@ block content
                         span {{form}}
                         span {{class_id}}
                         span.col-sm-12
-                            input(type="submit",ng-click="add(class_id,ghi_chu)")
+                            input(type="submit",ng-click="add()")
         script(src="/javascripts/jquery.contextMenu.js")
         script(src="/javascripts/jquery.ui.position.js")
 
