@@ -2,6 +2,10 @@
  * Created by Phi on 3/30/2015.
  */
 var day, i , number;
+var my_tenMon = [];
+var my_thu = [];
+var my_tiet = [];
+
 function xoa(tiet ,so_tiet){
     var part = tiet.split("_");
     var so = parseInt(part[1]);
@@ -22,19 +26,16 @@ function chuyen(thu){
     if(thu == 7) return "sat";
     if(thu == "CN") return "sun";
 }
-function chuyen_tiet(st , en){
-    var ti = [];
-    for(var i = st ; i <= en ; i++){
-        ti[i - st] = i;
-    }
-    return ti;
-}
-function check_tiet(tiet1 , tiet2){
-    for(var i = 0 ; i < tiet1.length ; i++)
-        for(var j = 0 ; j < tiet2.length; j++)
-            if(tiet1[i] == tiet2[j]) return true;
 
-    return false;
+function check_tiet(tiet1 , tiet2){
+    var t1_1 = tiet1.value.split("-")[0];
+    var t1_2 = tiet1.value.split("-")[1];
+    var t2_1 = tiet2.value.split("-")[0];
+    var t2_2 = tiet2.value.split("-")[1];
+    if((t2_1 >= t1_1 && t2_1 <= t1_2) || (t2_2 >= t1_1 && t2_2 <= t1_2))
+        return true;
+    else
+        return false;
 }
 
 
@@ -46,6 +47,10 @@ user.controller('timetable',function($scope,$http,$q){
                 $scope.theories=data[0];
                 $scope.practices=data[1];
                 for(i = 0 ; i < $scope.theories.length ; i++){
+                    my_tenMon[i] = $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon;
+                    my_thu[i] = $scope.theories[i].thong_tin_lop.thu;
+                    my_tiet[i] = $scope.theories[i].thong_tin_lop.tiet_bat_dau + "-" + $scope.theories[i].thong_tin_lop.tiet_ket_thuc;
+
                     day = chuyen($scope.theories[i].thong_tin_lop.thu )+ "_" + $scope.theories[i].thong_tin_lop.tiet_bat_dau;
                     number = $scope.theories[i].thong_tin_lop.tiet_ket_thuc - $scope.theories[i].thong_tin_lop.tiet_bat_dau + 1 ;
                     xoa(day,number);
@@ -165,7 +170,7 @@ user.controller('timetable',function($scope,$http,$q){
                                 break;
                             }
                             if (thu.value == my_thu[i]) {
-                                if (check_tiet(my_tiet[i], chuyen_tiet(tiet.value.split("-")[0], tiet.value.split("-")[0]))) {
+                                if (check_tiet(my_tiet[i], tiet.value)) {
                                     $scope.rp = "Môn học đã bị trùng tiết !";
                                     alert("Môn học đã bị trùng tiết !");
                                     kiem_tra = false;
