@@ -28,10 +28,10 @@ function chuyen(thu){
 }
 
 function check_tiet(tiet1 , tiet2){
-    var t1_1 = tiet1.value.split("-")[0];
-    var t1_2 = tiet1.value.split("-")[1];
-    var t2_1 = tiet2.value.split("-")[0];
-    var t2_2 = tiet2.value.split("-")[1];
+    var t1_1 = tiet1.split("-")[0];
+    var t1_2 = tiet1.split("-")[1];
+    var t2_1 = tiet2.split("-")[0];
+    var t2_2 = tiet2.split("-")[1];
     if((t2_1 >= t1_1 && t2_1 <= t1_2) || (t2_2 >= t1_1 && t2_2 <= t1_2))
         return true;
     else
@@ -64,8 +64,12 @@ user.controller('timetable',function($scope,$http,$q){
                     $("#"+day).html("<span class='lophoc' class_id='"+$scope.theories[i].ma_lop+"' ghi_chu='"+ $scope.theories[i].ghi_chu +"' lich_thi='"+ lichthi +"'>"+$scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon +"<br>(" + $scope.theories[i].thong_tin_lop.giang_duong + ")</span>");
                 }
 
-
+                var j = $scope.theories.length;
                 for(i = 0 ; i < $scope.practices.length ; i++){
+                    my_tenMon[j+i] = $scope.practices[i].thong_tin_lop.thong_tin_mon.ten_mon;
+                    my_thu[j+i] = $scope.practices[i].thong_tin_lop.thu;
+                    my_tiet[i+j] = $scope.practices[i].thong_tin_lop.tiet_bat_dau + "-" + $scope.practices[i].thong_tin_lop.tiet_ket_thuc;
+
                     day = chuyen($scope.practices[i].thong_tin_lop.thu )+ "_" + $scope.practices[i].thong_tin_lop.tiet_bat_dau;
                     number = $scope.practices[i].thong_tin_lop.tiet_ket_thuc - $scope.practices[i].thong_tin_lop.tiet_bat_dau + 1 ;
                     xoa(day,number);
@@ -128,11 +132,9 @@ user.controller('timetable',function($scope,$http,$q){
         $scope.addClass=!$scope.addClass;
         $http.get('/api/user/add_class')
             .success(function(data){
-                $scope.name_mon=data[0];
-
-                var my_tenMon = [];
-                var my_thu = [];
-                var my_tiet = [];
+                $scope.ly_thuyet= data[0];
+                $scope.thuc_hanh = data[1];
+                $scope.name_mon = $scope.ly_thuyet.concat($scope.thuc_hanh);
 
                 var tenMon = [];
                 for(var i = 0 ; i < $scope.name_mon. length ;i++){
@@ -160,8 +162,10 @@ user.controller('timetable',function($scope,$http,$q){
                     },
                     close: function(){
                         $scope.rp = "";
+                        console.log("dfsa");
                         var kiem_tra = true;
                         for(var i = 0 ; i < my_tenMon.length ; i++) {
+                            //console.log("dfsa");
                             //console.log(my_tenMon[i] + "- thu" + my_thu[i] + " Tiet " + my_tiet[i]);
                             if (subject.value == my_tenMon[i]) {
                                 $scope.rp = "Môn học này đã có ! ";
@@ -170,6 +174,7 @@ user.controller('timetable',function($scope,$http,$q){
                                 break;
                             }
                             if (thu.value == my_thu[i]) {
+                                //console.log(my_tiet[i] + "-" + tiet.value);
                                 if (check_tiet(my_tiet[i], tiet.value)) {
                                     $scope.rp = "Môn học đã bị trùng tiết !";
                                     alert("Môn học đã bị trùng tiết !");
@@ -191,18 +196,19 @@ user.controller('timetable',function($scope,$http,$q){
             }).error(function(data){
                 console.log("error");
             });
-        $scope.add=function(){
-            console.log('demo');
-            var data={};
-            data.class_id=$('#class_id').val();
-            data.ghi_chu=$('#ghi_chu').val();
-            $http.post('/api/user/add_class',data)
-                .success(function(data){
-                    $scope.rp=data;
-                    location.reload();
-                }).error(function(data){
-                    console.log(data);
-                });
-        }
+
+    }
+    $scope.add=function(){
+        console.log('demo');
+        var data={};
+        data.class_id=$('#class_id').val();
+        data.ghi_chu=$('#ghi_chu').val();
+        $http.post('/api/user/add_class',data)
+            .success(function(data){
+                $scope.rp=data;
+                location.reload();
+            }).error(function(data){
+                console.log(data);
+            });
     }
 });
