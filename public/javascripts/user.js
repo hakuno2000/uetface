@@ -162,10 +162,8 @@ user.controller('timetable',function($scope,$http,$q){
                     },
                     close: function(){
                         $scope.rp = "";
-                        console.log("dfsa");
                         var kiem_tra = true;
                         for(var i = 0 ; i < my_tenMon.length ; i++) {
-                            //console.log("dfsa");
                             //console.log(my_tenMon[i] + "- thu" + my_thu[i] + " Tiet " + my_tiet[i]);
                             if (subject.value == my_tenMon[i]) {
                                 $scope.rp = "Môn học này đã có ! ";

@@ -7,7 +7,6 @@ var router=express.Router();
 var mongoose=require('mongoose');
 var isNull=require('./../../isNull');
 router.post('/',function(req,res){
-    console.log(req.body);
     var user=require('./../../data/models/user_login');
     user.findOne({token:req.body.token}).exec(function(err,std){
         if(err) res.json({type:'error',content:'Có lỗi xảy ra!'});
