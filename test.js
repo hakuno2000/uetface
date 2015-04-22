@@ -100,13 +100,28 @@ function doit(next){
 //var now=new Date();
 //var ex=crypto.createHash('sha256').update(now.toJSON()).digest('hex');
 //console.log(ex);
-var async=require('async');
 var mongoose=require('mongoose');
 var subjects =require('./routes/data/models/subjects');
-var thoery_info=require('./routes/data/models/theory_info');
+var theory_info=require('./routes/data/models/theory_info');
 var practice=require('./routes/data/models/theory');
-practice.find({ma_lop:'PHI1004 1'}).exec(function(err,res){
-    console.log(res);
+var teacher=require('./routes/data/models/teacher');
+var theory_teacher_schema= new mongoose.Schema({
+    ma_giang_vien : String,
+    ma_lop : String,
+    ghi_chu : String,
+    ten_giang_vien : String
+});
+var theory_teacher= mongoose.model('theory_teacher',theory_teacher_schema,'giangvien_lopmonhoc');
+theory_info.find().exec(function(err,res){
+    res.forEach(function(data){
+       theory_teacher_schema.findOne({ma_lop:data.ma_lop,ghi_chu:data.ghi_chu}).exec(function(err,value){
+           teacher.findOne({ho_va_ten:value.ten_giang_vien}).exec(function(err,getTeacher){
+               theory_info.update({ma_lop:data.ma_lop,ghi_chu:data.ghi_chu},{$set:{giang_vien:getTeacher._id}}).exec(function(err,last){
+                   console.log(last);
+               });
+           });
+       });
+    });
 });
 //async.parallel([
 //    function getIdTheoryClass(cb){
