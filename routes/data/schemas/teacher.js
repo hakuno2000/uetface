@@ -4,7 +4,7 @@
 var mongoose=require('mongoose');
 var deepPopulate = require('mongoose-deep-populate');
 var teacher=new mongoose.Schema({
-    ma_giang_vien:{type:String,ref:'dgmh'},
+    ma_giang_vien:String,
     ho_va_ten: String,
     ma_danh_gia: String
 });

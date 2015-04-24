@@ -48,7 +48,7 @@ function doit(next){
 //var practice=require('./routes/data/models/practice');
 //var theory=require('./routes/data/models/theory');
 //var theory_info=require('./routes/data/models/theory_info');
-//var isNull=require('./routes/isNull');
+var isNull=require('./routes/isNull');
 //practice.find().exec(function(err,result){
 //    result.forEach(function(value){
 //        theory.find({ma_lop: value.ma_lop,ma_sinh_vien: value.ma_sinh_vien}).exec(function(err,result2){
@@ -105,6 +105,7 @@ var subjects =require('./routes/data/models/subjects');
 var theory_info=require('./routes/data/models/theory_info');
 var practice=require('./routes/data/models/theory');
 var teacher=require('./routes/data/models/teacher');
+
 var theory_teacher_schema= new mongoose.Schema({
     ma_giang_vien : String,
     ma_lop : String,
@@ -112,17 +113,44 @@ var theory_teacher_schema= new mongoose.Schema({
     ten_giang_vien : String
 });
 var theory_teacher= mongoose.model('theory_teacher',theory_teacher_schema,'giangvien_lopmonhoc');
+//var fs=require('fs');
+//var doc=fs.readFileSync('data2.json','utf8');
+//var doc=doc.substr(1);
+//var obj=JSON.parse(doc);
+//obj.forEach(function(value){
+//    teacher.find({ho_va_ten:value["Giáo viên"]}).exec(function(err,res){
+//        if(isNull(res)){
+//            var newTeacher= new teacher({
+//                ma_giang_vien:'',
+//                ho_va_ten:value["Giáo viên"]
+//            });
+//            newTeacher.save(function(err,kq){
+//                console.log(kq);
+//            });
+//        }
+//    })
+//});
 theory_info.find().exec(function(err,res){
     res.forEach(function(data){
-       theory_teacher_schema.findOne({ma_lop:data.ma_lop,ghi_chu:data.ghi_chu}).exec(function(err,value){
-           teacher.findOne({ho_va_ten:value.ten_giang_vien}).exec(function(err,getTeacher){
-               theory_info.update({ma_lop:data.ma_lop,ghi_chu:data.ghi_chu},{$set:{giang_vien:getTeacher._id}}).exec(function(err,last){
-                   console.log(last);
-               });
-           });
+       theory_teacher.findOne({ma_lop:data.ma_lop},function(err,theory_teacher){
+           //teacher.findOne({ho_va_ten:value.ten_giang_vien}).exec(function(err,getTeacher){
+           //    theory_info.update({ma_lop:data.ma_lop,ghi_chu:data.ghi_chu},{$set:{giang_vien:getTeacher._id}}).exec(function(err,last){
+           //        console.log(last);
+           //    });
+           //});
+           if(isNull(theory_teacher)){
+               console.log(data.ma_lop+" "+data.ghi_chu);
+           }else{
+               console.log(theory_teacher.ten_giang_vien);
+           }
        });
     });
 });
+//theory_teacher.find().exec(function(err,res){
+//   res.forEach(function(value){
+//      teacher
+//   });
+//});
 //async.parallel([
 //    function getIdTheoryClass(cb){
 //        var theory=require('./routes/data/models/theory');
