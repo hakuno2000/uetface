@@ -39,7 +39,6 @@ router.post('/',userNotLoggedIn,function(req,res,next){
                 &&req.body.q7&&req.body.q8&&req.body.q9&&req.body.q10&&req.body.q11&&req.body.q12
                 &&req.body.q13&&req.body.q14&&req.body.q15&&req.body.q16&&req.body.q17&&req.body.q18){
                 var dgmh=require('./../data/models/dgmh');
-                if(mongoose.connection.readyState==0) mongoose.connect(dbURL);
                 var subject=require('./../data/models/subjects');
                 async.parallel([
                     function getIdTeacher(cb){
