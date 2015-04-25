@@ -28,14 +28,13 @@ function chuyen(thu){
 }
 
 function check_tiet(tiet1 , tiet2){
-    var t1_1 = tiet1.split("-")[0];
-    var t1_2 = tiet1.split("-")[1];
-    var t2_1 = tiet2.split("-")[0];
-    var t2_2 = tiet2.split("-")[1];
-    if((t2_1 >= t1_1 && t2_1 <= t1_2) || (t2_2 >= t1_1 && t2_2 <= t1_2))
-        return true;
-    else
-        return false;
+    var t1_1 = Number(tiet1.split("-")[0]);
+    var t1_2 = Number(tiet1.split("-")[1]);
+    var t2_1 = Number(tiet2.split("-")[0]);
+    var t2_2 = Number(tiet2.split("-")[1]);
+    if(t2_1 >= t1_1 && t2_1 <= t1_2) return true;
+    else if (t2_2 >= t1_1 && t2_2 <= t1_2) return true;
+    else return false;
 }
 
 
@@ -80,6 +79,7 @@ user.controller('timetable',function($scope,$http,$q){
                 console.log(data);
             });
     }
+
     getClass();
     $(function () {
         $.contextMenu({
@@ -161,10 +161,11 @@ user.controller('timetable',function($scope,$http,$q){
                         //e.toElement.title = ti;
                     },
                     close: function(){
+
                         $scope.rp = "";
                         var kiem_tra = true;
                         for(var i = 0 ; i < my_tenMon.length ; i++) {
-                            //console.log(my_tenMon[i] + "- thu" + my_thu[i] + " Tiet " + my_tiet[i]);
+                           // console.log(my_tenMon[i] + "- thu" + my_thu[i] + " Tiet " + my_tiet[i]);
                             if (subject.value == my_tenMon[i]) {
                                 $scope.rp = "Môn học này đã có ! ";
                                 alert("Môn học này đã có !");
@@ -172,8 +173,9 @@ user.controller('timetable',function($scope,$http,$q){
                                 break;
                             }
                             if (thu.value == my_thu[i]) {
-                                //console.log(my_tiet[i] + "-" + tiet.value);
+
                                 if (check_tiet(my_tiet[i], tiet.value)) {
+                                    // 8 -10 vs 9-10
                                     $scope.rp = "Môn học đã bị trùng tiết !";
                                     alert("Môn học đã bị trùng tiết !");
                                     kiem_tra = false;
