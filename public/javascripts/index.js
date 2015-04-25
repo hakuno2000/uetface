@@ -14,7 +14,10 @@ index.controller('myCtrl',function($scope,$http){
         $scope.lop = "";
         $scope.isDisabled = true;
         test_msv = false;
-        if($scope.msv.length < 7){
+        if($scope.msv.length == 0){
+            $scope.checkMSV = "";
+        }
+        else if($scope.msv.length < 7){
             $scope.checkMSV = "Mã sinh viên phải có ít nhất 7 chữ số !";
         }
         else if ($scope.msv.length == 8 || $scope.msv.length == 7){
