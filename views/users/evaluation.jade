@@ -2,6 +2,7 @@
    Created by Phi on 1/30/2015.
 extends ../layout
 block content
+
     header#HOME(style='background: none;')
         .section_overlay
             nav.navbar.navbar-default.navbar-fixed-top
@@ -29,22 +30,28 @@ block content
                                 a(href='/') TRANG CHỦ
                             li()
                                 a(href='/evaluation') Đánh giá môn học
-        script.
-            $('a.print').click(function(e) {
-                alert("DMM!")
-                $('#form').lightbox_me({
-                    centered: true,
-                    onLoad: function() {
-                        //$('#sign_up').find('input:first').focus()
-                    }
-                });
-                e.preventDefault();
-            });
         section#SERVICE.services
             .container.evaluate(ng-app="evaluate")
                 h2=Rp_Form
                 script(src="javascripts/evaluation.js").
-                div.col-sm-12.col-md-12(ng-controller="list")
+                script(src="javascripts/ui-bootstrap-tpls-0.12.1.js")
+                div(ng-controller="list")
+                    script(type='text/ng-template', id='myModalContent.html').
+                        <div class="modal-header">
+                        <h3 class="modal-title">I'm a modal!</h3>
+                        </div>
+                        <div class="modal-body">
+                        <ul>
+                        <li ng-repeat="item in items">
+                        <a ng-click="selected.item = item">{{ item }}</a>
+                        </li>
+                        </ul>
+                        Selected: <b>{{ selected.item }}</b>
+                        </div>
+                        <div class="modal-footer">
+                        <button class="btn btn-primary" ng-click="ok()">OK</button>
+                        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                        </div>
                     div(ng-init="add=false; count=0;", ng-click="add=!add;")
                         div {{dgmh_rp}}
                         div.input-group
@@ -65,6 +72,7 @@ block content
                                         li Tiết học: {{member.tiet_bat_dau+'-'+member.tiet_ket_thuc}}
                                         li Thứ: {{member.thu}}
                                         li Giảng đường: {{member.giang_duong}}
+
                                 div(ng-init="mh=true;", ng-click="mh=!mh;")
                                     span.input-group-addon(style="background:none; border:none;")
                                     span.glyphicon.glyphicon-chevron-right(ng-show="mh")
@@ -80,39 +88,17 @@ block content
                                     span Mã giảng viên: {{member.ma_giang_vien.ma_giang_vien}}
                                     ul(ng-hide="gv")
                                         li Tên giảng viên: {{member.ma_giang_vien.ho_va_ten}}
-                            .col-sm-2.col-md-1
-                                a.glyphicon.glyphicon-print.print(href="#print", rel="prettyPhoto",title="In ra pdf")
-                            .col-sm-2.col-md-1
-                                a.glyphicon.glyphicon-eye-open(href="#Add_Subject", ng-click="",title="Xem")
-                            .col-sm-2.col-md-1
-                                a.glyphicon.glyphicon-pencil(href="#Add_Subject", ng-click="",title="Chỉnh sửa")
-                            .col-sm-2.col-md-1
+                            .col-sm-1.col-md-1
+                                a.glyphicon.glyphicon-print.print(href="#print", ng-click="open()",title="In ra pdf")
+                            .col-sm-1.col-md-1
+                                a.glyphicon.glyphicon-eye-open(href="#Add_Subject", ng-click="open('lg')",title="Xem")
+                            .col-sm-1.col-md-1
+                                a.glyphicon.glyphicon-pencil(href="#Add_Subject", ng-click="open('sm')",title="Chỉnh sửa")
+                            .col-sm-1.col-md-1
                                 a.glyphicon.glyphicon-remove(ng-click="",title="Xóa")
                     h3 {{list_rp}}
-                    form(method="post",action="", name="danhgia", style="display:none;")
-                        div.row
-                            div.col-sm-2.col-md-2
-                                strong Môn học:
-                            div.col-sm-4.col-md-4
-                                input.form-control#subject(name='subject', type='text', placeholder='Môn học',autocomplete="off" )
-
-                        div.row
-                            div.col-sm-2.col-md-2
-                                strong Mã lớp môn học:
-                            div.col-sm-4.col-md-4
-                                input.form-control#class_id(type='text', placeholder='Mã lớp môn học',autocomplete="off")
-                        div.row
-                            div.col-sm-2.col-md-2
-                                strong Mã đánh giá:
-                            div.col-sm-4.col-md-4
-                                input.form-control#evaluate_id(name='cla_id', type='text', placeholder='Mã đánh giá ',autocomplete="off",disabled,required)
-                        div.row
-                            div.col-sm-2.col-md-2
-                                strong Giảng viên:
-                            div.col-sm-4.col-md-4
-                                input.form-control#teacher_id(name='tea_id', type='text', placeholder='Giảng viên',autocomplete="off" ,  ng-model="giang_vien",required)
-                div.col-sm-12.col-md-12#form.hide(ng-controller="create")
-                    div(ng-init="add=true", ng-click="add=!add;")
+                div.col-sm-12.col-md-12(ng-controller="create")
+                    div(ng-init="add=true", ng-click="createEval()")
                         div.input-group
                             span.input-group-addon(style="background:none; border:none;")
                                 span.glyphicon.glyphicon-plus(ng-show="add")
@@ -174,7 +160,67 @@ block content
                                         label.css-label.radGroup2(for='radio4'+stt) 4
                                         input.css-checkbox(type='radio', name='q'+stt, id="radio5"+stt)
                                         label.css-label.radGroup2(for='radio5'+stt) 5
-                            div
+                            style.
+                                input[type=radio].css-checkbox {
+                                    position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+                                }
+                                input[type=radio].css-checkbox + label.css-label {
+                                    padding-left:10px;
+                                    padding-right:15px;
+                                    height:30px;
+                                    display:inline-block;
+                                    line-height:30px;
+                                    background-repeat:no-repeat;
+                                    background-position: 0 0;
+                                    font-size:20px;
+                                    vertical-align:middle;
+                                    cursor:pointer;
+                                }
+                                    input[type=radio].css-checkbox:checked + label.css-label {
+                                    background-position: 0 -30px;
+                                }
+                                label.css-label {
+                                    background-image:url('./images/1.png');
+                                    -webkit-touch-callout: none;
+                                    -webkit-user-select: none;
+                                    -khtml-user-select: none;
+                                    -moz-user-select: none;
+                                    -ms-user-select: none;
+                                    user-select: none;
+                                }
+
+                                .suggest {
+                                    position: absolute;
+                                    left: 0;
+                                    top: 30px;
+                                    width: 100%;
+                                    height: 200px;
+                                    margin: 0;
+                                    padding-left: 15px;
+                                    padding-right: 15px;
+                                    display: none;
+                                    z-index: 10;
+                                    overflow: auto;
+                                }
+                                .suggest ul{
+                                    width: 100%;
+                                    background-color: white;
+                                    list-style: none;
+                                    padding: 0;
+                                    font-size: 20px;
+
+                                }
+                                .suggest ul li {
+                                    display:block;
+                                    border:black 1px solid;
+                                    padding:2px;
+                                }
+                                .active, .suggest li:hover {
+                                    background-color: #CFD0DD;
+
+
+                                }
+                            .container
                                 |Nếu bạn có ý kiến đóng góp khác, thì tô kín vào ô số 1, sau đó ghi ở dưới đây:
                                 span(style="float:right")
                                     input.css-checkbox(type='radio', name='q'+stt, id="comment")
@@ -183,67 +229,5 @@ block content
                                 textarea(name='comment', rows='4', cols='80')
                                 br
                                 center Cám ơn những ý kiến đóng góp quý báu của bạn!
-                                input(type="submit", name="submit_form", value="gửi đi",style="margin-bottom:20px;")
-        section
-            style.
-                input[type=radio].css-checkbox {
-                    position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
-                }
-                input[type=radio].css-checkbox + label.css-label {
-                    padding-left:10px;
-                    padding-right:15px;
-                    height:30px;
-                    display:inline-block;
-                    line-height:30px;
-                    background-repeat:no-repeat;
-                    background-position: 0 0;
-                    font-size:20px;
-                    vertical-align:middle;
-                    cursor:pointer;
-                }
-                input[type=radio].css-checkbox:checked + label.css-label {
-                    background-position: 0 -30px;
-                }
-                label.css-label {
-                    background-image:url('./images/1.png');
-                    border-radius: 50%;
-                    -webkit-touch-callout: none;
-                    -webkit-user-select: none;
-                    -khtml-user-select: none;
-                    -moz-user-select: none;
-                    -ms-user-select: none;
-                    user-select: none;
-                }
+                                input(type="submit", name="submit_form", value="gửi đi")
 
-                .suggest {
-                    position: absolute;
-                    left: 0;
-                    top: 30px;
-                    width: 100%;
-                    height: 200px;
-                    margin: 0;
-                    padding-left: 15px;
-                    padding-right: 15px;
-                    display: none;
-                    z-index: 10;
-                    overflow: auto;
-                }
-                .suggest ul{
-                    width: 100%;
-                    background-color: white;
-                    list-style: none;
-                    padding: 0;
-                    font-size: 20px;
-
-                }
-                .suggest ul li {
-                    display:block;
-                    border:black 1px solid;
-                    padding:2px;
-                }
-                .active, .suggest li:hover {
-                    background-color: #CFD0DD;
-
-
-                }
-            script(src="/javascripts/jquery.lightbox_me.js")

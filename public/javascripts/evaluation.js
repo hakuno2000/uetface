@@ -1,8 +1,23 @@
 /**
  * Created by PHI on 3/24/2015.
  */
-var process=angular.module('evaluate',[]);
-process.controller('list',function($scope,$http){
+var process=angular.module('evaluate',['ui.bootstrap']);
+process.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+
+    $scope.items = items;
+    $scope.selected = {
+        item: $scope.items[0]
+    };
+
+    $scope.ok = function () {
+        $modalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});
+process.controller('list',function($scope,$http,$log,$modal){
     $http.get('/api/user/find_evaluate')
         .success(function(data){
             if(data.type=="error"){
@@ -36,20 +51,54 @@ process.controller('list',function($scope,$http){
         }).error(function(data){
            console.log(data);
         });
-}).controller('create',function($scope,$http){
-    $http.get('/api/user/find_class')
-        .success(function(data){
-            $scope.theories = data[0];
+    $scope.items = ['item1', 'item2', 'item3'];
 
-            var tenMon = [];
-            var maLop = [];
-            for(var i = 0 ; i < $scope.theories.length ; i++){
-                tenMon[i] = $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon;
-                maLop[i] = $scope.theories[i].ma_lop;
+    $scope.open = function (size) {
+
+        var modalInstance = $modal.open({
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            size: size,
+            resolve: {
+                items: function () {
+                    return $scope.items;
+                }
             }
-            $("#subject").autocomplete({
-                source : tenMon,
-                close: function () {
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+}).controller('create',function($scope,$http){
+    $scope.createEval=function() {
+        $scope.add=!$scope.add;
+        $http.get('/api/user/find_class')
+            .success(function(data){
+                $scope.theories = data[0];
+
+                var tenMon = [];
+                var maLop = [];
+                for(var i = 0 ; i < $scope.theories.length ; i++){
+                    tenMon[i] = $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon;
+                    maLop[i] = $scope.theories[i].ma_lop;
+                }
+                $("#subject").autocomplete({
+                    source : tenMon,
+                    close: function () {
+                        if(check(subject.value)!=undefined){
+                            class_id.value = check(subject.value);
+                            evaluate_id.value=check2(subject.value);
+                        }
+                        else{
+                            class_id.value = "Không có lớp học này trong thời khóa biểu của bạn!";
+                            evaluate_id.value= "Mã không tồn tại!"
+                        }
+                    }
+                });
+                class_id.onblur=function(){
                     if(check(subject.value)!=undefined){
                         class_id.value = check(subject.value);
                         evaluate_id.value=check2(subject.value);
@@ -59,37 +108,27 @@ process.controller('list',function($scope,$http){
                         evaluate_id.value= "Mã không tồn tại!"
                     }
                 }
-            });
-            class_id.onblur=function(){
-                if(check(subject.value)!=undefined){
-                    class_id.value = check(subject.value);
-                    evaluate_id.value=check2(subject.value);
+                $("#class_id").autocomplete({
+                    source : maLop
+                })
+                function check(e){
+                    for(var i = 0 ; i < $scope.theories.length ; i++){
+                        if(e == $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon){
+                            return $scope.theories[i].ma_lop;
+                        }
+                    }
+                    return;
                 }
-                else{
-                    class_id.value = "Không có lớp học này trong thời khóa biểu của bạn!";
-                    evaluate_id.value= "Mã không tồn tại!"
+                function check2(e){
+                    for(var i = 0 ; i < $scope.theories.length ; i++){
+                        if(e == $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon){
+                            return $scope.theories[i].thong_tin_lop.ma_danh_gia;
+                        }
+                    }
+                    return;
                 }
-            }
-            $("#class_id").autocomplete({
-                source : maLop
             })
-            function check(e){
-                for(var i = 0 ; i < $scope.theories.length ; i++){
-                    if(e == $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon){
-                        return $scope.theories[i].ma_lop;
-                    }
-                }
-                return;
-            }
-            function check2(e){
-                for(var i = 0 ; i < $scope.theories.length ; i++){
-                    if(e == $scope.theories[i].thong_tin_lop.thong_tin_mon.ten_mon){
-                        return $scope.theories[i].thong_tin_lop.ma_danh_gia;
-                    }
-                }
-                return;
-            }
-        })
+    }
 
     $http.get('/api/findteacher/')
         .success(function(data1){
