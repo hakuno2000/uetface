@@ -168,6 +168,21 @@ block content
                         padding: 5px 10px;
                     }
                 script(src="/javascripts/user.js").
+
+        section(style="margin-bottom:50px;",ng-controller="lich_thi")
+            .container
+                form()
+                    //span {{rp}}
+                    div(ng-init="add=false", ng-click="load()")
+                        //div {{dgmh_rp}}
+                        div.input-group
+                            span.input-group-addon(style="background:none; border:none;")
+                                span.glyphicon.glyphicon-plus(ng-show="add")
+                                span.glyphicon.glyphicon-minus(ng-show="!add")
+                            span(style="font-size:1.5em") Lịch thi
+                    div(ng-hide="!lichThi")
+                        div {{rp}}
+
         section(style="margin-bottom:50px;",ng-controller="add_class")
             .container
                 form()

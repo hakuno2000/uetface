@@ -211,4 +211,12 @@ user.controller('timetable',function($scope,$http,$q){
                 console.log(data);
             });
     }
+}).controller('lich_thi',function($http,$scope){
+    $scope.load = function() {
+        $scope.lichThi = !$scope.lichThi;
+        $http.get('/api/user/lich_thi')
+            .success(function(data){
+                $scope.rp = "hello";
+            })
+    }
 });
