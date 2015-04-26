@@ -184,6 +184,7 @@ block content
                         table
                             tr
                                 th STT
+                                th SBD
                                 th Tên môn học
                                 th Ngày thi
                                 th Giờ thi
@@ -193,6 +194,7 @@ block content
                                 th Hình thức thi
                             tr(ng-repeat="x in names")
                                 th {{x.stt}}
+                                td {{x.sbd}}
                                 td {{x.ten_mon_hoc}}
                                 td {{x.ngay_thi}}
                                 td {{x.gio_thi}}
