@@ -36,7 +36,15 @@ function check_tiet(tiet1 , tiet2){
     else if (t2_2 >= t1_1 && t2_2 <= t1_2) return true;
     else return false;
 }
+function compare_day(day1 , day2){
 
+    var d1 = day1.split("/");
+    var d2 = day2.split("/");
+    var t1 = new Date(Number(d1[2]) , Number(d1[1]) , Number(d1[0]));
+    var t2 = new Date(Number(d2[2]) , Number(d2[1]) , Number(d2[0]));
+    if(t1 > t2) return true;
+    else return false;
+}
 
 var user=angular.module('user',[]);
 user.controller('timetable',function($scope,$http,$q){
@@ -216,7 +224,24 @@ user.controller('timetable',function($scope,$http,$q){
         $scope.lichThi = !$scope.lichThi;
         $http.get('/api/user/lich_thi')
             .success(function(data){
-                $scope.rp = "hello";
-            })
+                //console.log(data[0]);
+                $scope.names = data[0];
+
+                for(var i = 0 ; i < $scope.names.length  ; i++){
+
+                    for(var j = 0 ; j < $scope.names.length - 1; j++){
+                        var st = $scope.names[j].ngay_thi;
+                        var en = $scope.names[j + 1].ngay_thi;
+                        
+                        if(compare_day(st,en)){
+                            var temp = $scope.names[j];
+                            $scope.names[j] = $scope.names[j+1];
+                            $scope.names[j+1] = temp;
+                        }
+                    }
+                }
+                for(var i = 0 ; i < $scope.names.length ; i++)
+                    $scope.names[i].stt = i + 1;
+    })
     }
 });

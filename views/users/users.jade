@@ -181,7 +181,26 @@ block content
                                 span.glyphicon.glyphicon-minus(ng-show="!add")
                             span(style="font-size:1.5em") Lịch thi
                     div(ng-hide="!lichThi")
-                        div {{rp}}
+                        table
+                            tr
+                                th STT
+                                th Tên môn học
+                                th Ngày thi
+                                th Giờ thi
+                                th Ca thi
+                                th Phòng thi
+                                th Địa điểm
+                                th Hình thức thi
+                            tr(ng-repeat="x in names")
+                                th {{x.stt}}
+                                td {{x.ten_mon_hoc}}
+                                td {{x.ngay_thi}}
+                                td {{x.gio_thi}}
+                                td {{x.ca_thi}}
+                                td {{x.phong_thi}}
+                                td {{x.dia_diem}}
+                                td {{x.hinh_thuc_thi}}
+
 
         section(style="margin-bottom:50px;",ng-controller="add_class")
             .container
