@@ -10,7 +10,9 @@ var create_dgmh=require('./create_dgmh');
 var add_class=require('./add_class');
 var remove_class=require('./remove_class');
 var get_class=require('./get_class');
+var lich_thi=require('./lich_thi');
 
+router.use('/lich_thi',lich_thi);
 router.use('/get_class',get_class);
 router.use('/remove_class',remove_class);
 router.use('/add_class',add_class);
