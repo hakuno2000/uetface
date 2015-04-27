@@ -168,52 +168,48 @@ block content
                         padding: 5px 10px;
                     }
                 script(src="/javascripts/user.js").
-
         section(style="margin-bottom:50px;",ng-controller="lich_thi")
             .container
-                form()
-                    //span {{rp}}
-                    div(ng-init="add=false", ng-click="load()")
-                        //div {{dgmh_rp}}
-                        div.input-group
-                            span.input-group-addon(style="background:none; border:none;")
-                                span.glyphicon.glyphicon-plus(ng-show="add")
-                                span.glyphicon.glyphicon-minus(ng-show="!add")
-                            span(style="font-size:1.5em") Lịch thi
-                    div(ng-hide="!lichThi")
-                        table
-                            tr
-                                th STT
-                                th SBD
-                                th Tên môn học
-                                th Ngày thi
-                                th Giờ thi
-                                th Ca thi
-                                th Phòng thi
-                                th Địa điểm
-                                th Hình thức thi
-                            tr(ng-repeat="x in names")
-                                th {{x.stt}}
-                                td {{x.sbd}}
-                                td {{x.ten_mon_hoc}}
-                                td {{x.ngay_thi}}
-                                td {{x.gio_thi}}
-                                td {{x.ca_thi}}
-                                td {{x.phong_thi}}
-                                td {{x.dia_diem}}
-                                td {{x.hinh_thuc_thi}}
-
-
+                //span {{rp}}
+                div(ng-click="load()")
+                    //div {{dgmh_rp}}
+                    div.input-group
+                        span.input-group-addon(style="background:none; border:none;")
+                            span.glyphicon.glyphicon-plus(ng-show="lichThi")
+                            span.glyphicon.glyphicon-minus(ng-show="!lichThi")
+                        span(style="font-size:1.5em") Lịch thi
+                div(ng-hide="!lichThi")
+                    table
+                        tr
+                            th STT
+                            th SBD
+                            th Tên môn học
+                            th Ngày thi
+                            th Giờ thi
+                            th Ca thi
+                            th Phòng thi
+                            th Địa điểm
+                            th Hình thức thi
+                        tr(ng-repeat="x in names")
+                            th {{x.stt}}
+                            td {{x.sbd}}
+                            td {{x.ten_mon_hoc}}
+                            td {{x.ngay_thi}}
+                            td {{x.gio_thi}}
+                            td {{x.ca_thi}}
+                            td {{x.phong_thi}}
+                            td {{x.dia_diem}}
+                            td {{x.hinh_thuc_thi}}
         section(style="margin-bottom:50px;",ng-controller="add_class")
             .container
                 form()
                     span {{rp}}
-                    div(ng-init="add=false; count=0;", ng-click="load()")
+                    div( ng-click="load()")
                         div {{dgmh_rp}}
                         div.input-group
                             span.input-group-addon(style="background:none; border:none;")
-                                span.glyphicon.glyphicon-plus(ng-show="add")
-                                span.glyphicon.glyphicon-minus(ng-show="!add")
+                                span.glyphicon.glyphicon-plus(ng-show="addClass")
+                                span.glyphicon.glyphicon-minus(ng-show="!addClass")
                             span(style="font-size:1.5em") Thêm lớp
                     div(ng-hide="!addClass")
                         span.col-sm-1 Tên môn

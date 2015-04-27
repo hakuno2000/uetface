@@ -51,10 +51,12 @@ process.controller('list',function($scope,$http,$log,$modal){
         }).error(function(data){
            console.log(data);
         });
-    $scope.items = ['item1', 'item2', 'item3'];
-
-    $scope.open = function (size) {
-
+    $scope.items = [
+        'item1',
+        'item2',
+        'item3'
+    ];
+    $scope.open = function (size,data) {
         var modalInstance = $modal.open({
             templateUrl: 'myModalContent.html',
             controller: 'ModalInstanceCtrl',
@@ -65,7 +67,7 @@ process.controller('list',function($scope,$http,$log,$modal){
                 }
             }
         });
-
+        console.log(data);
         modalInstance.result.then(function (selectedItem) {
             $scope.selected = selectedItem;
         }, function () {
