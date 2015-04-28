@@ -2,15 +2,18 @@
  * Created by PHI on 3/24/2015.
  */
 var process=angular.module('evaluate',['ui.bootstrap']);
-process.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+process.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items, ans) {
 
     $scope.items = items;
-    $scope.selected = {
-        item: $scope.items[0]
-    };
+    $scope.answers=[];
+    for(var i=0;i<18;i++){
+        $scope.answers[i]=ans["q"+(i+1)];
+    }
+    $scope.data=ans;
+    console.log(ans);
 
     $scope.ok = function () {
-        $modalInstance.close($scope.selected.item);
+        $modalInstance.close();
     };
 
     $scope.cancel = function () {
@@ -52,11 +55,26 @@ process.controller('list',function($scope,$http,$log,$modal){
            console.log(data);
         });
     $scope.items = [
-        'item1',
-        'item2',
-        'item3'
+        'Giảng đường đáp ứng nhu cầu của môn học.',
+        'Các thiết bị tại giảng đường đáp ứng nhu cầu giảng dạy và học tập.',
+        'Bạn được hỗ trợ kịp thời trong quá trình học môn này.',
+        'Mục tiêu của môn học nêu rõ kiến thức và kĩ năng người học cần đạt được.',
+        'Thời lượng môn học được phân bổ hợp lí cho các hình thức học tập.',
+        'Các tài liệu phục vụ môn học được cập nhật.',
+        'Môn học góp phần trang bị kiến thức, kĩ năng nghề nghiệp cho bạn.',
+        'Giảng viên hướng dẫn cho bạn phương pháp học tập khi bắt đầu môn học.',
+        'Phương pháp giảng dạy của giảng viên giúp bạn phát triển tư duy phê phán',
+        'Giảng viên tạo cơ hội để bạn chủ động tham gia vào quá trình học tập',
+        'Giảng viên giúp bạn phát triển kĩ năng làm việc độc lập',
+        'Giảng viên rèn luyện cho bạn phương pháp liên hệ giữa các vấn đề trong môn học với thực tiễn',
+        'Giảng viên sử dụng hiệu quả phương tiện dạy học',
+        'Giảng viên quan tâm giáo dục tư cách, phẩm chất nghề nghiệp của người học',
+        'Bạn hiểu những vấn đề được truyền tải trên lớp ',
+        'Kết quả học tập của người học được đánh giá bằng nhiều hình thức phù hợp với tính chất và đặc thù môn học',
+        'Nội dung kiểm tra đánh giá tổng hợp được các kiến thức và kĩ năng mà người học phải đạt được theo yêu cầu',
+        'Thông tin phản hồi từ kiểm tra đánh giá giúp bạn cải thiện kết quả học tập'
     ];
-    $scope.open = function (size,data) {
+    $scope.openView = function (size,data) {
         var modalInstance = $modal.open({
             templateUrl: 'myModalContent.html',
             controller: 'ModalInstanceCtrl',
@@ -64,14 +82,16 @@ process.controller('list',function($scope,$http,$log,$modal){
             resolve: {
                 items: function () {
                     return $scope.items;
+                },
+                ans: function(){
+                    return data;
                 }
             }
         });
-        console.log(data);
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
+        modalInstance.result.then(function () {
+
         }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
+
         });
     };
 }).controller('create',function($scope,$http){
