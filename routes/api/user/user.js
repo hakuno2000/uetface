@@ -11,7 +11,11 @@ var add_class=require('./add_class');
 var remove_class=require('./remove_class');
 var get_class=require('./get_class');
 var lich_thi=require('./lich_thi');
+var update_evaluate=require('./update_dgmh');
+var delete_evaluate=require('./delete_dgmh');
 
+router.use('/delete_evaluate',delete_evaluate);
+router.use('/update_evaluate',update_evaluate);
 router.use('/lich_thi',lich_thi);
 router.use('/get_class',get_class);
 router.use('/remove_class',remove_class);

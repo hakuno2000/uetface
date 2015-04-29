@@ -138,73 +138,75 @@ user.controller('timetable',function($scope,$http,$q){
 }).controller('add_class',function($http,$scope){
     $scope.load=function(){
         $scope.addClass=!$scope.addClass;
-        $http.get('/api/user/add_class')
-            .success(function(data){
-                $scope.ly_thuyet= data[0];
-                $scope.thuc_hanh = data[1];
-                $scope.name_mon = $scope.ly_thuyet.concat($scope.thuc_hanh);
+        if($scope.addClass==true)
+        {
+            $http.get('/api/user/add_class')
+                .success(function(data){
+                    $scope.ly_thuyet= data[0];
+                    $scope.thuc_hanh = data[1];
+                    $scope.name_mon = $scope.ly_thuyet.concat($scope.thuc_hanh);
 
-                var tenMon = [];
-                for(var i = 0 ; i < $scope.name_mon. length ;i++){
-                    var obj = {};
-                    obj.label = $scope.name_mon[i].thong_tin_mon.ten_mon;
-                    obj.period= $scope.name_mon[i].tiet_bat_dau+ "-" + $scope.name_mon[i].tiet_ket_thuc;
-                    obj.day=$scope.name_mon[i].thu;
-                    obj.note=$scope.name_mon[i].ghi_chu;
-                    obj.class_id=$scope.name_mon[i].ma_lop;
-                    obj.value = $scope.name_mon[i].thong_tin_mon.ten_mon;
-                    tenMon[i] = obj;
-                }
+                    var tenMon = [];
+                    for(var i = 0 ; i < $scope.name_mon. length ;i++){
+                        var obj = {};
+                        obj.label = $scope.name_mon[i].thong_tin_mon.ten_mon;
+                        obj.period= $scope.name_mon[i].tiet_bat_dau+ "-" + $scope.name_mon[i].tiet_ket_thuc;
+                        obj.day=$scope.name_mon[i].thu;
+                        obj.note=$scope.name_mon[i].ghi_chu;
+                        obj.class_id=$scope.name_mon[i].ma_lop;
+                        obj.value = $scope.name_mon[i].thong_tin_mon.ten_mon;
+                        tenMon[i] = obj;
+                    }
 
 
-                $("#subject").autocomplete({
-                    source : tenMon,
-                    focus: function( e, ui ) {
-                        $("#class_id").val(ui.item.class_id);
-                        $("#thu").val(ui.item.day);
-                        $("#tiet").val(ui.item.period);
-                        $("#ghi_chu").val(ui.item.note);
+                    $("#subject").autocomplete({
+                        source : tenMon,
+                        focus: function( e, ui ) {
+                            $("#class_id").val(ui.item.class_id);
+                            $("#thu").val(ui.item.day);
+                            $("#tiet").val(ui.item.period);
+                            $("#ghi_chu").val(ui.item.note);
 
-                        //var ti = "Thứ " + $scope.name_mon[ui.item.value].thu + "(" + $scope.name_mon[ui.item.value].tiet_bat_dau + "-" + $scope.name_mon[ui.item.value].tiet_ket_thuc + ")";
-                        //e.toElement.title = ti;
-                    },
-                    close: function(){
+                            //var ti = "Thứ " + $scope.name_mon[ui.item.value].thu + "(" + $scope.name_mon[ui.item.value].tiet_bat_dau + "-" + $scope.name_mon[ui.item.value].tiet_ket_thuc + ")";
+                            //e.toElement.title = ti;
+                        },
+                        close: function(){
 
-                        $scope.rp = "";
-                        var kiem_tra = true;
-                        for(var i = 0 ; i < my_tenMon.length ; i++) {
-                           // console.log(my_tenMon[i] + "- thu" + my_thu[i] + " Tiet " + my_tiet[i]);
-                            if (subject.value == my_tenMon[i]) {
-                                $scope.rp = "Môn học này đã có ! ";
-                                alert("Môn học này đã có !");
-                                kiem_tra = false;
-                                break;
-                            }
-                            if (thu.value == my_thu[i]) {
-
-                                if (check_tiet(my_tiet[i], tiet.value)) {
-                                    // 8 -10 vs 9-10
-                                    $scope.rp = "Môn học đã bị trùng tiết !";
-                                    alert("Môn học đã bị trùng tiết !");
+                            $scope.rp = "";
+                            var kiem_tra = true;
+                            for(var i = 0 ; i < my_tenMon.length ; i++) {
+                                // console.log(my_tenMon[i] + "- thu" + my_thu[i] + " Tiet " + my_tiet[i]);
+                                if (subject.value == my_tenMon[i]) {
+                                    $scope.rp = "Môn học này đã có ! ";
+                                    alert("Môn học này đã có !");
                                     kiem_tra = false;
                                     break;
                                 }
+                                if (thu.value == my_thu[i]) {
+
+                                    if (check_tiet(my_tiet[i], tiet.value)) {
+                                        // 8 -10 vs 9-10
+                                        $scope.rp = "Môn học đã bị trùng tiết !";
+                                        alert("Môn học đã bị trùng tiết !");
+                                        kiem_tra = false;
+                                        break;
+                                    }
+                                }
+                                kiem_tra = true;
                             }
-                            kiem_tra = true;
+                            if(kiem_tra == false){
+                                class_id.value = "";
+                                thu.value = "";
+                                tiet.value = "";
+                                ghi_chu.value = "";
+                            }
                         }
-                        if(kiem_tra == false){
-                            class_id.value = "";
-                            thu.value = "";
-                            tiet.value = "";
-                            ghi_chu.value = "";
-                        }
-                    }
-                })
+                    })
 
-            }).error(function(data){
-                console.log("error");
-            });
-
+                }).error(function(data){
+                    console.log("error");
+                });
+        }
     }
     $scope.add=function(){
         console.log('demo');
@@ -222,26 +224,29 @@ user.controller('timetable',function($scope,$http,$q){
 }).controller('lich_thi',function($http,$scope){
     $scope.load = function() {
         $scope.lichThi = !$scope.lichThi;
-        $http.get('/api/user/lich_thi')
-            .success(function(data){
-                //console.log(data[0]);
-                $scope.names = data[0];
+        if($scope.lichThi==true)
+        {
+            $http.get('/api/user/lich_thi')
+                .success(function(data){
+                    //console.log(data[0]);
+                    $scope.names = data[0];
 
-                for(var i = 0 ; i < $scope.names.length  ; i++){
+                    for(var i = 0 ; i < $scope.names.length  ; i++){
 
-                    for(var j = 0 ; j < $scope.names.length - 1; j++){
-                        var st = $scope.names[j].ngay_thi;
-                        var en = $scope.names[j + 1].ngay_thi;
-                        
-                        if(compare_day(st,en)){
-                            var temp = $scope.names[j];
-                            $scope.names[j] = $scope.names[j+1];
-                            $scope.names[j+1] = temp;
+                        for(var j = 0 ; j < $scope.names.length - 1; j++){
+                            var st = $scope.names[j].ngay_thi;
+                            var en = $scope.names[j + 1].ngay_thi;
+
+                            if(compare_day(st,en)){
+                                var temp = $scope.names[j];
+                                $scope.names[j] = $scope.names[j+1];
+                                $scope.names[j+1] = temp;
+                            }
                         }
                     }
-                }
-                for(var i = 0 ; i < $scope.names.length ; i++)
-                    $scope.names[i].stt = i + 1;
-    })
+                    for(var i = 0 ; i < $scope.names.length ; i++)
+                        $scope.names[i].stt = i + 1;
+                })
+        }
     }
 });

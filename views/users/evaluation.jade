@@ -42,19 +42,67 @@ block content
                         <h3 class="modal-title">Giảng viên: {{data.ma_giang_vien.ho_va_ten}}</h3>
                         </div>
                         <div class="modal-body">
+                            <table>
+                                <tr ng-repeat="item in items">
+                                    <td class="col-sm-10 col-md-10" >{{$index+1}}. <a>{{ item }}</a></td>
+                                    <td class="col-sm-2 col-md-2">
+                                        <input type="radio" id="viewradio+{{$index}}" class="css-checkbox" disabled>
+                                        <label for="viewradio+{{$index}}" class="css-label radGroup2" style="border-radius:50%">{{answers[$index]}}</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                        <button class="btn btn-primary" ng-click="ok()">Xác Nhận</button>
+                        <button class="btn btn-warning" ng-click="cancel()">Quay Lại</button>
+                        </div>
+                    script(type='text/ng-template', id='edit').
+                        <div class="modal-header">
+                        <h3 class="modal-title">{{data.ma_lop_mon_hoc.thong_tin_mon.ten_mon}}</h3>
+                        <h3 class="modal-title">Giảng viên: {{data.ma_giang_vien.ho_va_ten}}</h3>
+                        </div>
+                        <div class="modal-body">
                         <table>
                             <tr ng-repeat="item in items">
                                 <td class="col-sm-10 col-md-10" >{{$index+1}}. <a>{{ item }}</a></td>
                                 <td class="col-sm-2 col-md-2">
-                                    <input type="radio" id="viewradio+{{$index}}" class="css-checkbox" disabled>
-                                    <label for="viewradio+{{$index}}" class="css-label radGroup2" style="border-radius:50%">{{answers[$index]}}</label>
+                                    <input type="radio" id="viewradio{{$index}}" class="css-checkbox" disabled>
+                                    <label for="viewradio{{$index}}" class="css-label radGroup2" style="border-radius:50%">{{answers[$index]}}</label>
+                                    <select ng-model="edit['q'+$index]" ng-click="answers[$index]=edit['q'+$index]">
+                                        <option value=1 selected>1</option>
+                                        <option value=2>2</option>
+                                        <option value=3>3</option>
+                                        <option value=4>4</option>
+                                        <option value=5>5</option>
+                                    </select>
                                 </td>
                             </tr>
                         </table>
                         </div>
                         <div class="modal-footer">
+                        <button class="btn btn-primary" ng-click="ok()">Xác Nhận</button>
+                        <button class="btn btn-warning" ng-click="cancel()">Quay Lại</button>
+                        </div>
+                    script(type='text/ng-template', id='response').
+                        <div class="modal-header">
+                        <h3 class="modal-title">Thông báo</h3>
+                        </div>
+                        <div class="modal-body">
+                            <h3>{{content}}</h3>
+                        </div>
+                        <div class="modal-footer">
                         <button class="btn btn-primary" ng-click="ok()">OK</button>
-                        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                        </div>
+                    script(type='text/ng-template', id='delete').
+                        <div class="modal-header">
+                        <h3 class="modal-title">Thông báo</h3>
+                        </div>
+                        <div class="modal-body">
+                            <h3>Bạn có chắc chắn xóa đánh giá này?</h3>
+                        </div>
+                        <div class="modal-footer">
+                        <button class="btn btn-primary" ng-click="ok()">Xóa</button>
+                        <button class="btn btn-warning" ng-click="cancel()">Quay Lại</button>
                         </div>
                     div(ng-init="add=false; count=0;", ng-click="add=!add;")
                         div {{dgmh_rp}}
@@ -95,11 +143,11 @@ block content
                             .col-sm-1.col-md-1
                                 a.glyphicon.glyphicon-print.print(href="#print", ng-click="open()",title="In ra pdf")
                             .col-sm-1.col-md-1
-                                a.glyphicon.glyphicon-eye-open(href="#Add_Subject", ng-click="openView('lg',member)",title="Xem")
+                                a.glyphicon.glyphicon-eye-open(href="#view", ng-click="openView('lg',member)",title="Xem")
                             .col-sm-1.col-md-1
-                                a.glyphicon.glyphicon-pencil(href="#Add_Subject", ng-click="open('sm')",title="Chỉnh sửa")
+                                a.glyphicon.glyphicon-pencil(href="#edit", ng-click="openEdit('lg',member)",title="Chỉnh sửa")
                             .col-sm-1.col-md-1
-                                a.glyphicon.glyphicon-remove(ng-click="",title="Xóa")
+                                a.glyphicon.glyphicon-remove(ng-click="openDelete('lg',member)",title="Xóa")
                     h3 {{list_rp}}
                 div.col-sm-12.col-md-12(ng-controller="create")
                     div(ng-init="add=true", ng-click="createEval()")

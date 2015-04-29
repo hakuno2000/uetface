@@ -10,7 +10,6 @@ process.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items,
         $scope.answers[i]=ans["q"+(i+1)];
     }
     $scope.data=ans;
-    console.log(ans);
 
     $scope.ok = function () {
         $modalInstance.close();
@@ -20,40 +19,82 @@ process.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items,
         $modalInstance.dismiss('cancel');
     };
 });
+process.controller('Response', function ($scope, $modalInstance, content) {
+
+    $scope.content = content;
+    $scope.ok = function () {
+        $modalInstance.close();
+    };
+});
+process.controller('EditModalInstanceCtrl', function ($scope, $modalInstance, items, ans) {
+
+    $scope.items = items;
+    $scope.answers=[];
+    for(var i=0;i<18;i++){
+        $scope.answers[i]=ans["q"+(i+1)];
+    }
+    $scope.data=ans;
+
+    $scope.ok = function () {
+        var data= $.extend({},$scope.answers);
+        data.cla_id=ans.ma_lop_mon_hoc._id;
+        data.tea_id=ans.ma_giang_vien._id;
+        $modalInstance.close(data);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});
+process.controller('DeleteModalInstanceCtrl', function ($scope, $modalInstance, ans) {
+    $scope.ok = function () {
+        var data={};
+        data.cla_id=ans.ma_lop_mon_hoc._id;
+        data.tea_id=ans.ma_giang_vien._id;
+        $modalInstance.close(data);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});
 process.controller('list',function($scope,$http,$log,$modal){
-    $http.get('/api/user/find_evaluate')
-        .success(function(data){
-            if(data.type=="error"){
-                $scope.dgmh_rp=data.content;
-            }else{
-                data.forEach(function(value){
-                    if(!value.hasOwnProperty('ma_lop_thuc_hanh')){
-                        var temp=value.ma_lop_mon_hoc;
-                        value.ma_lop=temp.ma_danh_gia;
-                        value.tiet_bat_dau=temp.tiet_bat_dau;
-                        value.tiet_ket_thuc=temp.tiet_ket_thuc;
-                        value.thu=temp.thu;
-                        value.giang_duong=temp.giang_duong;
-                        value.ma_mon=temp.thong_tin_mon.ma_danh_gia;
-                        value.ten_mon=temp.thong_tin_mon.ten_mon;
-                        value.ma_mon_hoc=temp.thong_tin_mon.ma_mon;
-                    }else{
-                        var temp=value.ma_lop_thuc_hanh;
-                        value.ma_lop=temp.ma_danh_gia;
-                        value.tiet_bat_dau=temp.tiet_bat_dau;
-                        value.tiet_ket_thuc=temp.tiet_ket_thuc;
-                        value.thu=temp.thu;
-                        value.giang_duong=temp.giang_duong;
-                        value.ma_mon=temp.thong_tin_mon.ma_danh_gia;
-                        value.ten_mon=temp.thong_tin_mon.ten_mon;
-                        value.ma_mon_hoc=temp.thong_tin_mon.ma_mon;
-                    }
-                });
-                $scope.list=data;
-            }
-        }).error(function(data){
-           console.log(data);
-        });
+    $scope.find_evaluate=function(){
+        $http.get('/api/user/find_evaluate')
+            .success(function(data){
+                if(data.type=="error"){
+                    $scope.dgmh_rp=data.content;
+                }else{
+                    data.forEach(function(value){
+                        if(!value.hasOwnProperty('ma_lop_thuc_hanh')){
+                            var temp=value.ma_lop_mon_hoc;
+                            value.ma_lop=temp.ma_danh_gia;
+                            value.tiet_bat_dau=temp.tiet_bat_dau;
+                            value.tiet_ket_thuc=temp.tiet_ket_thuc;
+                            value.thu=temp.thu;
+                            value.giang_duong=temp.giang_duong;
+                            value.ma_mon=temp.thong_tin_mon.ma_danh_gia;
+                            value.ten_mon=temp.thong_tin_mon.ten_mon;
+                            value.ma_mon_hoc=temp.thong_tin_mon.ma_mon;
+                        }else{
+                            var temp=value.ma_lop_thuc_hanh;
+                            value.ma_lop=temp.ma_danh_gia;
+                            value.tiet_bat_dau=temp.tiet_bat_dau;
+                            value.tiet_ket_thuc=temp.tiet_ket_thuc;
+                            value.thu=temp.thu;
+                            value.giang_duong=temp.giang_duong;
+                            value.ma_mon=temp.thong_tin_mon.ma_danh_gia;
+                            value.ten_mon=temp.thong_tin_mon.ten_mon;
+                            value.ma_mon_hoc=temp.thong_tin_mon.ma_mon;
+                        }
+                    });
+                    $scope.list=data;
+                }
+            }).error(function(data){
+                console.log(data);
+            });
+    }
+    $scope.find_evaluate();
     $scope.items = [
         'Giảng đường đáp ứng nhu cầu của môn học.',
         'Các thiết bị tại giảng đường đáp ứng nhu cầu giảng dạy và học tập.',
@@ -94,9 +135,75 @@ process.controller('list',function($scope,$http,$log,$modal){
 
         });
     };
+    $scope.openEdit = function (size,data) {
+        var modalInstance = $modal.open({
+            templateUrl: 'edit',
+            controller: 'EditModalInstanceCtrl',
+            size: size,
+            resolve: {
+                items: function () {
+                    return $scope.items;
+                },
+                ans: function(){
+                    return data;
+                }
+            }
+        });
+        modalInstance.result.then(function (data) {
+            for(var i=0;i<18;i++){
+                data['q'+(i+1)]=data[i];
+                delete data[i];
+            }
+            $http.post('/api/user/update_evaluate',data)
+                .success(function(response){
+                    $scope.find_evaluate();
+                    $scope.Response('lg',response.content);
+                }).error(function(response){
+                    console.log(response);
+                })
+        }, function () {
+
+        });
+    };
+    $scope.openDelete = function (size,data) {
+        var modalInstance = $modal.open({
+            templateUrl: 'delete',
+            controller: 'DeleteModalInstanceCtrl',
+            size: size,
+            resolve: {
+                ans: function(){
+                    return data;
+                }
+            }
+        });
+        modalInstance.result.then(function (data) {
+            $http.post('/api/user/delete_evaluate',data)
+                .success(function(response){
+                    $scope.find_evaluate();
+                    $scope.Response('lg',response.content);
+                }).error(function(response){
+                    console.log(response);
+                })
+        }, function () {
+
+        });
+    };
+    $scope.Response = function (size,content) {
+        var modalInstance = $modal.open({
+            templateUrl: 'response',
+            controller: 'Response',
+            size: size,
+            resolve: {
+                content: function () {
+                    return content;
+                }
+            }
+        });
+    };
 }).controller('create',function($scope,$http){
     $scope.createEval=function() {
         $scope.add=!$scope.add;
+
         $http.get('/api/user/find_class')
             .success(function(data){
                 $scope.theories = data[0];
@@ -150,27 +257,26 @@ process.controller('list',function($scope,$http,$log,$modal){
                     return;
                 }
             })
-    }
 
-    $http.get('/api/findteacher/')
-        .success(function(data1){
-            var danhsach = [];
-            $scope.teachers = data1;
-            for(var i = 0 ; i < $scope.teachers.length - 1  ; i++){
-                danhsach[i] = $scope.teachers[i].ma_giang_vien + "_" + $scope.teachers[i].ho_va_ten;
-            }
-            $("#teacher_id" ).autocomplete({
-                source:  danhsach,
-                close: function() {
-                    //console.log()
-
-                    if(teacher_id.value.split("_")[1]!=undefined){
-                        name_gv.value = teacher_id.value.split("_")[1];
-                    }
-                    teacher_id.value = teacher_id.value.split("_")[0];
+        $http.get('/api/findteacher/')
+            .success(function(data1){
+                var danhsach = [];
+                $scope.teachers = data1;
+                for(var i = 0 ; i < $scope.teachers.length - 1  ; i++){
+                    danhsach[i] = $scope.teachers[i].ma_giang_vien + "_" + $scope.teachers[i].ho_va_ten;
                 }
-            });
+                $("#teacher_id" ).autocomplete({
+                    source:  danhsach,
+                    close: function() {
+                        //console.log()
 
-        })
+                        if(teacher_id.value.split("_")[1]!=undefined){
+                            name_gv.value = teacher_id.value.split("_")[1];
+                        }
+                        teacher_id.value = teacher_id.value.split("_")[0];
+                    }
+                });
 
+            })
+    }
 });
